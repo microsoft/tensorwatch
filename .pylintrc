@@ -1,0 +1,15 @@
+[MASTER]
+ignore=model_graph,
+  receptive_field,
+  saliency
+
+[TYPECHECK]
+ignored-modules=numpy,torch,matplotlib,pyplot,zmq
+
+[MESSAGES CONTROL]
+disable=protected-access,
+  broad-except,
+  global-statement,
+  fixme,
+  C,
+  R

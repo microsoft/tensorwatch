@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{cc8abc7f-ede1-4e13-b6b7-0041a5ec66a7}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>tensorwatch\v2\zmq_watcher_server.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>Global|ContinuumAnalytics|Anaconda36-64</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="tensorwatch\embeddings\__init__.py" />
+    <Compile Include="tensorwatch\stream_union.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\file_stream.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\filtered_stream.py" />
+    <Compile Include="tensorwatch\stream.py" />
+    <Compile Include="tensorwatch\stream_factory.py" />
+    <Compile Include="tensorwatch\visualizer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\vis_base.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\saliency\lime\lime_base.py" />
+    <Compile Include="tensorwatch\saliency\lime\lime_image.py" />
+    <Compile Include="tensorwatch\saliency\lime\wrappers\scikit_image.py" />
+    <Compile Include="tensorwatch\saliency\lime\wrappers\__init__.py" />
+    <Compile Include="tensorwatch\saliency\lime\__init__.py" />
+    <Compile Include="tensorwatch\pytorch_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\array_stream.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\data_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\imagenet_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\image_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\model_graph\hiddenlayer\ge.py" />
+    <Compile Include="tensorwatch\model_graph\hiddenlayer\graph.py" />
+    <Compile Include="tensorwatch\model_graph\hiddenlayer\pytorch_builder.py" />
+    <Compile Include="tensorwatch\model_graph\hiddenlayer\tf_builder.py" />
+    <Compile Include="tensorwatch\model_graph\hiddenlayer\transforms.py" />
+    <Compile Include="tensorwatch\model_graph\hiddenlayer\__init__.py" />
+    <Compile Include="tensorwatch\model_graph\torchstat_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\model_graph\__init__.py" />
+    <Compile Include="tensorwatch\mpl\base_mpl_plot.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\evaler.py" />
+    <Compile Include="tensorwatch\evaler_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\mpl\image_plot.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\lv_types.py" />
+    <Compile Include="tensorwatch\mpl\line_plot.py" />
+    <Compile Include="tensorwatch\mpl\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\plotly\base_plotly_plot.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\plotly\line_plot.py" />
+    <Compile Include="tensorwatch\plotly\embeddings_plot.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\plotly\__init__.py" />
+    <Compile Include="tensorwatch\receptive_field\rf_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\repeated_timer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\embeddings\tsne_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\saliency\backprop.py" />
+    <Compile Include="tensorwatch\saliency\deeplift.py" />
+    <Compile Include="tensorwatch\saliency\epsilon_lrp.py" />
+    <Compile Include="tensorwatch\saliency\gradcam.py" />
+    <Compile Include="tensorwatch\saliency\inverter_util.py" />
+    <Compile Include="tensorwatch\saliency\lime_image_explainer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\saliency\occlusion.py" />
+    <Compile Include="tensorwatch\saliency\saliency.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\saliency\__init__.py" />
+    <Compile Include="tensorwatch\text_vis.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\utils.py" />
+    <Compile Include="tensorwatch\watcher_base.py" />
+    <Compile Include="tensorwatch\zmq_mgmt_stream.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\zmq_wrapper.py" />
+    <Compile Include="tensorwatch\zmq_stream.py" />
+    <Compile Include="tensorwatch\watcher_client.py" />
+    <Compile Include="tensorwatch\watcher.py" />
+    <Compile Include="tensorwatch\__init__.py" />
+    <Compile Include="setup.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tensorwatch" />
+    <Folder Include="tensorwatch\saliency\lime\wrappers\" />
+    <Folder Include="tensorwatch\model_graph\" />
+    <Folder Include="tensorwatch\model_graph\hiddenlayer\" />
+    <Folder Include="tensorwatch\model_graph\hiddenlayer\__pycache__\" />
+    <Folder Include="tensorwatch\mpl\" />
+    <Folder Include="tensorwatch\embeddings\" />
+    <Folder Include="tensorwatch\saliency\lime\" />
+    <Folder Include="tensorwatch\receptive_field\" />
+    <Folder Include="tensorwatch\plotly\" />
+    <Folder Include="tensorwatch\saliency\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|ContinuumAnalytics|Anaconda36-64" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include=".gitignore" />
+    <Content Include=".pylintrc">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="CONTRIBUTING.md">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="install_jupyterlab.bat" />
+    <Content Include="LICENSE.TXT">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="NOTICE.md">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="README.md" />
+    <Content Include="tensorwatch\model_graph\hiddenlayer\README.md">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="tensorwatch\model_graph\hiddenlayer\__pycache__\ge.cpython-36.pyc" />
+    <Content Include="tensorwatch\model_graph\hiddenlayer\__pycache__\graph.cpython-36.pyc" />
+    <Content Include="tensorwatch\model_graph\hiddenlayer\__pycache__\pytorch_builder.cpython-36.pyc" />
+    <Content Include="tensorwatch\model_graph\hiddenlayer\__pycache__\transforms.cpython-36.pyc" />
+    <Content Include="tensorwatch\model_graph\hiddenlayer\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="tensorwatch\saliency\README.md">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="TODO.md" />
+    <Content Include="update_package.bat" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

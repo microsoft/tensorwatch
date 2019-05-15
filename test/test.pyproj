@@ -1,0 +1,128 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>components\arr_img_plot.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <Name>test</Name>
+    <RootNamespace>test</RootNamespace>
+    <InterpreterId>Global|ContinuumAnalytics|Anaconda36-64</InterpreterId>
+    <IsWindowsApplication>False</IsWindowsApplication>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="components\arr_img_plot.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\circ_ref.py" />
+    <Compile Include="dlc\dlc.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="files\file_stream_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\cli_ij.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="mnist\cli_mnist.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\cli_sum_log.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pre_train\draw_model.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\evaler_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\ipython_widget.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\panda_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="post_train\saliency.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\srv_sum_log.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="pre_train\tsny.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\mpl_line_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\plotly_line_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\watcher_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\stream_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="zmq\zmq_stream_pub_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="zmq\zmq_watcher_client_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="zmq\zmq_watcher_server_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="zmq\zmq_stream_sub_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\srv_ij.py" />
+    <Compile Include="zmq\zmq_srv.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="components\thread_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|ContinuumAnalytics|Anaconda36-64" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tensorwatch.pyproj">
+      <Name>tensorwatch</Name>
+      <Project>{cc8abc7f-ede1-4e13-b6b7-0041a5ec66a7}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dlc\" />
+    <Folder Include="components\" />
+    <Folder Include="mnist\" />
+    <Folder Include="files\" />
+    <Folder Include="zmq\" />
+    <Folder Include="post_train\" />
+    <Folder Include="pre_train\" />
+    <Folder Include="simple_log\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+  <!-- Uncomment the CoreCompile target to enable the Build command in
+       Visual Studio and specify your pre- and post-build commands in
+       the BeforeBuild and AfterBuild targets below. -->
+  <!--<Target Name="CoreCompile" />-->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>
