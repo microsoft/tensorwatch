@@ -2,7 +2,7 @@
 # Licensed under the MIT license.
 
 from .stream import Stream
-import pickle
+import pickle, os
 from typing import Any
 from . import utils
 
@@ -23,14 +23,17 @@ class FileStream(Stream):
         super(FileStream, self).close()
 
     def write(self, val:Any, from_stream:'Stream'=None):
+        stream_item = self.to_stream_item(val)
+
         if self.for_write:
-            pickle.dump(val, self._file)
-        super(FileStream, self).write(val)
+            pickle.dump(stream_item, self._file)
+        super(FileStream, self).write(stream_item)
 
     def read_all(self, from_stream:'Stream'=None):
         if self.for_write:
             raise IOError('Cannot use read() call because FileSteam is opened with for_write=True')
         if self._file is not None:
+            self._file.seek(0, 0) # we may filter this stream multiple times
             while not utils.is_eof(self._file):
                 yield pickle.load(self._file)
         for item in super(FileStream, self).read_all():
@@ -40,6 +43,7 @@ class FileStream(Stream):
         if self.for_write:
             raise IOError('Cannot use load() call because FileSteam is opened with for_write=True')
         if self._file is not None:
+            self._file.seek(0, 0) # we may filter this stream multiple times
             while not utils.is_eof(self._file):
                 stream_item = pickle.load(self._file)
                 self.write(stream_item)

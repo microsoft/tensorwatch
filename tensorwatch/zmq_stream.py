@@ -40,10 +40,12 @@ class ZmqStream(Stream):
         self.write(val)
 
     def write(self, val:Any, from_stream:'Stream'=None, topic=None):
-        super(ZmqStream, self).write(val)
+        stream_item = self.to_stream_item(val)
+
         if self.for_write:
             topic = topic or self.topic
             utils.debug_log('Sent subscription item', verbosity=5)
-            self._zmq.send_obj(val, topic)
+            self._zmq.send_obj(stream_item, topic)
         # else if this was opened for read then we have subscription and 
         # we shouldn't be calling send_obj
+        super(ZmqStream, self).write(stream_item)

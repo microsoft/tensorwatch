@@ -11,11 +11,8 @@ class ArrayStream(Stream):
 
         self.stream_name = stream_name
         self.array = array
-        self.creator_id = str(uuid.uuid4())
-
 
     def load(self, from_stream:'Stream'=None):
         if self.array is not None:
-            stream_item = StreamItem(value=self.array,item_index=0, 
-                stream_name=self.stream_name, creator_id=self.creator_id, stream_index=0)
-            self.write(stream_item)
+            self.write(self.array)
+        super(ArrayStream, self).load()

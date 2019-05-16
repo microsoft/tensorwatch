@@ -13,12 +13,23 @@ class FilteredStream(Stream):
         self.subscribe(source_stream)
         self.filter_expr = filter_expr
 
-    def write(self, val:Any, from_stream:'Stream'=None):
-        result, is_valid = self.filter_expr(val) \
+    def _filter(self, stream_item):
+        return self.filter_expr(stream_item) \
             if self.filter_expr is not None \
-            else (val, True)
+            else (stream_item, True)
 
+    def write(self, val:Any, from_stream:'Stream'=None):
+        stream_item = self.to_stream_item(val)
+
+        result, is_valid = self._filter(stream_item)
         if is_valid:
             return super(FilteredStream, self).write(result)
         # else ignore this call
+
+    def read_all(self, from_stream:'Stream'=None): #override->replacement
+        for subscribed_to in self._subscribed_to:
+            for stream_item in subscribed_to.read_all(from_stream=self):
+                result, is_valid = self._filter(stream_item)
+                if is_valid:
+                    yield stream_item
             

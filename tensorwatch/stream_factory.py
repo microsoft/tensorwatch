@@ -6,6 +6,7 @@ from .zmq_stream import ZmqStream
 from .file_stream import FileStream
 from .stream import Stream
 from .stream_union import StreamUnion
+import uuid
 
 class StreamFactory:
     r"""Allows to create shared stream such as file and ZMQ streams
@@ -70,6 +71,10 @@ class StreamFactory:
             if stream_args is None:
                 raise ValueError('File name must be specified for stream type "file"')
             stream_name = '{}:{}:{}'.format(stream_type, stream_args, for_write)
+            # each read only file stream should be separate stream or otheriwse sharing will
+            # change seek positions
+            if not for_write: 
+                stream_name += ':' + str(uuid.uuid4())
             if stream_name not in self._streams:
                 self._streams[stream_name] = FileStream(for_write=for_write, 
                     file_name=stream_args, stream_name=stream_name)

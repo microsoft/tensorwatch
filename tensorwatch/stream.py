@@ -4,6 +4,7 @@
 import weakref, uuid
 from typing import Any
 from . import utils
+from .lv_types import StreamItem
 
 class Stream:
     def __init__(self, stream_name:str=None, console_debug:bool=False):
@@ -13,6 +14,7 @@ class Stream:
         self.closed = False
         self.console_debug = console_debug
         self.stream_name = stream_name or str(uuid.uuid4()) # useful to use as key and avoid circular references
+        self.items_written = 0
 
     def subscribe(self, stream:'Stream'): # notify other stream
         utils.debug_log('{} added {} as subscription'.format(self.stream_name, stream.stream_name))
@@ -26,17 +28,31 @@ class Stream:
         self.held_refs.discard(stream)
         #stream.held_refs.discard(self) # not needed as only subscriber should hold ref
 
+    def to_stream_item(self, val:Any):
+        stream_item = val if isinstance(val, StreamItem) else \
+            StreamItem(value=val, stream_name=self.stream_name)
+        if stream_item.stream_name is None:
+            stream_item.stream_name = self.stream_name
+        if stream_item.item_index is None:
+            stream_item.item_index = self.items_written
+        return stream_item
+
     def write(self, val:Any, from_stream:'Stream'=None):
+        # if you override write method, first you must call self.to_stream_item
+        # so it can stamp the stamp the stream name
+        stream_item = self.to_stream_item(val)
+
         if self.console_debug:
-            print(self.stream_name, val)
+            print(self.stream_name, stream_item)
 
         for subscriber in self._subscribers:
-            subscriber.write(val, from_stream=self)
+            subscriber.write(stream_item, from_stream=self)
+        self.items_written += 1
 
     def read_all(self, from_stream:'Stream'=None):
         for subscribed_to in self._subscribed_to:
-            for item in subscribed_to.read_all(from_stream=self):
-                yield item
+            for stream_item in subscribed_to.read_all(from_stream=self):
+                yield stream_item
 
     def load(self, from_stream:'Stream'=None):
         for subscribed_to in self._subscribed_to:

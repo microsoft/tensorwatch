@@ -66,8 +66,7 @@ class VisBase(Stream, metaclass=ABCMeta):
             return self._show_widget_native(blocking)
 
     def write(self, val:Any, from_stream:'Stream'=None):
-        # let the base class know about new item, this will notify any subscribers
-        super(VisBase, self).write(val)
+        stream_item = self.to_stream_item(val)
 
         stream_vis:StreamPlot = None
         if from_stream:
@@ -76,10 +75,10 @@ class VisBase(Stream, metaclass=ABCMeta):
         if not stream_vis: # select the first one we have
             stream_vis = next(iter(self._stream_vises.values()))
 
-        stream_item = val if isinstance(val, StreamItem) else \
-            StreamItem(value=val, stream_name=stream_vis.stream.stream_name)
-
         VisBase.write_stream_plot(self, stream_vis, stream_item)
+
+        super(VisBase, self).write(stream_item)
+
 
     @staticmethod
     def write_stream_plot(vis, stream_vis:StreamPlot, stream_item:StreamItem):

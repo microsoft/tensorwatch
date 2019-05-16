@@ -18,16 +18,19 @@ class ZmqMgmtStream(ZmqStream):
         self._clisrv = clisrv
         self._stream_reqs:Dict[str,StreamCreateRequest] = {}
 
-    def write(self, mgmt_msg:Any, from_stream:'Stream'=None):
+    def write(self, val:Any, from_stream:'Stream'=None):
         r"""Handles server management events.
         """
+        stream_item = self.to_stream_item(val)
+        mgmt_msg = stream_item.value
+
         utils.debug_log("Received - SeverMgmtevent", mgmt_msg)
         # if server was restarted then send create stream requests again
         if mgmt_msg.event_name == ServerMgmtMsg.EventServerStart:
             for stream_req in self._stream_reqs.values():
                 self._send_create_stream(stream_req)
 
-        super(ZmqMgmtStream, self).write(mgmt_msg)
+        super(ZmqMgmtStream, self).write(stream_item)
 
     def add_stream_req(self, stream_req:StreamCreateRequest)->None:
         self._send_create_stream(stream_req)

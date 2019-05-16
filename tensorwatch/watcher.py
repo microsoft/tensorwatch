@@ -48,10 +48,11 @@ class Watcher(WatcherBase):
 
     def default_devices(self)->Sequence[str]: # overriden
         devices = []
-        if self.port is not None:
-            devices.append('tcp:' + str(self.port))
+        # first open file device because it may have older data 
         if self.filename is not None:
             devices.append('file:' + self.filename)
+        if self.port is not None:
+            devices.append('tcp:' + str(self.port))
         return devices
 
     def close(self):

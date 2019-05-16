@@ -9,6 +9,7 @@ from .stream_factory import StreamFactory
 from .filtered_stream import FilteredStream
 import uuid
 import time
+import functools
 from . import utils
 
 
@@ -20,7 +21,6 @@ class WatcherBase:
             """
             self.req, self.evaler, self.stream = req, evaler, stream
             self.index, self.disabled, self.last_sent = index, disabled, last_sent
-            self.item_count = 0 # creator of StreamItem needs to set to set item num
 
     def __init__(self) -> None:
         self.closed = None
@@ -36,8 +36,6 @@ class WatcherBase:
         # factory streams are shared per watcher instance
         self._stream_factory = StreamFactory()
 
-        # each StreamItem should be stamped by its creator
-        self.creator_id = str(uuid.uuid4())
         self.closed = False
 
     def close(self):
@@ -92,13 +90,13 @@ class WatcherBase:
         for device_stream in device_streams:
             # each device may have multiple streams so let's filter it
             filtered_stream = FilteredStream(source_stream=device_stream, 
-                filter_expr=WatcherBase._filter_stream \
+                filter_expr=functools.partial(WatcherBase._filter_stream, stream_name) \
                                 if stream_name is not None else None)
             stream.subscribe(filtered_stream)
             stream.held_refs.add(filtered_stream) # otherwise filtered stream will be destroyed by gc
         return stream
 
-    def _filter_stream(steam_item):
+    def _filter_stream(stream_name, steam_item):
         if isinstance(steam_item, StreamItem):
             return (steam_item, steam_item.stream_name is None or steam_item.stream_name == stream_name)
         else:
@@ -179,9 +177,7 @@ class WatcherBase:
         eval_return = stream_info.evaler.post(event_vars)
         if eval_return.is_valid:
             event_name = stream_info.req.event_name
-            stream_item = StreamItem(value=eval_return.result, item_index=stream_info.item_count,
-                stream_name=stream_info.req.stream_name, creator_id=self.creator_id, 
-                stream_index=stream_info.index, exception=eval_return.exception)
+            stream_item = StreamItem(value=eval_return.result, exception=eval_return.exception)
             stream_info.stream.write(stream_item)
             stream_info.item_count += 1
             utils.debug_log("eval_return sent", event_name, verbosity=5)
@@ -203,12 +199,8 @@ class WatcherBase:
             stream_info.disabled = True
             utils.debug_log("{} stream disabled".format(stream_info.req.stream_name), verbosity=1)
 
-        stream_item = StreamItem(value=eval_return.result, item_index=stream_info.item_count, 
-            stream_name=stream_info.req.stream_name, 
-            creator_id=self.creator_id, stream_index=stream_info.index,
-            exception=eval_return.exception, ended=True)
+        stream_item = StreamItem(value=eval_return.result, exception=eval_return.exception, ended=True)
         stream_info.stream.write(stream_item)
-        stream_info.item_count += 1
 
     def del_stream(self, stream_name:str) -> None:
         utils.debug_log("deleting stream", stream_name)
