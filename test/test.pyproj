@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>components\arr_img_plot.py</StartupFile>
+    <StartupFile>simple_log\file_only_test.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -56,6 +56,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="post_train\saliency.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\file_only_test.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\srv_sum_log.py">

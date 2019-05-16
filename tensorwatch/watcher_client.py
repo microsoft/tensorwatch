@@ -39,8 +39,6 @@ class WatcherClient(WatcherBase):
             # create subscription where we will receive server management events
             self._zmq_srvmgmt_sub = ZmqMgmtStream(clisrv=self._clisrv, for_write=False, port=self.port,
                 stream_name='zmq_srvmgmt_sub:'+str(self.port)+':False')
-        if self.filename is not None:
-            self._file = self._stream_factory.get_streams(stream_types=['file:'+self.filename], for_write=False)[0]
     
     def close(self):
         if not self.closed:

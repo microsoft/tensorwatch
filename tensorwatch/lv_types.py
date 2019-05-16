@@ -28,8 +28,8 @@ class EventVars:
 EventsVars = List[EventVars]
 
 class StreamItem:
-    def __init__(self, item_index:int, value:Any,
-            stream_name:str, creator_id:str, stream_index:int,
+    def __init__(self, value:Any, item_index:int=None, 
+            stream_name:str=None, creator_id:str=None, stream_index:int=None,
             ended:bool=False, exception:Exception=None, stream_reset:bool=False):
         self.value = value
         self.exception = exception

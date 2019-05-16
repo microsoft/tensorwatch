@@ -16,6 +16,6 @@ class ArrayStream(Stream):
 
     def load(self, from_stream:'Stream'=None):
         if self.array is not None:
-            stream_item = StreamItem(item_index=0, value=self.array,
+            stream_item = StreamItem(value=self.array,item_index=0, 
                 stream_name=self.stream_name, creator_id=self.creator_id, stream_index=0)
             self.write(stream_item)

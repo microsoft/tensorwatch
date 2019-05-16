@@ -40,8 +40,6 @@ class Watcher(WatcherBase):
             # TODO: can we do better?
             self._th = threading.Thread(target=self._send_server_start)
             self._th.start()
-        if self.filename is not None:
-            self._file = self._stream_factory.get_streams(stream_types=['file:'+self.filename], for_write=True)[0]
 
     def _send_server_start(self):
         time.sleep(2)

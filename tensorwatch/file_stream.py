@@ -27,6 +27,15 @@ class FileStream(Stream):
             pickle.dump(val, self._file)
         super(FileStream, self).write(val)
 
+    def read_all(self, from_stream:'Stream'=None):
+        if self.for_write:
+            raise IOError('Cannot use read() call because FileSteam is opened with for_write=True')
+        if self._file is not None:
+            while not utils.is_eof(self._file):
+                yield pickle.load(self._file)
+        for item in super(FileStream, self).read_all():
+            yield item
+
     def load(self, from_stream:'Stream'=None):
         if self.for_write:
             raise IOError('Cannot use load() call because FileSteam is opened with for_write=True')
@@ -35,4 +44,8 @@ class FileStream(Stream):
                 stream_item = pickle.load(self._file)
                 self.write(stream_item)
         super(FileStream, self).load()
+
+    def save(self, from_stream:'Stream'=None):
+        self._file.flush()
+        super(FileStream, self).save(val)
 

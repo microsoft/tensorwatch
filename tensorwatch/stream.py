@@ -33,9 +33,18 @@ class Stream:
         for subscriber in self._subscribers:
             subscriber.write(val, from_stream=self)
 
+    def read_all(self, from_stream:'Stream'=None):
+        for subscribed_to in self._subscribed_to:
+            for item in subscribed_to.read_all(from_stream=self):
+                yield item
+
     def load(self, from_stream:'Stream'=None):
         for subscribed_to in self._subscribed_to:
             subscribed_to.load(from_stream=self)
+
+    def save(self, from_stream:'Stream'=None):
+        for subscriber in self._subscribers:
+            subscriber.save(from_stream=self)
 
     def close(self):
         if not self.closed:

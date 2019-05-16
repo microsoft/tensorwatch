@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-from typing import Dict, Sequence
+from typing import Dict, Sequence, List
 from .zmq_stream import ZmqStream
 from .file_stream import FileStream
 from .stream import Stream
@@ -32,7 +32,7 @@ class StreamFactory:
     def __exit__(self, exception_type, exception_value, traceback):
         self.close()
 
-    def get_streams(self, stream_types:Sequence[str], for_write:bool=None)->Stream:
+    def get_streams(self, stream_types:Sequence[str], for_write:bool=None)->List[Stream]:
         streams = [self._create_stream_by_string(stream_type, for_write) for stream_type in stream_types]
         return streams
 
