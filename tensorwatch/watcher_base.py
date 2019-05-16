@@ -92,12 +92,17 @@ class WatcherBase:
         for device_stream in device_streams:
             # each device may have multiple streams so let's filter it
             filtered_stream = FilteredStream(source_stream=device_stream, 
-                filter_expr=((lambda steam_item: (steam_item, steam_item.stream_name is None or steam_item.stream_name == stream_name)) \
-                    if stream_name is not None \
-                    else None))
+                filter_expr=WatcherBase._filter_stream \
+                                if stream_name is not None else None)
             stream.subscribe(filtered_stream)
             stream.held_refs.add(filtered_stream) # otherwise filtered stream will be destroyed by gc
         return stream
+
+    def _filter_stream(steam_item):
+        if isinstance(steam_item, StreamItem):
+            return (steam_item, steam_item.stream_name is None or steam_item.stream_name == stream_name)
+        else:
+            return (steam_item, True)
 
     def create_stream(self, stream_name:str=None, devices:Sequence[str]=None, event_name:str='',
         expr=None, throttle:float=None, vis_params:VisParams=None)->Stream:

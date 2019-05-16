@@ -146,10 +146,12 @@
     <Content Include=".pylintrc">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="CHANGELOG.md" />
     <Content Include="CONTRIBUTING.md">
       <SubType>Code</SubType>
     </Content>
     <Content Include="install_jupyterlab.bat" />
+    <Content Include="ISSUE_TEMPLATE.md" />
     <Content Include="LICENSE.TXT">
       <SubType>Code</SubType>
     </Content>
@@ -157,6 +159,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="README.md" />
+    <Content Include="SUPPORT.md" />
     <Content Include="tensorwatch\model_graph\hiddenlayer\README.md">
       <SubType>Code</SubType>
     </Content>

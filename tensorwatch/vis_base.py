@@ -76,7 +76,10 @@ class VisBase(Stream, metaclass=ABCMeta):
         if not stream_vis: # select the first one we have
             stream_vis = next(iter(self._stream_vises.values()))
 
-        VisBase.write_stream_plot(self, stream_vis, val)
+        stream_item = val if isinstance(val, StreamItem) else \
+            StreamItem(value=val, stream_name=stream_vis.stream.stream_name)
+
+        VisBase.write_stream_plot(self, stream_vis, stream_item)
 
     @staticmethod
     def write_stream_plot(vis, stream_vis:StreamPlot, stream_item:StreamItem):
