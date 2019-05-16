@@ -14,7 +14,6 @@ class FileStream(Stream):
         self._file = open(file_name, 'wb' if for_write else 'rb')
         self.file_name = file_name
         self.for_write = for_write
-        self.last_flush = 0
         utils.debug_log('FileStream started', self.file_name, verbosity=1)
 
     def close(self):
@@ -29,9 +28,6 @@ class FileStream(Stream):
 
         if self.for_write:
             pickle.dump(stream_item, self._file)
-            if time.time()-self.last_flush > 0.2: # TODO: can we do better?
-                self._file.flush()
-                self.last_flush = time.time()
         super(FileStream, self).write(stream_item)
 
     def read_all(self, from_stream:'Stream'=None):
@@ -55,6 +51,7 @@ class FileStream(Stream):
         super(FileStream, self).load()
 
     def save(self, from_stream:'Stream'=None):
-        self._file.flush()
+        if not self._file.closed:
+            self._file.flush()
         super(FileStream, self).save(val)
 

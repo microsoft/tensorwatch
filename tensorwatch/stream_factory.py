@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-from typing import Dict, Sequence, List
+from typing import Dict, Sequence, List, Any
 from .zmq_stream import ZmqStream
 from .file_stream import FileStream
 from .stream import Stream
@@ -46,6 +46,9 @@ class StreamFactory:
             # we create new union of child but this is not necessory
             return StreamUnion(streams, for_write=for_write)
 
+    def _get_stream_name(stream_type:str, stream_args:Any, for_write:bool)->str:
+        return '{}:{}:{}'.format(stream_type, stream_args, for_write)
+
     def _create_stream_by_string(self, stream_spec:str, for_write:bool)->Stream:
         parts = stream_spec.split(':', 1) if stream_spec is not None else ['']
         stream_type = parts[0]
@@ -55,7 +58,7 @@ class StreamFactory:
 
         if stream_type == 'tcp':
             port = int(stream_args or 0)
-            stream_name = '{}:{}:{}'.format(stream_type, port, for_write)
+            stream_name = StreamFactory._get_stream_name(stream_type, port, for_write)
             if stream_name not in self._streams:
                 self._streams[stream_name] = ZmqStream(for_write=for_write, 
                     port=port, stream_name=stream_name, block_until_connected=False)
@@ -73,11 +76,17 @@ class StreamFactory:
         if stream_type == 'file':
             if stream_args is None:
                 raise ValueError('File name must be specified for stream type "file"')
-            stream_name = '{}:{}:{}'.format(stream_type, stream_args, for_write)
+            stream_name = StreamFactory._get_stream_name(stream_type, stream_args, for_write)
             # each read only file stream should be separate stream or otheriwse sharing will
             # change seek positions
             if not for_write: 
                 stream_name += ':' + str(uuid.uuid4())
+
+                # if write file exist then flush it before read stream would read it
+                write_stream_name = StreamFactory._get_stream_name(stream_type, stream_args, True)
+                write_file_stream = self._streams.get(write_stream_name, None)
+                if write_file_stream:
+                    write_file_stream.save()
             if stream_name not in self._streams:
                 self._streams[stream_name] = FileStream(for_write=for_write, 
                     file_name=stream_args, stream_name=stream_name)
