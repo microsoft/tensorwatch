@@ -47,19 +47,24 @@ class WatcherClient(WatcherBase):
             utils.debug_log("WatcherClient is closed", verbosity=1)
         super(WatcherClient, self).close()
 
-    def default_devices(self)->Sequence[str]: # overriden
+    def devices_or_default(self, devices:Sequence[str])->Sequence[str]: # overriden
+        # TODO: this method is duplicated in Watcher and WatcherClient
+        if devices is not None:
+            return ['tcp:' + str(self.port) if device=='tcp' else device for device in devices]
+
         devices = []
-        if self.port is not None:
-            devices.append('tcp:' + str(self.port))
+        # first add file device because it may have older data 
         if self.filename is not None:
             devices.append('file:' + self.filename)
+        if self.port is not None:
+            devices.append('tcp:' + str(self.port))
         return devices
 
     # override to send request to server, instead of underlying WatcherBase base class
     def create_stream(self, stream_name:str=None, devices:Sequence[str]=None, event_name:str='',
         expr=None, throttle:float=1, vis_params:VisParams=None)->Stream: # overriden
 
-        stream_req = StreamCreateRequest(stream_name=stream_name, devices=devices or self.default_devices(),
+        stream_req = StreamCreateRequest(stream_name=stream_name, devices=self.devices_or_default(devices),
             event_name=event_name, expr=expr, throttle=throttle, vis_params=vis_params)
 
         self._zmq_srvmgmt_sub.add_stream_req(stream_req)

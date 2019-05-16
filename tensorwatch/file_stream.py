@@ -5,6 +5,7 @@ from .stream import Stream
 import pickle, os
 from typing import Any
 from . import utils
+import time
 
 class FileStream(Stream):
     def __init__(self, for_write:bool, file_name:str, stream_name:str=None, console_debug:bool=False):
@@ -13,6 +14,7 @@ class FileStream(Stream):
         self._file = open(file_name, 'wb' if for_write else 'rb')
         self.file_name = file_name
         self.for_write = for_write
+        self.last_flush = 0
         utils.debug_log('FileStream started', self.file_name, verbosity=1)
 
     def close(self):
@@ -27,6 +29,9 @@ class FileStream(Stream):
 
         if self.for_write:
             pickle.dump(stream_item, self._file)
+            if time.time()-self.last_flush > 0.2: # TODO: can we do better?
+                self._file.flush()
+                self.last_flush = time.time()
         super(FileStream, self).write(stream_item)
 
     def read_all(self, from_stream:'Stream'=None):

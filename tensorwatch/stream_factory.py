@@ -7,6 +7,7 @@ from .file_stream import FileStream
 from .stream import Stream
 from .stream_union import StreamUnion
 import uuid
+from . import utils
 
 class StreamFactory:
     r"""Allows to create shared stream such as file and ZMQ streams
@@ -49,6 +50,8 @@ class StreamFactory:
         parts = stream_spec.split(':', 1) if stream_spec is not None else ['']
         stream_type = parts[0]
         stream_args = parts[1] if len(parts) > 1 else None
+
+        utils.debug_log("Creating stream", (stream_spec, for_write))
 
         if stream_type == 'tcp':
             port = int(stream_args or 0)

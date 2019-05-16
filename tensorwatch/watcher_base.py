@@ -53,7 +53,7 @@ class WatcherBase:
     def __exit__(self, exception_type, exception_value, traceback):
         self.close()
 
-    def default_devices(self)->Sequence[str]:
+    def devices_or_default(self, devices:Sequence[str])->Sequence[str]:
         return None
 
     def open_stream(self, stream_name:str=None, devices:Sequence[str]=None, 
@@ -64,7 +64,7 @@ class WatcherBase:
         # TODO: what if devices were specified AND stream exist in cache?
 
         # create devices is any
-        devices = devices or self.default_devices()
+        devices = self.devices_or_default(devices)
         device_streams = None
         if devices is not None:
             # we open devices in read-only mode
@@ -132,7 +132,7 @@ class WatcherBase:
         if not stream_info:
             utils.debug_log("Creating stream", stream_name)
             stream = Stream(stream_name=stream_name)
-            devices = devices or self.default_devices()
+            devices = self.devices_or_default(devices)
             if devices is not None:
                 # attached devices are opened in write-only mode
                 device_streams = self._stream_factory.get_streams(stream_types=devices, 
@@ -179,7 +179,6 @@ class WatcherBase:
             event_name = stream_info.req.event_name
             stream_item = StreamItem(value=eval_return.result, exception=eval_return.exception)
             stream_info.stream.write(stream_item)
-            stream_info.item_count += 1
             utils.debug_log("eval_return sent", event_name, verbosity=5)
         else:
             utils.debug_log("Invalid eval_return not sent", verbosity=5)

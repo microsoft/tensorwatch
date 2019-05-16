@@ -46,7 +46,11 @@ class Watcher(WatcherBase):
         self._zmq_stream_pub.write(ServerMgmtMsg(event_name=ServerMgmtMsg.EventServerStart, 
             event_args=self.srv_name), topic=PublisherTopics.ServerMgmt)
 
-    def default_devices(self)->Sequence[str]: # overriden
+    def devices_or_default(self, devices:Sequence[str])->Sequence[str]: # overriden
+        # TODO: this method is duplicated in Watcher and WatcherClient
+        if devices is not None:
+            return ['tcp:' + str(self.port) if device=='tcp' else device for device in devices]
+
         devices = []
         # first open file device because it may have older data 
         if self.filename is not None:
