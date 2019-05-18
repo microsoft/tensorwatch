@@ -49,6 +49,8 @@ class ImagePlot(BaseMplPlot):
 
             # resize if requested
             if stream_vis.viz_img_scale is not None:
+                if isinstance(img_viz, np.ndarray) and np.issubdtype(img_viz.dtype, np.floating):
+                    img_viz = img_viz.clip(-1, 1) # some MNIST images have out of range values causing exception in sklearn
                 img_viz = skimage.transform.rescale(img_viz, 
                     (stream_vis.viz_img_scale, stream_vis.viz_img_scale), mode='reflect', preserve_range=False)
 

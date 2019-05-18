@@ -14,7 +14,7 @@ from .visualizer import Visualizer
 
 from .stream import Stream
 from .array_stream import ArrayStream
-from .lv_types import ImagePlotItem, VisParams, StreamItem
+from .lv_types import ImagePlotItem, VisParams, StreamItem, PredictionResult
 from . import utils
 
 ###### Import methods for tw namespace #########

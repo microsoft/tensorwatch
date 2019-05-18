@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-from typing import List, Callable, Any, Sequence
+from typing import List, Callable, Any, Sequence, Hashable
 from . import utils
 import uuid
 
@@ -111,6 +111,17 @@ class ImagePlotItem:
         if not isinstance(images, tuple):
             images = (images,)
         self.images, self.alpha, self.cmap, self.title = images, alpha, cmap, title
+
+class PredictionResult:
+    def __init__(self, loss:float=None, class_id:Hashable=None, probability:float=None, 
+                 inputs:Any=None, outputs:Any=None, targets:Any=None, others:Any=None):
+        self.loss = loss
+        self.class_id = class_id
+        self.probability = probability
+        self.inputs = inputs
+        self.outputs = outputs
+        self.targets = targets
+        self.others = others
 
 class DefaultPorts:
     PubSub = 40859

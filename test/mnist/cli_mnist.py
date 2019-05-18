@@ -10,7 +10,8 @@ def img_in_class():
     cli_train = tw.WatcherClient()
 
     imgs = cli_train.create_stream(event_name='batch',
-        expr="top(l, out_xform=pyt_img_class_out_xform, order='rnd')", throttle=1)
+        expr="topk_all(l, batch_vals=lambda b: (b.batch.loss_all, (b.batch.input, b.batch.output), b.batch.target), \
+            out_f=image_class_outf, order='dsc')", throttle=1)
     img_plot = tw.mpl.ImagePlot()
     img_plot.subscribe(imgs, viz_img_scale=3)
     img_plot.show()
@@ -105,6 +106,6 @@ def text_stats():
 #epoch_stats()
 #plot_weight()
 #plot_grads1()
-#img_in_class()
+img_in_class()
 #text_stats()
-batch_stats()
+#batch_stats()

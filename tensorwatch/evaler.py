@@ -1,8 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-import threading
-import sys
+import threading, sys, logging
 from collections.abc import Iterator
 from .lv_types import EventVars
 
@@ -86,7 +85,7 @@ class Evaler:
                 else:
                     self.eval_return = Evaler.EvalReturn(result, True)
             except Exception as ex: # pylint: disable=broad-except
-                print(ex, file=sys.stderr)
+                logging.exception('Exception occured while evaluating expression: ' + self.expr)
                 self.eval_return = Evaler.EvalReturn(None, True, ex)
             self.eval_wait.set()
             self.reset_wait.wait()

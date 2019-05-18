@@ -21,3 +21,11 @@
 * ImagePlotItem should accept numpy array or pillow or torch tensor 
 * image plot getting refreshed at 12hz instead of 2 hz in MNIST
 * image plot doesn't title
+* Animated mesh/surface graph demo
+* Move to h5 storage?
+* Error envelop
+* histogram
+* new graph on end
+* TF support
+* generic visualizer -> Given obj and Box, paint in box
+* visualize image and text with attention
