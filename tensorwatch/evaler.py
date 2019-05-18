@@ -3,7 +3,7 @@
 
 import threading, sys, logging
 from collections.abc import Iterator
-from .lv_types import EventVars
+from .lv_types import EventData
 
 # pylint: disable=unused-wildcard-import
 # pylint: disable=wildcard-import
@@ -27,19 +27,19 @@ class Evaler:
         def __init__(self, eval_wait):
             self.eval_wait = eval_wait
             self.post_wait = threading.Event()
-            self.event_vars, self.ended = None, None # define attributes in init
+            self.event_data, self.ended = None, None # define attributes in init
             self.reset()
 
         def reset(self):
-            self.event_vars, self.ended = None, False
+            self.event_data, self.ended = None, False
             self.post_wait.clear()
 
         def abort(self):
             self.ended = True
             self.post_wait.set()
 
-        def post(self, event_vars:EventVars=None, ended=False):
-            self.event_vars, self.ended = event_vars, ended
+        def post(self, event_data:EventData=None, ended=False):
+            self.event_data, self.ended = event_data, ended
             self.post_wait.set()
 
         def get_vals(self):
@@ -49,7 +49,7 @@ class Evaler:
                 if self.ended:
                     break
                 else:
-                    yield self.event_vars
+                    yield self.event_data
                     # below will cause result=None, is_valid=False when
                     # expression has reduce
                     self.eval_wait.set()
@@ -102,12 +102,12 @@ class Evaler:
         self.eval_wait.set()
         self.reset_wait.set()
 
-    def post(self, event_vars:EventVars=None, ended=False, continue_thread=True):
+    def post(self, event_data:EventData=None, ended=False, continue_thread=True):
         if not self.running:
             utils.debug_log('post was called when Evaler is not running')
             return None, False
         self.eval_return.reset()
-        self.g.post(event_vars, ended)
+        self.g.post(event_data, ended)
         self.eval_wait.wait()
         self.eval_wait.clear()
         # save result before it would get reset

@@ -6,7 +6,7 @@ from . import utils
 import uuid
 
 
-class EventVars:
+class EventData:
     def __init__(self, globals_val, **vars_val):
         if globals_val is not None:
             for key in globals_val:
@@ -25,7 +25,7 @@ class EventVars:
  
         return ', '.join(sb)
 
-EventsVars = List[EventVars]
+EventsVars = List[EventData]
 
 class StreamItem:
     def __init__(self, value:Any, stream_name:str=None, item_index:int=None, 
@@ -95,7 +95,7 @@ class CliSrvReqTypes:
     create_stream = 'CreateStream'
     del_stream = 'DeleteStream'
 
-class StreamPlot:
+class StreamVisInfo:
     def __init__(self, stream, title, clear_after_end, 
                 clear_after_each, history_len, dim_history, opacity,
                 index, stream_vis_args, last_update):

@@ -3,7 +3,7 @@
 
 import plotly.graph_objs as go
 from .base_plotly_plot import BasePlotlyPlot
-from ..lv_types import EventVars
+from ..lv_types import EventData
 from .. import utils
 import ipywidgets as widgets
 
@@ -117,7 +117,7 @@ class LinePlot(BasePlotlyPlot):
                     x, y, z, ann, txt, clr = unpacker(*val)
                 else:
                     x, y, ann, txt, clr, _ = unpacker(*val)
-            elif isinstance(val, EventVars):
+            elif isinstance(val, EventData):
                 x = val.x if hasattr(val, 'x') else x
                 y = val.y if hasattr(val, 'y') else y
                 z = val.z if hasattr(val, 'z') else z

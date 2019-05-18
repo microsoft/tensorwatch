@@ -6,7 +6,7 @@ from typing import Any
 from types import MethodType
 from abc import ABCMeta, abstractmethod
 
-from .lv_types import StreamPlot, StreamItem
+from .lv_types import StreamVisInfo, StreamItem
 from . import utils
 from .stream import Stream
 
@@ -40,7 +40,7 @@ class VisBase(Stream, metaclass=ABCMeta):
         with self.lock:
             self.layout_dirty = True
         
-            stream_vis = StreamPlot(stream, title, clear_after_end, 
+            stream_vis = StreamVisInfo(stream, title, clear_after_end, 
                 clear_after_each, history_len, dim_history, opacity,
                 len(self._stream_vises), stream_vis_args, 0)
             stream_vis._clear_pending = False
@@ -68,7 +68,7 @@ class VisBase(Stream, metaclass=ABCMeta):
     def write(self, val:Any, from_stream:'Stream'=None):
         stream_item = self.to_stream_item(val)
 
-        stream_vis:StreamPlot = None
+        stream_vis:StreamVisInfo = None
         if from_stream:
             stream_vis = self._stream_vises.get(from_stream.stream_name, None)
 
@@ -81,7 +81,7 @@ class VisBase(Stream, metaclass=ABCMeta):
 
 
     @staticmethod
-    def write_stream_plot(vis, stream_vis:StreamPlot, stream_item:StreamItem):
+    def write_stream_plot(vis, stream_vis:StreamVisInfo, stream_item:StreamItem):
         with vis.lock: # this could be from separate thread!
             #if stream_vis is None:
             #    utils.debug_log('stream_vis not specified in VisBase.write')

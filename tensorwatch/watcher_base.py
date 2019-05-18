@@ -2,7 +2,7 @@
 # Licensed under the MIT license.
 
 from typing import Dict, Any, Sequence
-from .lv_types import EventVars, StreamItem, StreamCreateRequest, VisParams
+from .lv_types import EventData, StreamItem, StreamCreateRequest, VisParams
 from .evaler import Evaler
 from .stream import Stream
 from .stream_factory import StreamFactory
@@ -168,13 +168,13 @@ class WatcherBase:
                     time.time() - stream_info.last_sent >= stream_info.req.throttle:
                 stream_info.last_sent = time.time()
                 
-                events_vars = EventVars(self._global_vars, **obs_vars)
+                events_vars = EventData(self._global_vars, **obs_vars)
                 self._eval_wrie(stream_info, events_vars)
             else:
                 utils.debug_log("Throttled", event_name, verbosity=5)
 
-    def _eval_wrie(self, stream_info:'WatcherBase.StreamInfo', event_vars:EventVars):
-        eval_return = stream_info.evaler.post(event_vars)
+    def _eval_wrie(self, stream_info:'WatcherBase.StreamInfo', event_data:EventData):
+        eval_return = stream_info.evaler.post(event_data)
         if eval_return.is_valid:
             event_name = stream_info.req.event_name
             stream_item = StreamItem(value=eval_return.result, exception=eval_return.exception)
