@@ -93,6 +93,14 @@ class BasePlotlyPlot(VisBase):
         pass
 
     @abstractmethod
+    def clear_plot(self, stream_vis, clear_history):
+        """(for derived class) Clears the data in specified plot before new data is redrawn"""
+        pass
+    @abstractmethod
+    def _show_stream_items(self, stream_vis, stream_items):
+        """(for derived class) Plot the data in given axes"""
+        pass
+    @abstractmethod
     def _setup_layout(self, stream_vis):
         pass
     @abstractmethod
