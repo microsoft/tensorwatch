@@ -6,10 +6,10 @@ import errno
 import pickle
 from zmq.eventloop import ioloop, zmqstream
 import zmq.utils.monitor
-import functools, sys, logging, traceback
+import functools, sys, logging
 from threading import Thread, Event
 from . import utils
-import weakref
+import weakref, logging
 
 class ZmqWrapper:
 
@@ -38,11 +38,11 @@ class ZmqWrapper:
             ZmqWrapper._ioloop.add_callback(ZmqWrapper._ioloop.stop)
             ZmqWrapper._thread = None
             ZmqWrapper._ioloop = None
-            print("ZMQ IOLoop is now closed")
+            print('ZMQ IOLoop is now closed')
 
     @staticmethod
     def get_timer(secs, callback, start=True):
-        utils.debug_log("Adding PeriodicCallback", secs)
+        utils.debug_log('Adding PeriodicCallback', secs)
         pc = ioloop.PeriodicCallback(callback, secs * 1e3)
         if (start):
             pc.start()
@@ -61,11 +61,11 @@ class ZmqWrapper:
         while ZmqWrapper._thread is not None:
             try:
                 ZmqWrapper._start_event.set()
-                utils.debug_log("starting ioloop...")
+                utils.debug_log('starting ioloop...')
                 ZmqWrapper._ioloop.start()
             except zmq.ZMQError as ex:
                 if ex.errno == errno.EINTR:
-                    print("Cannot start IOLoop! ZMQError: {}".format(ex), file=sys.stderr)
+                    logging.exception('Cannot start IOLoop - ZMQError')
                     continue
                 else:
                     raise
@@ -83,10 +83,9 @@ class ZmqWrapper:
             try:
                 r.val = f(*kargs, **kwargs)
                 ZmqWrapper._ioloop_block.set()
-            except Exception as ex:
-                print(ex)
-                logging.fatal(ex, exc_info=True) 
-                traceback.print_exc(file=sys.stdout)
+            except:
+                logging.exception('Error in call scheduled in ioloop')
+
 
         # We will add callback in IO Loop and then wait for that
         # call back to be completed
@@ -99,16 +98,16 @@ class ZmqWrapper:
             r = Result()
             f_wrapped = functools.partial(wrapper, f, r, *kargs, **kwargs)
             ZmqWrapper._ioloop.add_callback(f_wrapped)
-            utils.debug_log("Waiting for call on ioloop", f, verbosity=5)
+            utils.debug_log('Waiting for call on ioloop', f, verbosity=5)
             ZmqWrapper._ioloop_block.wait()
-            utils.debug_log("Call on ioloop done", f, verbosity=5)
+            utils.debug_log('Call on ioloop done', f, verbosity=5)
             return r.val
         else:
             f_wrapped = functools.partial(f, *kargs, **kwargs)
             ZmqWrapper._ioloop.add_callback(f_wrapped)
 
     class Publication:
-        def __init__(self, port, host="*", block_until_connected=True):
+        def __init__(self, port, host='*', block_until_connected=True):
             # define vars
             self._socket = None
             self._mon_socket = None
@@ -123,7 +122,7 @@ class ZmqWrapper:
             context = zmq.Context()
             self._socket = context.socket(zmq.PUB)
             utils.debug_log('Binding socket', (host, port), verbosity=5)
-            self._socket.bind("tcp://%s:%d" % (host, port))
+            self._socket.bind('tcp://%s:%d' % (host, port))
             utils.debug_log('Bound socket', (host, port), verbosity=5)
             self._mon_socket = self._socket.get_monitor_socket(zmq.EVENT_CONNECTED | zmq.EVENT_DISCONNECTED)
             self._mon_stream = zmqstream.ZMQStream(self._mon_socket)
@@ -138,7 +137,7 @@ class ZmqWrapper:
             #utils.debug_log('_send_multipart', parts, verbosity=6)
             return self._socket.send_multipart(parts)
 
-        def send_obj(self, obj, topic=""):
+        def send_obj(self, obj, topic=''):
             ZmqWrapper._io_loop_call(False, self._send_multipart, 
                 [topic.encode(), pickle.dumps(obj)])
 
@@ -147,14 +146,14 @@ class ZmqWrapper:
             event = ev['event']
             endpoint = ev['endpoint']
             if event == zmq.EVENT_CONNECTED:
-                utils.debug_log("Subscriber connect event", endpoint, verbosity=1)
+                utils.debug_log('Subscriber connect event', endpoint, verbosity=1)
             elif event == zmq.EVENT_DISCONNECTED:
-                utils.debug_log("Subscriber disconnect event", endpoint, verbosity=1)
+                utils.debug_log('Subscriber disconnect event', endpoint, verbosity=1)
 
 
     class Subscription:
         # subscribe to topic, call callback when object is received on topic
-        def __init__(self, port, topic="", callback=None, host="localhost"):
+        def __init__(self, port, topic='', callback=None, host='localhost'):
             self._socket = None
             self._stream = None
             self.topic = None
@@ -175,7 +174,7 @@ class ZmqWrapper:
                     if weak_callback and weak_callback():
                         weak_callback()(pickle.loads(obj_s))
                 except Exception as ex:
-                    print(ex, file=sys.stderr) # TODO: standardize this
+                    logging.exception('Error in subscription callback')
                     raise
 
             # connect to stream socket
@@ -183,12 +182,12 @@ class ZmqWrapper:
             self.topic = topic.encode()
             self._socket = context.socket(zmq.SUB)
 
-            utils.debug_log("Subscriber connecting...", (host, port), verbosity=1)
-            self._socket.connect("tcp://%s:%d" % (host, port))
-            utils.debug_log("Subscriber connected!", (host, port), verbosity=1)
+            utils.debug_log('Subscriber connecting...', (host, port), verbosity=1)
+            self._socket.connect('tcp://%s:%d' % (host, port))
+            utils.debug_log('Subscriber connected!', (host, port), verbosity=1)
 
             # setup socket filtering
-            if topic != "":
+            if topic != '':
                 self._socket.setsockopt(zmq.SUBSCRIBE, self.topic)
 
             # if callback is specified then create a stream and set it 
@@ -203,7 +202,7 @@ class ZmqWrapper:
         def _receive_obj(self):
             [topic, obj_s] = self._socket.recv_multipart() # pylint: disable=unbalanced-tuple-unpacking
             if topic != self.topic:
-                raise ValueError("Expected topic: %s, Received topic: %s" % (topic, self.topic)) 
+                raise ValueError('Expected topic: %s, Received topic: %s' % (topic, self.topic)) 
             return pickle.loads(obj_s)
 
         def receive_obj(self):
@@ -236,7 +235,7 @@ class ZmqWrapper:
 
         def _connect(self, port, is_server, callback, host):
             def callback_wrapper(callback, msg):
-                utils.debug_log("Server received request...", verbosity=6)
+                utils.debug_log('Server received request...', verbosity=6)
 
                 [obj_s] = msg
                 try:
@@ -244,28 +243,28 @@ class ZmqWrapper:
                     # we must send reply to complete the cycle
                     self._socket.send_multipart([pickle.dumps((ret, None))])
                 except Exception as ex:
-                    print("ClientServer call raised exception: ", ex, file=sys.stderr)
+                    logging.exception('ClientServer call raised exception')
                     # we must send reply to complete the cycle
                     self._socket.send_multipart([pickle.dumps((None, ex))])
                 
-                utils.debug_log("Server sent response", verbosity=6)
+                utils.debug_log('Server sent response', verbosity=6)
                 
             context = zmq.Context()
             if is_server:
-                host = host or "127.0.0.1"
+                host = host or '127.0.0.1'
                 self._socket = context.socket(zmq.REP)
                 utils.debug_log('Binding socket', (host, port), verbosity=5)
-                self._socket.bind("tcp://%s:%d" % (host, port))
+                self._socket.bind('tcp://%s:%d' % (host, port))
                 utils.debug_log('Bound socket', (host, port), verbosity=5)
             else:
-                host = host or "localhost"
+                host = host or 'localhost'
                 self._socket = context.socket(zmq.REQ)
                 self._socket.setsockopt(zmq.REQ_CORRELATE, 1)
                 self._socket.setsockopt(zmq.REQ_RELAXED, 1)
 
-                utils.debug_log("Client connecting...", verbosity=1)
-                self._socket.connect("tcp://%s:%d" % (host, port))
-                utils.debug_log("Client connected!", verbosity=1)
+                utils.debug_log('Client connecting...', verbosity=1)
+                self._socket.connect('tcp://%s:%d' % (host, port))
+                utils.debug_log('Client connected!', verbosity=1)
 
             if callback is not None:
                 self._stream = zmqstream.ZMQStream(self._socket)
@@ -283,8 +282,8 @@ class ZmqWrapper:
             return pickle.loads(obj_s)
 
         def request(self, req_obj):
-            utils.debug_log("Client sending request...", verbosity=6)
+            utils.debug_log('Client sending request...', verbosity=6)
             self.send_obj(req_obj)
             r = self.receive_obj()
-            utils.debug_log("Client received response", verbosity=6)
+            utils.debug_log('Client received response', verbosity=6)
             return r

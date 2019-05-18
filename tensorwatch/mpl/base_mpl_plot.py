@@ -15,7 +15,7 @@ from matplotlib.animation import FuncAnimation
 
 from ..vis_base import VisBase
 
-import sys, traceback, logging
+import sys, logging
 from abc import abstractmethod
 from .. import utils
 from IPython import get_ipython #, display
@@ -76,9 +76,8 @@ class BaseMplPlot(VisBase):
             #   are popping up exception in Jupyter Notebook because these
             #   exceptions occur in background?
             self.last_ex = ex
-            print(ex)
-            logging.fatal(ex, exc_info=True) 
-            traceback.print_exc(file=sys.stdout)
+            logging.exception('Exception in matplotlib update loop')
+
 
     def show(self, blocking=False):
         if not self.is_shown and self.anim_interval:
