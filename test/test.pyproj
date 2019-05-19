@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>mnist\cli_mnist.py</StartupFile>
+    <StartupFile>simple_log\confidence_interval.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -59,6 +59,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\cli_sum_log_2.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\confidence_interval.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\file_only_test.py">

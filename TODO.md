@@ -18,7 +18,7 @@
 * Remove error if MNIST notebook is on and we run fruits
 * Remove 2nd image from fruits
 * clear exisitng streams when starting client
-* ImagePlotItem should accept numpy array or pillow or torch tensor 
+* ImageData should accept numpy array or pillow or torch tensor 
 * image plot getting refreshed at 12hz instead of 2 hz in MNIST
 * image plot doesn't title
 * Animated mesh/surface graph demo

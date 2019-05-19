@@ -105,12 +105,24 @@ class StreamVisInfo:
         self.history_len, self.dim_history = history_len, dim_history
         self.index, self.stream_vis_args, self.last_update = index, stream_vis_args, last_update
 
-class ImagePlotItem:
+class ImageData:
     # images are numpy array of shape [[channels,] height, width]
     def __init__(self, images=None, title=None, alpha=None, cmap=None):
         if not isinstance(images, tuple):
             images = (images,)
         self.images, self.alpha, self.cmap, self.title = images, alpha, cmap, title
+
+class PointData:
+    def __init__(self, x:float=None, y:float=None, z:float=None, low:float=None, high:float=None,
+                 annotation:Any=None, text:Any=None, color:Any=None)->None:
+        self.x = x
+        self.y = y
+        self.z = z
+        self.low = low # confidence interval
+        self.high = high
+        self.annotation = annotation
+        self.text = text
+        self.color = color # typically string like '#d62728'
 
 class PredictionResult:
     def __init__(self, loss:float=None, class_id:Hashable=None, probability:float=None, 

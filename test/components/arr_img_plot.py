@@ -7,8 +7,8 @@ import torchvision.datasets as datasets
 fruits_ds = datasets.ImageFolder(r'D:\datasets\fruits-360\Training')
 mnist_ds = datasets.MNIST('../data', train=True, download=True)
 
-images = [tw.ImagePlotItem(fruits_ds[i][0], title=str(i)) for i in range(5)] + \
-         [tw.ImagePlotItem(mnist_ds[i][0], title=str(i)) for i in range(5)]
+images = [tw.ImageData(fruits_ds[i][0], title=str(i)) for i in range(5)] + \
+         [tw.ImageData(mnist_ds[i][0], title=str(i)) for i in range(5)]
 
 stream = tw.ArrayStream(images)
 

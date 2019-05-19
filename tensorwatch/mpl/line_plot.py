@@ -6,7 +6,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from .. import utils
 import numpy as np
-from ..lv_types import EventData
+from ..lv_types import PointData
 import ipywidgets as widgets
 
 class LinePlot(BaseMplPlot):
@@ -28,12 +28,13 @@ class LinePlot(BaseMplPlot):
         color = color or plt.cm.Dark2((len(self._stream_vises)%8)/8) # pylint: disable=no-member
 
         # add default line in subplot
+        stream_vis.color = color
         stream_vis.line = matplotlib.lines.Line2D([], [], 
             label=stream_vis.title or ytitle or str(stream_vis.index), color=color) #, linewidth=3
         if stream_vis.opacity is not None:
             stream_vis.line.set_alpha(stream_vis.opacity)
         stream_vis.ax.add_line(stream_vis.line)
-
+        stream_vis.fill_between_col = None
         # if more than 2 y-axis then place additional outside
         if len(self._stream_vises) > 1:
             pos = (len(self._stream_vises)) * 30
@@ -68,7 +69,8 @@ class LinePlot(BaseMplPlot):
             stream_vis.ax.add_line(line)
         else: #clear current line
             lines[-1].set_data([], [])
-
+        if stream_vis.fill_between_col is not None:
+            stream_vis.fill_between_col.remove()
         # remove annotations
         for label_info in stream_vis.xylabel_refs:
             label_info.set_visible(False)
@@ -83,38 +85,34 @@ class LinePlot(BaseMplPlot):
         line = stream_vis.ax.get_lines()[-1]
         xdata, ydata = line.get_data()
         zdata, anndata, txtdata, clrdata = [], [], [], []
+        lows, highs = [], [] # confidence interval
 
-        unpacker = lambda a0=None,a1=None,a2=None,a3=None,a4=None,a5=None, *_:(a0,a1,a2,a3,a4,a5)
+        unpacker = lambda a0=None,a1=None,a2=None,a3=None,a4=None,a5=None,a6=None,a7=None,*_:\
+            (a0,a1,a2,a3,a4,a5,a6,a7)
 
         # add each value in trace data
         # each value is of the form:
         # 2D graphs:
         #   y
-        #   x [, y [, annotation [, text [, color]]]]
+        #   x [, y [,low, [, high [,annotation [, text [, color]]]]]]
         #   y
-        #   x [, y [, z, [annotation [, text [, color]]]]]
+        #   x [, y [, z, [,low, [, high [annotation [, text [, color]]]]]
         for val in vals:
             # set defaults
             x, y, z =  len(xdata), None, None
+            low, high = None, None
             ann, txt, clr = None, None, None
 
             # if val turns out to be array-like, extract x,y
             val_l = utils.is_scaler_array(val)
             if val_l >= 0:
                 if self.is_3d:
-                    x, y, z, ann, txt, clr = unpacker(*val)
+                    x, y, z, low, high, ann, txt, clr = unpacker(*val)
                 else:
-                    x, y, ann, txt, clr, _ = unpacker(*val)
-            elif isinstance(val, EventData):
-                x = val.x if hasattr(val, 'x') else x
-                y = val.y if hasattr(val, 'y') else y
-                z = val.z if hasattr(val, 'z') else z
-                ann = val.ann if hasattr(val, 'ann') else ann
-                txt = val.txt if hasattr(val, 'txt') else txt
-                clr = val.clr if hasattr(val, 'clr') else clr
-
-                if y is None:
-                    y = next(iter(val.__dict__.values()))
+                    x, y, low, high, ann, txt, clr, _ = unpacker(*val)
+            elif isinstance(val, PointData):
+                x, y, z, low, high, ann, txt, clr = val.x, val.y, val.z, \
+                    val.low, val.high, val.annotation, val.text, val.color
             else:
                 y = val
 
@@ -126,6 +124,10 @@ class LinePlot(BaseMplPlot):
             xdata.append(x)
             ydata.append(y)
             zdata.append(z)
+            if low is not None:
+                lows.append(low)
+            if high is not None:
+                highs.append(high)
             if (txt):
                 txtdata.append(txt)
             if clr:
@@ -134,6 +136,10 @@ class LinePlot(BaseMplPlot):
                 anndata.append(dict(x=x, y=y, xref='x', yref='y', text=ann, showarrow=False))
 
         line.set_data(xdata, ydata)
+        if stream_vis.fill_between_col is not None:
+            stream_vis.fill_between_col.remove()
+        if len(lows) > 0 and len(highs) > 0:
+            stream_vis.ax.fill_between(xdata, highs, lows, color=stream_vis.color, alpha=0.2)
         for ann in anndata:
             stream_vis.xylabel_refs.append(stream_vis.ax.text( \
                 ann['x'], ann['y'], ann['text']))

@@ -6,7 +6,7 @@ import numpy as np
 import random
 import heapq
 from . import utils
-from .lv_types import ImagePlotItem
+from .lv_types import ImageData, PointData
 from collections import OrderedDict
 from itertools import groupby, islice
 import operator
@@ -159,7 +159,7 @@ def reduce_params(model, param_reducer:callable, include_weights=True, include_b
         if param_group.requires_grad:
             is_bias = 'bias' in param_group_name
             if (include_weights and not is_bias) or (include_bias and is_bias):
-                yield i, param_reducer(param_group), param_group_name
+                yield PointData(x=i, y=param_reducer(param_group), annotation=param_group_name)
 
 
 def image_class_outf(label, metric, item): 
@@ -177,13 +177,13 @@ def image_class_outf(label, metric, item):
         title += ',Prob:{:.2f},Pred:{:.2f}'.format(math.exp(net_output_p), net_output_i)
 
     # return image, text
-    return ImagePlotItem((net_input,), title=title)
+    return ImageData((net_input,), title=title)
 
 
 def image_image_outf(label, metric, item): 
     """item is assumed to be (Image1, Image2, ....)
     """
-    return ImagePlotItem(tuple(tensor_utils.tensor2np(i) for i in item), 
+    return ImageData(tuple(tensor_utils.tensor2np(i) for i in item), 
                          title="loss:{:.2f}".format(metric))
 
 
