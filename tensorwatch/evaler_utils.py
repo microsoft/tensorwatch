@@ -1,8 +1,8 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-import torch
 import math
+import numpy as np
 import random
 import heapq
 from . import utils
@@ -12,6 +12,7 @@ from itertools import groupby, islice
 import operator
 from typing import Callable, List, Iterable, Any, Sized, Tuple
 from . import utils
+from . import tensor_utils
 
 def skip_k(l:Iterable[Any], k:int)->Iterable[Any]:
     """For given iterable, return only k-th items, strating from 0
@@ -79,20 +80,20 @@ def topk(labels:Sized, metric:Sized=None, items:Sized=None, k:int=1,
             labels = [0] * len(metric)
         else:
             raise ValueError('Both labels and metric parameters cannot be None')
-    # if target is one dimentional tensor then extract values from it
-    if len(labels) > 0 and utils.has_method(labels[0], 'item') and len(labels[0].shape)==0:
-        labels = [label.item() for label in labels]
+    # if target is one dimensional tensor then extract values from it
+    labels = tensor_utils.to_scaler_list(labels)
 
     # if metric column in not supplied assume some constant for each row
     if metric is None or len(metric)==0:
         metric = [0] * len(labels)
-    elif utils.has_method(metric[0], 'mean'): # if each loss is per class Pytorch torch.Tensor
-        metric = [i.mean() for i in metric]
-
+    else: # if each loss is per row is tensor we take mean
+        metric = tensor_utils.to_mean_list(metric)
 
     # if items is not supplied then create list of same size as labels
     if items is None or len(items)==0:
         items = [None] * len(labels)
+    else:
+        items = [tensor_utils.to_np_list(item) for item in items]
 
     # convert columns to rows
     batch = list((*i[:2], i[2:]) for i in zip(labels, metric, *items))
@@ -164,20 +165,26 @@ def reduce_params(model, param_reducer:callable, include_weights=True, include_b
 def image_class_outf(label, metric, item): 
     """item is assumed to be (input_image, logits, ....)
     """
-    net_input = item[0].data.cpu().numpy()
-    # turn log-probabilities in to (max log-probability, class ID)
-    net_output = torch.max(item[1],0)
+
+    net_input = tensor_utils.tensor2np(item[0]) if len(item) > 0 else None
+
+    title = 'Label:{},Loss:{:.2f}'.format(label, metric)
+    if len(item) > 1:
+        # turn log-probabilities in to (max log-probability, class ID)
+        net_output = tensor_utils.tensor2np(item[1]) 
+        net_output_i = np.argmax(net_output)
+        net_output_p = net_output[net_output_i]
+        title += ',Prob:{:.2f},Pred:{:.2f}'.format(math.exp(net_output_p), net_output_i)
+
     # return image, text
-    return ImagePlotItem((net_input,), title="Label:{},Prob:{:.2f},Pred:{:.2f},Loss:{:.2f}".\
-        format(label, math.exp(net_output[0].item()), net_output[1].item(), metric))
+    return ImagePlotItem((net_input,), title=title)
 
 
 def image_image_outf(label, metric, item): 
     """item is assumed to be (Image1, Image2, ....)
     """
-    return ImagePlotItem(tuple(i.data.cpu().numpy() if isinstance(i, torch.Tensor) else i for i in item), 
+    return ImagePlotItem(tuple(tensor_utils.tensor2np(i) for i in item), 
                          title="loss:{:.2f}".format(metric))
-
 
 
 def grads_abs_mean(model):

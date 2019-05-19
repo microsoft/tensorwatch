@@ -29,6 +29,9 @@
     <Compile Include="tensorwatch\filtered_stream.py" />
     <Compile Include="tensorwatch\stream.py" />
     <Compile Include="tensorwatch\stream_factory.py" />
+    <Compile Include="tensorwatch\tensor_utils.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tensorwatch\visualizer.py">
       <SubType>Code</SubType>
     </Compile>
