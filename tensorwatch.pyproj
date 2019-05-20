@@ -20,6 +20,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="tensorwatch\embeddings\__init__.py" />
+    <Compile Include="tensorwatch\mpl\bar_plot.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tensorwatch\mpl\histogram.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tensorwatch\stream_union.py">
       <SubType>Code</SubType>
     </Compile>

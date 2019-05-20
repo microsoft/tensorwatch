@@ -78,9 +78,12 @@ class LinePlot(BaseMplPlot):
         stream_vis.xylabel_refs.clear()
 
     def _show_stream_items(self, stream_vis, stream_items):
+        """Paint the given stream_items in to visualizer. If visualizer is dirty then return False else True.
+        """
+
         vals = self._extract_vals(stream_items)
         if not len(vals):
-            return False
+            return True # not dirty
 
         line = stream_vis.ax.get_lines()[-1]
         xdata, ydata = line.get_data()
@@ -147,7 +150,7 @@ class LinePlot(BaseMplPlot):
         stream_vis.ax.relim()
         stream_vis.ax.autoscale_view()
 
-        return True
+        return False # dirty
 
 
 

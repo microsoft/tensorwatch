@@ -19,6 +19,9 @@ class Visualizer:
             only_summary=False, separate_yaxis=True, xtitle=None, ytitle=None, ztitle=None, color=None,
             xrange=None, yrange=None, zrange=None, draw_line=True, draw_marker=False,
 
+            # histogram
+            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2,
+
             vis_args={}, stream_vis_args={})->None:
 
         cell = cell._host_base.cell if cell is not None else None
@@ -39,6 +42,7 @@ class Visualizer:
             draw_marker=draw_marker, 
             rows=rows, cols=cols, img_width=img_width, img_height=img_height, img_channels=img_channels,
             colormap=colormap, viz_img_scale=viz_img_scale,
+            bins=bins, normed=normed, histtype=histtype, edge_color=edge_color, linewidth=linewidth,
             **stream_vis_args)
 
         stream.load()
@@ -50,6 +54,15 @@ class Visualizer:
         if vis_type is None:
             from .text_vis import TextVis
             return TextVis(cell=cell, title=title, **vis_args)
+        if vis_type in ['line', 'mpl-line', 'mpl-scatter']:
+            from . import mpl
+            return mpl.LinePlot(cell=cell, title=title, **vis_args)
+        if vis_type in ['image', 'mpl-image']:
+            from . import mpl
+            return mpl.ImagePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
+        if vis_type in ['histogram']:
+            from . import mpl
+            return mpl.Histogram(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['text', 'summary']:
             from .text_vis import TextVis
             return TextVis(cell=cell, title=title, **vis_args)
@@ -58,12 +71,6 @@ class Visualizer:
             from . import plotly
             return plotly.LinePlot(cell=cell, title=title, 
                                     is_3d=vis_type in ['line3d', 'scatter3d', 'mesh3d'], **vis_args)
-        if vis_type in ['image', 'mpl-image']:
-            from . import mpl
-            return mpl.ImagePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
-        if vis_type in ['line', 'mpl-line', 'mpl-scatter']:
-            from . import mpl
-            return mpl.LinePlot(cell=cell, title=title, **vis_args)
         if vis_type in ['tsne', 'embeddings', 'tsne2d', 'embeddings2d']:
             from . import plotly
             return plotly.EmbeddingsPlot(cell=cell, title=title, is_3d='2d' not in vis_type, 

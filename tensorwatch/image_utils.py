@@ -115,10 +115,12 @@ def linear_to_2d(img, size=None):
 def stack_images(imgs):
     return np.hstack(imgs)
 
-def plt_loop(sleep_time=1, plt_pause=0.01):
-    plt.ion()
-    plt.show(block=False)
-    while(not plt.waitforbuttonpress(plt_pause)):
+def plt_loop(count=None, sleep_time=1, plt_pause=0.01):
+    #plt.ion()
+    #plt.show(block=False)
+    while((count is None or count > 0) and not plt.waitforbuttonpress(plt_pause)):
         #plt.draw()
         plt.pause(plt_pause)
         time.sleep(sleep_time)
+        if count is not None:
+            count = count - 1

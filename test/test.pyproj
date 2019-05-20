@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>simple_log\confidence_interval.py</StartupFile>
+    <StartupFile>simple_log\histogram.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -61,10 +61,13 @@
     <Compile Include="simple_log\cli_sum_log_2.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\confidence_interval.py">
+    <Compile Include="simple_log\confidence_int.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\file_only_test.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\histogram.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\srv_sum_log_2.py" />

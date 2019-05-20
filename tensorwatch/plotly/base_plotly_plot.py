@@ -98,7 +98,9 @@ class BasePlotlyPlot(VisBase):
         pass
     @abstractmethod
     def _show_stream_items(self, stream_vis, stream_items):
-        """(for derived class) Plot the data in given axes"""
+        """Paint the given stream_items in to visualizer. If visualizer is dirty then return False else True.
+        """
+
         pass
     @abstractmethod
     def _setup_layout(self, stream_vis):

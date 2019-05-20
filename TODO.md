@@ -29,3 +29,4 @@
 * TF support
 * generic visualizer -> Given obj and Box, paint in box
 * visualize image and text with attention
+* add confidence interval for plotly: https://plot.ly/python/continuous-error-bars/

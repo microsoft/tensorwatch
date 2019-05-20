@@ -29,6 +29,9 @@ class ImagePlot(BaseMplPlot):
                     img.set_data(np.zeros((x, y)))
 
     def _show_stream_items(self, stream_vis, stream_items):
+        """Paint the given stream_items in to visualizer. If visualizer is dirty then return False else True.
+        """
+
         # as we repaint each image plot, select last if multiple events were pending
         stream_item = None
         for er in reversed(stream_items):
@@ -36,7 +39,7 @@ class ImagePlot(BaseMplPlot):
                 stream_item = er
                 break
         if stream_item is None:
-            return False
+            return True
 
         row, col, i = 0, 0, 0
         dirty = False
@@ -86,7 +89,7 @@ class ImagePlot(BaseMplPlot):
                     break
             i += 1
 
-        return dirty
+        return not dirty
 
     
     def has_legend(self):

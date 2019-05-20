@@ -139,7 +139,9 @@ class VisBase(Stream, metaclass=ABCMeta):
         pass
     @abstractmethod
     def _show_stream_items(self, stream_vis, stream_items):
-        """(for derived class) Plot the data in given axes"""
+        """Paint the given stream_items in to visualizer. If visualizer is dirty then return False else True.
+        """
+
         pass
     @abstractmethod
     def _post_add_subscription(self, stream_vis, **stream_vis_args):
@@ -163,7 +165,7 @@ class VisBase(Stream, metaclass=ABCMeta):
                     self.clear_plot(stream_vis, clear_history)
 
                 # if we have something to render
-                dirty = self._show_stream_items(stream_vis, stream_items)
+                dirty = not self._show_stream_items(stream_vis, stream_items)
                 if dirty:
                     self._post_update_stream_plot(stream_vis)
                     stream_vis.last_update = time.time()

@@ -49,6 +49,9 @@ class TextVis(VisBase):
         self.df = self.df.iloc[0:0]
 
     def _show_stream_items(self, stream_vis, stream_items):
+        """Paint the given stream_items in to visualizer. If visualizer is dirty then return False else True.
+        """
+
         for stream_item in stream_items:
             if stream_item.ended:
                 self.df = self.df.append(pd.Series({'Ended':True}), 
@@ -56,7 +59,7 @@ class TextVis(VisBase):
             else:
                 vals = self._extract_vals((stream_item,))
                 self._append(stream_vis, vals)
-        return True
+        return False # dirty
 
     def _post_update_stream_plot(self, stream_vis):
         if get_ipython():

@@ -86,9 +86,12 @@ class LinePlot(BasePlotlyPlot):
             return self._create_2d_trace(stream_vis, mode, hoverinfo, marker, line)  
 
     def _show_stream_items(self, stream_vis, stream_items):
+        """Paint the given stream_items in to visualizer. If visualizer is dirty then return False else True.
+        """
+
         vals = self._extract_vals(stream_items)
         if not len(vals):
-            return False
+            return True
 
         # get trace data
         trace = self.widget.data[stream_vis.trace_index]
@@ -170,7 +173,7 @@ class LinePlot(BasePlotlyPlot):
             exisitng += clrdata
             self.widget.data[stream_vis.trace_index].marker.color = exisitng
 
-        return True
+        return False # dirty
 
     def clear_plot(self, stream_vis, clear_history):
         traces = range(len(stream_vis.trace_history)) if clear_history else (stream_vis.trace_index,)

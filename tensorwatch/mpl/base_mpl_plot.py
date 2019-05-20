@@ -57,7 +57,7 @@ class BaseMplPlot(VisBase):
         if not self._ax_main:
             # by default assign one subplot to whole graph
             self._ax_main = self.figure.add_subplot(111)
-            self._ax_main.grid(True)
+            self._ax_main.grid(self.is_show_grid())
             # change the color of the top and right spines to opaque gray
             self._ax_main.spines['right'].set_color((.8,.8,.8))
             self._ax_main.spines['top'].set_color((.8,.8,.8))
@@ -65,6 +65,10 @@ class BaseMplPlot(VisBase):
                 title = self._ax_main.set_title(self.title)
                 title.set_weight('bold')
         return self._ax_main
+
+    # overridable
+    def is_show_grid(self):
+        return True
 
     def _on_update(self, frame): # pylint: disable=unused-argument
         try:
