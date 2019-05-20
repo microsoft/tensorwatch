@@ -20,7 +20,7 @@ class Visualizer:
             xrange=None, yrange=None, zrange=None, draw_line=True, draw_marker=False,
 
             # histogram
-            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2,
+            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2, bar_width=None,
 
             vis_args={}, stream_vis_args={})->None:
 
@@ -43,6 +43,7 @@ class Visualizer:
             rows=rows, cols=cols, img_width=img_width, img_height=img_height, img_channels=img_channels,
             colormap=colormap, viz_img_scale=viz_img_scale,
             bins=bins, normed=normed, histtype=histtype, edge_color=edge_color, linewidth=linewidth,
+            bar_width = bar_width,
             **stream_vis_args)
 
         stream.load()
@@ -54,26 +55,32 @@ class Visualizer:
         if vis_type is None:
             from .text_vis import TextVis
             return TextVis(cell=cell, title=title, **vis_args)
-        if vis_type in ['line', 'mpl-line', 'mpl-scatter']:
+        if vis_type in ['line', 'line3d', 'scatter', 'scatter3d', 
+                        'mpl-line', 'mpl-line3d', 'mpl-scatter3d', 'mpl-scatter']:
             from . import mpl
-            return mpl.LinePlot(cell=cell, title=title, **vis_args)
+            return mpl.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+                                is_3d=vis_type.endswith('3d'), **vis_args)
         if vis_type in ['image', 'mpl-image']:
             from . import mpl
             return mpl.ImagePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
+        if vis_type in ['bar', 'bar3d']:
+            from . import mpl
+            return mpl.BarPlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+                               is_3d=vis_type.endswith('3d'), **vis_args)
         if vis_type in ['histogram']:
             from . import mpl
             return mpl.Histogram(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['text', 'summary']:
             from .text_vis import TextVis
-            return TextVis(cell=cell, title=title, **vis_args)
-        if vis_type in ['plotly-line', 'scatter', 'plotly-scatter', 
-                            'line3d', 'scatter3d', 'mesh3d']:
+            return TextVis(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
+        if vis_type in ['plotly-line', 'plotly-line3d', 'plotly-scatter', 'plotly-scatter3d', 'mesh3d']:
             from . import plotly
-            return plotly.LinePlot(cell=cell, title=title, 
-                                    is_3d=vis_type in ['line3d', 'scatter3d', 'mesh3d'], **vis_args)
+            return plotly.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+                                   is_3d=vis_type.endswith('3d'), **vis_args)
         if vis_type in ['tsne', 'embeddings', 'tsne2d', 'embeddings2d']:
             from . import plotly
-            return plotly.EmbeddingsPlot(cell=cell, title=title, is_3d='2d' not in vis_type, 
+            return plotly.EmbeddingsPlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+                                         is_3d='2d' not in vis_type, 
                                          hover_images=hover_images, hover_image_reshape=hover_image_reshape, **vis_args)
         else:
             raise ValueError('Render vis_type parameter has invalid value: "{}"'.format(vis_type))

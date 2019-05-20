@@ -9,7 +9,7 @@ from .watcher_base import WatcherBase
 
 from .text_vis import TextVis
 from .plotly import EmbeddingsPlot
-from .mpl import LinePlot, ImagePlot, Histogram
+from .mpl import LinePlot, ImagePlot, Histogram, BarPlot
 from .visualizer import Visualizer
 
 from .stream import Stream

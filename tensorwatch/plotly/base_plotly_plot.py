@@ -13,10 +13,12 @@ from .. import utils
 
 
 class BasePlotlyPlot(VisBase):
-    def __init__(self, cell:widgets.Box=None, title=None, show_legend:bool=None, stream_name:str=None, console_debug:bool=False, **vis_args):
+    def __init__(self, cell:widgets.Box=None, title=None, show_legend:bool=None, is_3d:bool=False, 
+                 stream_name:str=None, console_debug:bool=False, **vis_args):
         super(BasePlotlyPlot, self).__init__(go.FigureWidget(), cell, title, show_legend, 
                                              stream_name=stream_name, console_debug=console_debug, **vis_args)
 
+        self.is_3d = is_3d
         self.widget.layout.title = title
         self.widget.layout.showlegend = show_legend if show_legend is not None else True
       

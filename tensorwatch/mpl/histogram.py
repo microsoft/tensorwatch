@@ -13,13 +13,12 @@ class Histogram(BaseMplPlot):
             xtitle='', ytitle='', color=None, 
             bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2,
             opacity=None, **stream_vis_args):
-        stream_vis.xylabel_refs = [] # annotation references
 
         # add main subplot
         stream_vis.bins, stream_vis.normed, stream_vis.linewidth = bins, normed, linewidth
         stream_vis.ax = self.get_main_axis()
-        stream_vis.data = []
-        stream_vis.hist_bars = [] # stores previously drawn bars
+        stream_vis.series = []
+        stream_vis.bars_artists = [] # stores previously drawn bars
 
         #TODO: improve color selection
         color = color or plt.cm.Dark2((len(self._stream_vises)%8)/8) # pylint: disable=no-member
@@ -37,12 +36,12 @@ class Histogram(BaseMplPlot):
         return False
 
     def clear_bars(self, stream_vis):
-        for bar in stream_vis.hist_bars:
+        for bar in stream_vis.bars_artists:
             bar.remove()
-        stream_vis.hist_bars.clear()
+        stream_vis.bars_artists.clear()
 
     def clear_plot(self, stream_vis, clear_history):
-        stream_vis.data.clear()
+        stream_vis.series.clear()
         self.clear_bars(stream_vis)
 
     def _show_stream_items(self, stream_vis, stream_items):
@@ -53,9 +52,9 @@ class Histogram(BaseMplPlot):
         if not len(vals):
             return True
 
-        stream_vis.data += vals
+        stream_vis.series += vals
         self.clear_bars(stream_vis)
-        n, bins, stream_vis.hist_bars = stream_vis.ax.hist(stream_vis.data, bins=stream_vis.bins,
+        n, bins, stream_vis.bars_artists = stream_vis.ax.hist(stream_vis.series, bins=stream_vis.bins,
                            normed=stream_vis.normed, color=stream_vis.color, edgecolor=stream_vis.edge_color, 
                            histtype=stream_vis.histtype, alpha=stream_vis.opacity, 
                            linewidth=stream_vis.linewidth)
@@ -66,8 +65,3 @@ class Histogram(BaseMplPlot):
         #stream_vis.ax.autoscale_view()
 
         return False
-
-
-
-   
-

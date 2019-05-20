@@ -8,6 +8,7 @@
 #import matplotlib
 #if os.name == 'posix' and "DISPLAY" not in os.environ:
 #    matplotlib.use('Agg') # Must be before importing matplotlib.pyplot or pylab!
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 #from ipywidgets.widgets.interaction import show_inline_matplotlib_plots
@@ -22,11 +23,14 @@ from IPython import get_ipython #, display
 import ipywidgets as widgets
 
 class BaseMplPlot(VisBase):
-    def __init__(self, cell:widgets.Box=None, title:str=None, show_legend:bool=None, stream_name:str=None, console_debug:bool=False, **vis_args):
-        super(BaseMplPlot, self).__init__(widgets.Output(), cell, title, show_legend, stream_name=stream_name, console_debug=console_debug, **vis_args)
+    def __init__(self, cell:widgets.Box=None, title:str=None, show_legend:bool=None, is_3d:bool=False,
+                 stream_name:str=None, console_debug:bool=False, **vis_args):
+        super(BaseMplPlot, self).__init__(widgets.Output(), cell, title, show_legend, 
+                stream_name=stream_name, console_debug=console_debug, **vis_args)
 
         self._fig_init_done = False
         self.show_legend = show_legend
+        self.is_3d = is_3d
         # graph objects
         self.figure = None
         self._ax_main = None
@@ -56,7 +60,8 @@ class BaseMplPlot(VisBase):
         # if we don't yet have main axis, create one
         if not self._ax_main:
             # by default assign one subplot to whole graph
-            self._ax_main = self.figure.add_subplot(111)
+            self._ax_main = self.figure.add_subplot(111,
+                projection=None if not self.is_3d else '3d')
             self._ax_main.grid(self.is_show_grid())
             # change the color of the top and right spines to opaque gray
             self._ax_main.spines['right'].set_color((.8,.8,.8))
