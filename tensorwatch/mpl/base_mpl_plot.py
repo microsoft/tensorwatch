@@ -50,6 +50,7 @@ class BaseMplPlot(VisBase):
         self.figure = plt.figure(figsize=(8, 3))
         self.anim_interval = anim_interval
 
+        # default color pallet
         plt.set_cmap('Dark2')
         plt.rcParams['image.cmap']='Dark2'
 

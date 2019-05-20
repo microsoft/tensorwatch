@@ -11,7 +11,7 @@ import ipywidgets as widgets
 
 class LinePlot(BaseMplPlot):
     def init_stream_plot(self, stream_vis, 
-            xtitle='', ytitle='', color=None, xrange=None, yrange=None, **stream_vis_args):
+            xtitle='', ytitle='', ztitle='', colormap=None, color=None, xrange=None, yrange=None, **stream_vis_args):
         stream_vis.xylabel_refs = [] # annotation references
 
         # add main subplot
@@ -20,8 +20,10 @@ class LinePlot(BaseMplPlot):
         else:
             stream_vis.ax = self.get_main_axis().twinx()
 
-        #TODO: improve color selection
-        color = color or plt.cm.Dark2((len(self._stream_vises)%8)/8) # pylint: disable=no-member
+        stream_vis.cmap = plt.cm.get_cmap(name=colormap or 'Dark2')
+        if color is None:
+            if not self.is_3d:
+                stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
 
         # add default line in subplot
         stream_vis.color = color
@@ -37,10 +39,14 @@ class LinePlot(BaseMplPlot):
             stream_vis.ax.spines['right'].set_position(('outward', pos))
 
         stream_vis.ax.set_xlabel(xtitle)
+        stream_vis.ax.xaxis.label.set_style('italic')
         stream_vis.ax.set_ylabel(ytitle)
         stream_vis.ax.yaxis.label.set_color(color)
         stream_vis.ax.yaxis.label.set_style('italic')
-        stream_vis.ax.xaxis.label.set_style('italic')
+        if self.is_3d:
+            stream_vis.ax.set_zlabel(ztitle)
+            stream_vis.ax.zaxis.label.set_style('italic')
+
         if xrange is not None:
             stream_vis.ax.set_xlim(*xrange)
         if yrange is not None:

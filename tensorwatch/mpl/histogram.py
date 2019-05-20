@@ -10,7 +10,7 @@ import ipywidgets as widgets
 
 class Histogram(BaseMplPlot):
     def init_stream_plot(self, stream_vis, 
-            xtitle='', ytitle='', color=None, 
+            xtitle='', ytitle='', ztitle='', colormap=None, color=None, 
             bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2,
             opacity=None, **stream_vis_args):
 
@@ -20,17 +20,22 @@ class Histogram(BaseMplPlot):
         stream_vis.series = []
         stream_vis.bars_artists = [] # stores previously drawn bars
 
-        #TODO: improve color selection
-        color = color or plt.cm.Dark2((len(self._stream_vises)%8)/8) # pylint: disable=no-member
+        stream_vis.cmap = plt.cm.get_cmap(name=colormap or 'Dark2')
+        if color is None:
+            if not self.is_3d:
+                stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
         stream_vis.color = color
         stream_vis.edge_color = 'black'
         stream_vis.histtype = histtype
         stream_vis.opacity = opacity
         stream_vis.ax.set_xlabel(xtitle)
+        stream_vis.ax.xaxis.label.set_style('italic')
         stream_vis.ax.set_ylabel(ytitle)
         stream_vis.ax.yaxis.label.set_color(color)
         stream_vis.ax.yaxis.label.set_style('italic')
-        stream_vis.ax.xaxis.label.set_style('italic')
+        if self.is_3d:
+            stream_vis.ax.set_zlabel(ztitle)
+            stream_vis.ax.zaxis.label.set_style('italic')
 
     def is_show_grid(self): #override
         return False
