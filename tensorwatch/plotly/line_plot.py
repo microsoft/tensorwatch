@@ -86,23 +86,26 @@ class LinePlot(BasePlotlyPlot):
 
         vals = self._extract_vals(stream_items)
         if not len(vals):
-            return True
+            return True # not dirty
 
         # get trace data
         trace = self.widget.data[stream_vis.trace_index]
         xdata, ydata, zdata, anndata, txtdata, clrdata = list(trace.x), list(trace.y), [], [], [], []
+        lows, highs = [], [] # confidence interval
+
         if self.is_3d:
             zdata = list(trace.z)
 
-        unpacker = lambda a0=None,a1=None,a2=None,a3=None,a4=None,a5=None, *_:(a0,a1,a2,a3,a4,a5)
+        unpacker = lambda a0=None,a1=None,a2=None,a3=None,a4=None,a5=None,a6=None,a7=None,*_:\
+            (a0,a1,a2,a3,a4,a5,a6,a7)
 
         # add each value in trace data
         # each value is of the form:
         # 2D graphs:
         #   y
-        #   x [, y [, annotation [, text [, color]]]]
+        #   x [, y [,low, [, high [,annotation [, text [, color]]]]]]
         #   y
-        #   x [, y [, z, [annotation [, text [, color]]]]]
+        #   x [, y [, z, [,low, [, high [annotation [, text [, color]]]]]
         for val in vals:
             # set defaults
             x, y, z =  len(xdata), None, None
@@ -112,19 +115,12 @@ class LinePlot(BasePlotlyPlot):
             val_l = utils.is_scaler_array(val)
             if val_l >= 0:
                 if self.is_3d:
-                    x, y, z, ann, txt, clr = unpacker(*val)
+                    x, y, z, low, high, ann, txt, clr = unpacker(*val)
                 else:
-                    x, y, ann, txt, clr, _ = unpacker(*val)
-            elif isinstance(val, EventData):
-                x = val.x if hasattr(val, 'x') else x
-                y = val.y if hasattr(val, 'y') else y
-                z = val.z if hasattr(val, 'z') else z
-                ann = val.ann if hasattr(val, 'ann') else ann
-                txt = val.txt if hasattr(val, 'txt') else txt
-                clr = val.clr if hasattr(val, 'clr') else clr
-
-                if y is None:
-                    y = next(iter(val.__dict__.values()))
+                    x, y, low, high, ann, txt, clr, _ = unpacker(*val)
+            elif isinstance(val, PointData):
+                x, y, z, low, high, ann, txt, clr = val.x, val.y, val.z, \
+                    val.low, val.high, val.annotation, val.text, val.color
             else:
                 y = val
 
@@ -136,6 +132,10 @@ class LinePlot(BasePlotlyPlot):
             xdata.append(x)
             ydata.append(y)
             zdata.append(z)
+            if low is not None:
+                lows.append(low)
+            if high is not None:
+                highs.append(high)
             if txt is not None:
                 txtdata.append(txt)
             if clr is not None:

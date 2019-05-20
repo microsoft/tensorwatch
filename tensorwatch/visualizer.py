@@ -55,7 +55,7 @@ class Visualizer:
         if vis_type is None:
             from .text_vis import TextVis
             return TextVis(cell=cell, title=title, **vis_args)
-        if vis_type in ['line', 'line3d', 'scatter', 'scatter3d', 
+        if vis_type in ['line', 
                         'mpl-line', 'mpl-line3d', 'mpl-scatter3d', 'mpl-scatter']:
             from . import mpl
             return mpl.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
@@ -73,7 +73,8 @@ class Visualizer:
         if vis_type in ['text', 'summary']:
             from .text_vis import TextVis
             return TextVis(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
-        if vis_type in ['plotly-line', 'plotly-line3d', 'plotly-scatter', 'plotly-scatter3d', 'mesh3d']:
+        if vis_type in ['line3d', 'scatter', 'scatter3d',
+                        'plotly-line', 'plotly-line3d', 'plotly-scatter', 'plotly-scatter3d', 'mesh3d']:
             from . import plotly
             return plotly.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
                                    is_3d=vis_type.endswith('3d'), **vis_args)

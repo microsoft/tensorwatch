@@ -8,6 +8,7 @@ from .. import utils
 import numpy as np
 from ..lv_types import PointData
 import ipywidgets as widgets
+import mpl_toolkits.mplot3d as plt3d
 
 class LinePlot(BaseMplPlot):
     def init_stream_plot(self, stream_vis, 
@@ -15,7 +16,7 @@ class LinePlot(BaseMplPlot):
         stream_vis.xylabel_refs = [] # annotation references
 
         # add main subplot
-        if len(self._stream_vises) == 0:
+        if len(self._stream_vises) <= 1:
             stream_vis.ax = self.get_main_axis()
         else:
             stream_vis.ax = self.get_main_axis().twinx()
@@ -27,8 +28,13 @@ class LinePlot(BaseMplPlot):
 
         # add default line in subplot
         stream_vis.color = color
-        stream_vis.line = matplotlib.lines.Line2D([], [], 
-            label=stream_vis.title or ytitle or str(stream_vis.index), color=color) #, linewidth=3
+        if not self.is_3d:
+            stream_vis.line = matplotlib.lines.Line2D([], [], 
+                label=stream_vis.title or ytitle or str(stream_vis.index), color=color) #, linewidth=3
+        else:
+            stream_vis.line = plt3d.art3d.Line3D([], [], [], 
+                label=stream_vis.title or ytitle or str(stream_vis.index), color=color) #, linewidth=3
+
         if stream_vis.opacity is not None:
             stream_vis.line.set_alpha(stream_vis.opacity)
         stream_vis.ax.add_line(stream_vis.line)
@@ -88,8 +94,13 @@ class LinePlot(BaseMplPlot):
             return True # not dirty
 
         line = stream_vis.ax.get_lines()[-1]
-        xdata, ydata = line.get_data()
-        zdata, anndata, txtdata, clrdata = [], [], [], []
+        if not self.is_3d:
+            xdata, ydata = line.get_data()
+            zdata = []
+        else:
+            xdata, ydata, zdata = line._verts3d # in future use get_data_3d(), these are numpy arrays
+            xdata, ydata, zdata = list(xdata), list(ydata), list(zdata)
+        anndata, txtdata, clrdata = [], [], []
         lows, highs = [], [] # confidence interval
 
         unpacker = lambda a0=None,a1=None,a2=None,a3=None,a4=None,a5=None,a6=None,a7=None,*_:\
@@ -133,14 +144,20 @@ class LinePlot(BaseMplPlot):
                 lows.append(low)
             if high is not None:
                 highs.append(high)
-            if (txt):
+            if txt is not None:
                 txtdata.append(txt)
-            if clr:
+            if clr is not None:
                 clrdata.append(clr)
             if ann: #TODO: yref should be y2 for different y axis
                 anndata.append(dict(x=x, y=y, xref='x', yref='y', text=ann, showarrow=False))
 
-        line.set_data(xdata, ydata)
+        if not self.is_3d:
+            line.set_data(xdata, ydata)
+        else:
+            # in future use set_data_3d
+            line._verts3d = (xdata, ydata, zdata)
+            line.stale = True
+
         if stream_vis.fill_between_col is not None:
             stream_vis.fill_between_col.remove()
         if len(lows) > 0 and len(highs) > 0:

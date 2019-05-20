@@ -28,9 +28,8 @@ def get_tsne_components(data, features_col=0, labels_col=1, whitten=True, n_comp
         comps = tsne_results.tolist()
         labels = data[labels_col]
         for i, item in enumerate(comps):
-            item.append(None) # annotation
-            item.append(str(labels[i])) # text
-            item.append(labels[i]) # color
+            # low, high, annotation, text, color
+            item.extend((None, None, None, str(labels[i]), labels[i]))
         return comps
     return tsne_results
 
