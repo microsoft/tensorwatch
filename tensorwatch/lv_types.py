@@ -63,7 +63,7 @@ class VisArgs:
             xrange=None, yrange=None, zrange=None, draw_line=True, draw_marker=False,
 
             # histogram
-            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2, bar_width=None,
+            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=None, bar_width=None,
 
             vis_args:dict=None, stream_vis_args:dict=None)->None:
 

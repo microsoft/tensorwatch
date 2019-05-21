@@ -13,11 +13,11 @@ import operator
 class BarPlot(BaseMplPlot):
     def init_stream_plot(self, stream_vis, 
             xtitle='', ytitle='', ztitle='', colormap=None, color=None, 
-            edge_color=None, linewidth=2, align=None, bar_width=None,
+            edge_color=None, linewidth=None, align=None, bar_width=None,
             opacity=None, **stream_vis_args):
 
         # add main subplot
-        stream_vis.align, stream_vis.linewidth = align, linewidth
+        stream_vis.align, stream_vis.linewidth = align, (linewidth or 2)
         stream_vis.bar_width = bar_width or 1
         stream_vis.ax = self.get_main_axis()
         stream_vis.series = {}
@@ -42,14 +42,14 @@ class BarPlot(BaseMplPlot):
     def is_show_grid(self): #override
         return False
 
-    def clear_bars(self, stream_vis):
+    def clear_artists(self, stream_vis):
         for bar in stream_vis.bars_artists:
             bar.remove()
         stream_vis.bars_artists.clear()
 
     def clear_plot(self, stream_vis, clear_history):
         stream_vis.series.clear()
-        self.clear_bars(stream_vis)
+        self.clear_artists(stream_vis)
 
     def _val2tuple(val, x)->tuple:
         """Accept scaler val, (y,), (x, y), (label, y), (x, y, label), return (x, y, z, color, label)
@@ -89,7 +89,7 @@ class BarPlot(BaseMplPlot):
                            [t[1] for t in stream_vis.series.values()], \
                            [t[4] for t in stream_vis.series.values()]
 
-            self.clear_bars(stream_vis) # remove previous bars
+            self.clear_artists(stream_vis) # remove previous bars
             bar_container = stream_vis.ax.bar(x, y, 
                                width=stream_vis.bar_width, 
                                tick_label = labels if any(l is not None for l in labels) else None,
@@ -110,10 +110,10 @@ class BarPlot(BaseMplPlot):
                 x, y, labels = [t[0] for t in tg], \
                                [t[1] for t in tg], \
                                [t[4] for t in tg]
-                colors = stream_vis.color or stream_vis.cmap
+                colors = stream_vis.color or stream_vis.cmap.colors
                 color = colors[zi % len(colors)]
 
-                self.clear_bars(stream_vis) # remove previous bars
+                self.clear_artists(stream_vis) # remove previous bars
                 bar_container = stream_vis.ax.bar(x, y, zs=z, zdir='y',
                                    width=stream_vis.bar_width, 
                                    tick_label = labels if any(l is not None for l in labels) else None,

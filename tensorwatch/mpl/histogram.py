@@ -11,11 +11,11 @@ import ipywidgets as widgets
 class Histogram(BaseMplPlot):
     def init_stream_plot(self, stream_vis, 
             xtitle='', ytitle='', ztitle='', colormap=None, color=None, 
-            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2,
+            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=None,
             opacity=None, **stream_vis_args):
 
         # add main subplot
-        stream_vis.bins, stream_vis.normed, stream_vis.linewidth = bins, normed, linewidth
+        stream_vis.bins, stream_vis.normed, stream_vis.linewidth = bins, normed, (linewidth or 2)
         stream_vis.ax = self.get_main_axis()
         stream_vis.series = []
         stream_vis.bars_artists = [] # stores previously drawn bars
@@ -23,7 +23,7 @@ class Histogram(BaseMplPlot):
         stream_vis.cmap = plt.cm.get_cmap(name=colormap or 'Dark2')
         if color is None:
             if not self.is_3d:
-                stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
+                color = stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
         stream_vis.color = color
         stream_vis.edge_color = 'black'
         stream_vis.histtype = histtype
@@ -40,14 +40,14 @@ class Histogram(BaseMplPlot):
     def is_show_grid(self): #override
         return False
 
-    def clear_bars(self, stream_vis):
+    def clear_artists(self, stream_vis):
         for bar in stream_vis.bars_artists:
             bar.remove()
         stream_vis.bars_artists.clear()
 
     def clear_plot(self, stream_vis, clear_history):
         stream_vis.series.clear()
-        self.clear_bars(stream_vis)
+        self.clear_artists(stream_vis)
 
     def _show_stream_items(self, stream_vis, stream_items):
         """Paint the given stream_items in to visualizer. If visualizer is dirty then return False else True.
@@ -58,7 +58,7 @@ class Histogram(BaseMplPlot):
             return True
 
         stream_vis.series += vals
-        self.clear_bars(stream_vis)
+        self.clear_artists(stream_vis)
         n, bins, stream_vis.bars_artists = stream_vis.ax.hist(stream_vis.series, bins=stream_vis.bins,
                            normed=stream_vis.normed, color=stream_vis.color, edgecolor=stream_vis.edge_color, 
                            histtype=stream_vis.histtype, alpha=stream_vis.opacity, 

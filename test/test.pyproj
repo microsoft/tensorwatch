@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>simple_log\notebook_maker.py</StartupFile>
+    <StartupFile>simple_log\pie_chart.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -77,6 +77,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\notebook_maker.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="simple_log\pie_chart.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\srv_sum_log_2.py" />

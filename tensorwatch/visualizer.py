@@ -24,7 +24,10 @@ class Visualizer:
             xrange=None, yrange=None, zrange=None, draw_line=True, draw_marker=False,
 
             # histogram
-            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2, bar_width=None,
+            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=None, bar_width=None,
+
+            # pie chart
+            autopct=None, shadow=None, 
 
             vis_args={}, stream_vis_args={})->None:
 
@@ -46,8 +49,8 @@ class Visualizer:
             draw_marker=draw_marker, 
             rows=rows, cols=cols, img_width=img_width, img_height=img_height, img_channels=img_channels,
             colormap=colormap, viz_img_scale=viz_img_scale,
-            bins=bins, normed=normed, histtype=histtype, edge_color=edge_color, linewidth=linewidth,
-            bar_width = bar_width,
+            bins=bins, normed=normed, histtype=histtype, edge_color=edge_color, linewidth=linewidth, bar_width = bar_width,
+            autopct=autopct, shadow=shadow,
             **stream_vis_args)
 
         stream.load()
@@ -74,6 +77,9 @@ class Visualizer:
         if vis_type in ['histogram']:
             from . import mpl
             return mpl.Histogram(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
+        if vis_type in ['pie']:
+            from . import mpl
+            return mpl.PieChart(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['text', 'summary']:
             from .text_vis import TextVis
             return TextVis(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)

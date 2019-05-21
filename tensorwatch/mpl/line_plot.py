@@ -12,7 +12,7 @@ import mpl_toolkits.mplot3d as plt3d
 
 class LinePlot(BaseMplPlot):
     def init_stream_plot(self, stream_vis, 
-            xtitle='', ytitle='', ztitle='', colormap=None, color=None, xrange=None, yrange=None, **stream_vis_args):
+            xtitle='', ytitle='', ztitle='', colormap=None, color=None, xrange=None, yrange=None, linewidth=None, **stream_vis_args):
         stream_vis.xylabel_refs = [] # annotation references
 
         # add main subplot
@@ -24,16 +24,17 @@ class LinePlot(BaseMplPlot):
         stream_vis.cmap = plt.cm.get_cmap(name=colormap or 'Dark2')
         if color is None:
             if not self.is_3d:
-                stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
+                color = stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
 
         # add default line in subplot
+        stream_vis.linewidth = linewidth or 3
         stream_vis.color = color
         if not self.is_3d:
             stream_vis.line = matplotlib.lines.Line2D([], [], 
-                label=stream_vis.title or ytitle or str(stream_vis.index), color=color) #, linewidth=3
+                label=stream_vis.title or ytitle or str(stream_vis.index), color=color)
         else:
             stream_vis.line = plt3d.art3d.Line3D([], [], [], 
-                label=stream_vis.title or ytitle or str(stream_vis.index), color=color) #, linewidth=3
+                label=stream_vis.title or ytitle or str(stream_vis.index), color=color)
 
         if stream_vis.opacity is not None:
             stream_vis.line.set_alpha(stream_vis.opacity)
@@ -73,7 +74,7 @@ class LinePlot(BaseMplPlot):
                     line.set_alpha(opacity)
                     line.set_linewidth(1)
             # add new line
-            line = matplotlib.lines.Line2D([], [], linewidth=3)
+            line = matplotlib.lines.Line2D([], [], linewidth=stream_vis.linewidth)
             stream_vis.ax.add_line(line)
         else: #clear current line
             lines[-1].set_data([], [])

@@ -26,6 +26,9 @@
     <Compile Include="tensorwatch\mpl\histogram.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tensorwatch\mpl\pie_chart.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tensorwatch\notebook_maker.py">
       <SubType>Code</SubType>
     </Compile>
