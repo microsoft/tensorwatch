@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>simple_log\pie_chart.py</StartupFile>
+    <StartupFile>visualizations\pie_chart.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,17 +24,17 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="components\arr_img_plot.py">
+    <Compile Include="visualizations\arr_img_plot.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="components\circ_ref.py" />
     <Compile Include="dlc\dlc.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="files\file_stream_test.py">
+    <Compile Include="files\file_stream.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\bar_plot.py">
+    <Compile Include="visualizations\bar_plot.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\cli_ij.py">
@@ -49,13 +49,13 @@
     <Compile Include="pre_train\draw_model.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\evaler_test.py">
+    <Compile Include="components\evaler.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\ipython_widget.py">
+    <Compile Include="deps\ipython_widget.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\panda_test.py">
+    <Compile Include="deps\panda.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="post_train\saliency.py">
@@ -64,22 +64,22 @@
     <Compile Include="simple_log\cli_sum_log_2.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\confidence_int.py">
+    <Compile Include="visualizations\confidence_int.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\file_only_test.py">
+    <Compile Include="components\file_only_test.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\histogram.py">
+    <Compile Include="visualizations\histogram.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\line_plot.py">
+    <Compile Include="visualizations\line_plot.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\notebook_maker.py">
+    <Compile Include="components\notebook_maker.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="simple_log\pie_chart.py">
+    <Compile Include="visualizations\pie_chart.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\srv_sum_log_2.py" />
@@ -89,35 +89,35 @@
     <Compile Include="pre_train\tsny.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\mpl_line_test.py">
+    <Compile Include="visualizations\mpl_line.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\plotly_line_test.py">
+    <Compile Include="visualizations\plotly_line.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\watcher_test.py">
+    <Compile Include="components\watcher.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\stream_test.py">
+    <Compile Include="components\stream.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="zmq\zmq_stream_pub_test.py">
+    <Compile Include="zmq\zmq_stream_pub.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="zmq\zmq_watcher_client_test.py">
+    <Compile Include="zmq\zmq_watcher_client.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="zmq\zmq_watcher_server_test.py">
+    <Compile Include="zmq\zmq_watcher_server.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="zmq\zmq_stream_sub_test.py">
+    <Compile Include="zmq\zmq_stream_sub.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\srv_ij.py" />
     <Compile Include="zmq\zmq_srv.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="components\thread_test.py">
+    <Compile Include="deps\thread.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -136,6 +136,8 @@
     <Folder Include="components\" />
     <Folder Include="mnist\" />
     <Folder Include="files\" />
+    <Folder Include="deps\" />
+    <Folder Include="visualizations\" />
     <Folder Include="zmq\" />
     <Folder Include="post_train\" />
     <Folder Include="pre_train\" />
