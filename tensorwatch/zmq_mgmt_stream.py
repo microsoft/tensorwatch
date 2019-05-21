@@ -39,10 +39,10 @@ class ZmqMgmtStream(ZmqStream):
         self._stream_reqs[stream_req.stream_name] = stream_req
 
     # override to send request to server
-    def del_stream(self, stream_name:str) -> None:
-        clisrv_req = ClientServerRequest(CliSrvReqTypes.del_stream, stream_name)
+    def del_stream(self, name:str) -> None:
+        clisrv_req = ClientServerRequest(CliSrvReqTypes.del_stream, name)
         self._clisrv.send_obj(clisrv_req)
-        self._stream_reqs.pop(stream_name, None)
+        self._stream_reqs.pop(name, None)
 
     def _send_create_stream(self, stream_req):
         utils.debug_log("sending create streamreq...")

@@ -59,10 +59,7 @@ class Visualizer:
         return self._host_base.show()
 
     def _get_vis_base(self, vis_type, cell:widgets.Box, title, hover_images=None, hover_image_reshape=None, cell_width=None, cell_height=None, **vis_args)->VisBase:
-        if vis_type is None:
-            from .text_vis import TextVis
-            return TextVis(cell=cell, title=title, **vis_args)
-        if vis_type in ['line', 
+        if vis_type is None or vis_type in ['line', 
                         'mpl-line', 'mpl-line3d', 'mpl-scatter3d', 'mpl-scatter']:
             from . import mpl
             return mpl.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 

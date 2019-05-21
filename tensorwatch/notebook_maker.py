@@ -2,7 +2,7 @@ import nbformat
 from nbformat.v4 import new_code_cell, new_markdown_cell, new_notebook
 from nbformat import v3, v4
 import codecs
-from os import linesep
+from os import linesep, path
 import uuid
 from . import utils
 import re
@@ -11,7 +11,10 @@ from .lv_types import VisArgs
 
 class NotebookMaker:
     def __init__(self, watcher, filename:str=None)->None:
-        self.filename = filename or 'test.ipynb'
+        self.filename = filename or \
+            (path.splitext(watcher.filename)[0] + '.ipynb' if watcher.filename else \
+            'tensorwatch.ipynb')
+
         self.cells = []
         self._default_vis_args = VisArgs()
 

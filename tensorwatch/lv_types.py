@@ -65,6 +65,9 @@ class VisArgs:
             # histogram
             bins=None, normed=None, histtype='bar', edge_color=None, linewidth=None, bar_width=None,
 
+            # pie chart
+            autopct=None, shadow=None, 
+
             vis_args:dict=None, stream_vis_args:dict=None)->None:
 
         self.vis_type, self.host = vis_type, host
@@ -87,6 +90,8 @@ class VisArgs:
         # histogram
         self.bins, self.normed, self.histtype, self.edge_color, self.linewidth, self.bar_width = \
             bins, normed, histtype, edge_color, linewidth, bar_width
+        # pie chart
+        self.autopct, self.shadow = autopct, shadow
 
         self.vis_args, self.stream_vis_args = vis_args, stream_vis_args
 

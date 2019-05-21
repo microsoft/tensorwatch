@@ -61,10 +61,10 @@ class WatcherClient(WatcherBase):
         return devices
 
     # override to send request to server, instead of underlying WatcherBase base class
-    def create_stream(self, stream_name:str=None, devices:Sequence[str]=None, event_name:str='',
+    def create_stream(self, name:str=None, devices:Sequence[str]=None, event_name:str='',
         expr=None, throttle:float=1, vis_args:VisArgs=None)->Stream: # overriden
 
-        stream_req = StreamCreateRequest(stream_name=stream_name, devices=self.devices_or_default(devices),
+        stream_req = StreamCreateRequest(stream_name=name, devices=self.devices_or_default(devices),
             event_name=event_name, expr=expr, throttle=throttle, vis_args=vis_args)
 
         self._zmq_srvmgmt_sub.add_stream_req(stream_req)
@@ -76,11 +76,11 @@ class WatcherClient(WatcherBase):
         return stream
 
     # override to set devices default to tcp
-    def open_stream(self, stream_name:str=None, devices:Sequence[str]=None)->Stream: # overriden
-        return super(WatcherClient, self).open_stream(stream_name=stream_name, devices=devices)
+    def open_stream(self, name:str=None, devices:Sequence[str]=None)->Stream: # overriden
+        return super(WatcherClient, self).open_stream(stream_name=name, devices=devices)
 
 
     # override to send request to server
-    def del_stream(self, stream_name:str) -> None:
-        self._zmq_srvmgmt_sub.del_stream(stream_req)
+    def del_stream(self, name:str) -> None:
+        self._zmq_srvmgmt_sub.del_stream(name)
 

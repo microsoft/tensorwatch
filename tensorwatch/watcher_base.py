@@ -59,7 +59,7 @@ class WatcherBase:
     def devices_or_default(self, devices:Sequence[str])->Sequence[str]:
         return None
 
-    def open_stream(self, stream_name:str=None, devices:Sequence[str]=None)->Stream:
+    def open_stream(self, name:str=None, devices:Sequence[str]=None)->Stream:
         r"""Opens stream from specified devices or returns one by name if
         it was created before.
         """
@@ -74,25 +74,25 @@ class WatcherBase:
                                                        for_write=False)
         # if no devices then open stream by name from cache
         if device_streams is None:
-            if stream_name is None:
-                raise ValueError('Both device and stream_name cannot be None')
+            if name is None:
+                raise ValueError('Both device and name cannot be None')
 
             stream_info = None
             for event_name, stream_infos in self._stream_infos: # per event
-                stream_info = stream_infos.get(stream_name, None)
+                stream_info = stream_infos.get(name, None)
                 if stream_info is not None:
                     break
             if stream_info is None:
-                raise ValueError('Requested stream was not found: ' + stream_name)
+                raise ValueError('Requested stream was not found: ' + name)
             return stream_info.stream
         
         # if we have device, first create stream and then attach device to it
-        stream = Stream(stream_name=stream_name)
+        stream = Stream(stream_name=name)
         for device_stream in device_streams:
             # each device may have multiple streams so let's filter it
             filtered_stream = FilteredStream(source_stream=device_stream, 
-                filter_expr=functools.partial(WatcherBase._filter_stream, stream_name) \
-                                if stream_name is not None else None)
+                filter_expr=functools.partial(WatcherBase._filter_stream, name) \
+                                if name is not None else None)
             stream.subscribe(filtered_stream)
             stream.held_refs.add(filtered_stream) # otherwise filtered stream will be destroyed by gc
         return stream
@@ -103,14 +103,14 @@ class WatcherBase:
         else:
             return (steam_item, True)
 
-    def create_stream(self, stream_name:str=None, devices:Sequence[str]=None, event_name:str='',
+    def create_stream(self, name:str=None, devices:Sequence[str]=None, event_name:str='',
         expr=None, throttle:float=None, vis_args:VisArgs=None)->Stream:
 
         r"""Create stream with or without expression and attach to devices where 
         it will be written to.
         """
         stream_index = self._stream_count
-        stream_name = stream_name or 'Watcher{}-Stream{}'.format(self.index, stream_index)
+        stream_name = name or 'Watcher{}-Stream{}'.format(self.index, stream_index)
         self._stream_count += 1
 
         # we allow few shortcuts, so modify expression if needed
@@ -202,16 +202,16 @@ class WatcherBase:
         stream_item = StreamItem(value=eval_return.result, exception=eval_return.exception, ended=True)
         stream_info.stream.write(stream_item)
 
-    def del_stream(self, stream_name:str) -> None:
-        utils.debug_log("deleting stream", stream_name)
+    def del_stream(self, name:str) -> None:
+        utils.debug_log("deleting stream", name)
         for stream_infos in self._stream_infos.values(): # per event
-            stream_info = stream_infos.get(stream_name, None)
+            stream_info = stream_infos.get(name, None)
             if stream_info:
                 stream_info.disabled = True
                 stream_info.evaler.abort()
                 return True
                 #TODO: to enable delete we need to protect iteration in set_vars
-                #del stream_reqs[stream_info.req.stream_name]
+                #del stream_reqs[stream_info.req.name]
         return False
 
     def make_notebook(self, filename:str=None):
