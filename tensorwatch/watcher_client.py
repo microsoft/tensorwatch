@@ -4,7 +4,7 @@
 from typing import Any, Dict, Sequence, List
 from .zmq_wrapper import ZmqWrapper
 from .lv_types import CliSrvReqTypes, ClientServerRequest, DefaultPorts
-from .lv_types import VisParams, PublisherTopics, ServerMgmtMsg, StreamCreateRequest
+from .lv_types import VisArgs, PublisherTopics, ServerMgmtMsg, StreamCreateRequest
 from .stream import Stream
 from .zmq_mgmt_stream import ZmqMgmtStream
 from . import utils
@@ -62,26 +62,22 @@ class WatcherClient(WatcherBase):
 
     # override to send request to server, instead of underlying WatcherBase base class
     def create_stream(self, stream_name:str=None, devices:Sequence[str]=None, event_name:str='',
-        expr=None, throttle:float=1, vis_params:VisParams=None)->Stream: # overriden
+        expr=None, throttle:float=1, vis_args:VisArgs=None)->Stream: # overriden
 
         stream_req = StreamCreateRequest(stream_name=stream_name, devices=self.devices_or_default(devices),
-            event_name=event_name, expr=expr, throttle=throttle, vis_params=vis_params)
+            event_name=event_name, expr=expr, throttle=throttle, vis_args=vis_args)
 
         self._zmq_srvmgmt_sub.add_stream_req(stream_req)
 
         if stream_req.devices is not None:
-            stream = self.open_stream(stream_name=stream_req.stream_name, 
-                devices=stream_req.devices, event_name=stream_req.event_name)
+            stream = self.open_stream(stream_name=stream_req.stream_name, devices=stream_req.devices)
         else: # we cannot return remote streams that are not backed by a device
             stream = None
         return stream
 
     # override to set devices default to tcp
-    def open_stream(self, stream_name:str=None, devices:Sequence[str]=None, 
-                 event_name:str='')->Stream: # overriden
-
-        return super(WatcherClient, self).open_stream(stream_name=stream_name, devices=devices, 
-                 event_name=event_name)
+    def open_stream(self, stream_name:str=None, devices:Sequence[str]=None)->Stream: # overriden
+        return super(WatcherClient, self).open_stream(stream_name=stream_name, devices=devices)
 
 
     # override to send request to server

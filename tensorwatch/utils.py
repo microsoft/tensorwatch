@@ -350,3 +350,13 @@ def is_eof(f):
     if s != b'':    # restore position
         f.seek(-1, os.SEEK_CUR)
     return s == b''
+
+def str2identifier(s):
+
+   # Remove invalid characters
+   s = re.sub('[^0-9a-zA-Z_]', '', s)
+
+   # Remove leading characters until we find a letter or underscore
+   s = re.sub('^[^a-zA-Z_]+', '', s)
+
+   return s

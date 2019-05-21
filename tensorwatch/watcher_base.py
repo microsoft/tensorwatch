@@ -2,15 +2,14 @@
 # Licensed under the MIT license.
 
 from typing import Dict, Any, Sequence
-from .lv_types import EventData, StreamItem, StreamCreateRequest, VisParams
+from .lv_types import EventData, StreamItem, StreamCreateRequest, VisArgs
 from .evaler import Evaler
 from .stream import Stream
 from .stream_factory import StreamFactory
 from .filtered_stream import FilteredStream
-import uuid
-import time
-import functools
+import uuid, time, functools
 from . import utils
+from .notebook_maker import NotebookMaker
 
 
 class WatcherBase:
@@ -21,8 +20,12 @@ class WatcherBase:
             """
             self.req, self.evaler, self.stream = req, evaler, stream
             self.index, self.disabled, self.last_sent = index, disabled, last_sent
-
+    
+    _watcher_count = 0
+    
     def __init__(self) -> None:
+        self.index = WatcherBase._watcher_count
+        WatcherBase._watcher_count += 1
         self.closed = None
         self._reset()
 
@@ -56,8 +59,7 @@ class WatcherBase:
     def devices_or_default(self, devices:Sequence[str])->Sequence[str]:
         return None
 
-    def open_stream(self, stream_name:str=None, devices:Sequence[str]=None, 
-                 event_name:str='')->Stream:
+    def open_stream(self, stream_name:str=None, devices:Sequence[str]=None)->Stream:
         r"""Opens stream from specified devices or returns one by name if
         it was created before.
         """
@@ -75,12 +77,11 @@ class WatcherBase:
             if stream_name is None:
                 raise ValueError('Both device and stream_name cannot be None')
 
-            # first search by event
-            stream_infos = self._stream_infos.get(event_name, None)
-            if stream_infos is None:
-                raise ValueError('Requested event was not found: ' + event_name)
-            # then search by stream name
-            stream_info = stream_infos.get(stream_name, None)
+            stream_info = None
+            for event_name, stream_infos in self._stream_infos: # per event
+                stream_info = stream_infos.get(stream_name, None)
+                if stream_info is not None:
+                    break
             if stream_info is None:
                 raise ValueError('Requested stream was not found: ' + stream_name)
             return stream_info.stream
@@ -103,13 +104,14 @@ class WatcherBase:
             return (steam_item, True)
 
     def create_stream(self, stream_name:str=None, devices:Sequence[str]=None, event_name:str='',
-        expr=None, throttle:float=None, vis_params:VisParams=None)->Stream:
+        expr=None, throttle:float=None, vis_args:VisArgs=None)->Stream:
 
         r"""Create stream with or without expression and attach to devices where 
         it will be written to.
         """
-
-        stream_name = stream_name or str(uuid.uuid4())
+        stream_index = self._stream_count
+        stream_name = stream_name or 'Watcher{}-Stream{}'.format(self.index, stream_index)
+        self._stream_count += 1
 
         # we allow few shortcuts, so modify expression if needed
         expr = expr
@@ -140,10 +142,9 @@ class WatcherBase:
                 for device_stream in device_streams:
                     device_stream.subscribe(stream)
             stream_req = StreamCreateRequest(stream_name=stream_name, devices=devices, event_name=event_name,
-                     expr=expr, throttle=throttle, vis_params=vis_params)
+                     expr=expr, throttle=throttle, vis_args=vis_args)
             stream_info = stream_infos[stream_name] = WatcherBase.StreamInfo(
-                stream_req, evaler, stream, self._stream_count)
-            self._stream_count += 1
+                stream_req, evaler, stream, stream_index)
         else:
             # TODO: throw error?
             utils.debug_log("Stream already exist, not creating again", stream_name)
@@ -212,3 +213,8 @@ class WatcherBase:
                 #TODO: to enable delete we need to protect iteration in set_vars
                 #del stream_reqs[stream_info.req.stream_name]
         return False
+
+    def make_notebook(self, filename:str=None):
+        nb = NotebookMaker(self)
+        nb.add_streams(self._stream_infos)
+        nb.write()

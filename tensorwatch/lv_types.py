@@ -43,43 +43,62 @@ class StreamItem:
 EventEvalFunc = Callable[[EventsVars], StreamItem]
 
 
-class VisParams:
-    def __init__(self, vis_type=None, host_vis=None, 
-            cell=None, title=None, 
-            clear_after_end=False, clear_after_each=False, history_len=1, dim_history=True, opacity=None,
-            images=None, images_reshape=None, width=None, height=None, vis_args=None, stream_vis_args=None)->None:
-        self.vis_type=vis_type
-        self.host_vis=host_vis, 
-        self.cell=cell
-        self.title=title
-        self.clear_after_end=clear_after_end
-        self.clear_after_each=clear_after_each
-        self.history_len=history_len
-        self.dim_history=dim_history
-        self.opacity=opacity
-        self.images=images
-        self.images_reshape=images_reshape
-        self.width=width
-        self.height=height
-        self.vis_args=vis_args or {}
-        self.stream_vis_args=stream_vis_args or {}
+class VisArgs:
+    """Provides container for visualizer parameters
 
-class StreamOpenRequest:
-    def __init__(self, stream_name:str, devices:Sequence[str]=None, 
-                 event_name:str='')->None:
-        self.stream_name = stream_name or str(uuid.uuid4())
-        self.devices = devices
-        self.event_name = event_name
+       These are same parameters as Visualizer constructor.
+       NOTE: If you modify arguments here then also sync Visualizer contructor.
+    """
+    def __init__(self, vis_type:str=None, host:'Visualizer'=None, 
+            cell:'Visualizer'=None, title:str=None, 
+            clear_after_end=False, clear_after_each=False, history_len=1, dim_history=True, opacity=None,
+
+            rows=2, cols=5, img_width=None, img_height=None, img_channels=None,
+            colormap=None, viz_img_scale=None,
+
+            # these image params are for hover on point for t-sne
+            hover_images=None, hover_image_reshape=None, cell_width:str=None, cell_height:str=None, 
+
+            only_summary=False, separate_yaxis=True, xtitle=None, ytitle=None, ztitle=None, color=None,
+            xrange=None, yrange=None, zrange=None, draw_line=True, draw_marker=False,
+
+            # histogram
+            bins=None, normed=None, histtype='bar', edge_color=None, linewidth=2, bar_width=None,
+
+            vis_args:dict=None, stream_vis_args:dict=None)->None:
+
+        self.vis_type, self.host = vis_type, host
+        self.cell, self.title = cell, title
+        self.clear_after_end, self.clear_after_each, self.history_len, self.dim_history, self.opacity = \
+            clear_after_end, clear_after_each, history_len, dim_history, opacity
+        self.rows, self.cols, self.img_width, self.img_height, self.img_channels = \
+            rows, cols, img_width, img_height, img_channels
+        self.colormap, self.viz_img_scale = colormap, viz_img_scale
+
+        # these image params are for hover on point for t-sne
+        self.hover_images, self.hover_image_reshape, self.cell_width, self.cell_height = \
+            hover_images, hover_image_reshape, cell_width, cell_height
+
+        self.only_summary, self.separate_yaxis, self.xtitle, self.ytitle, self.ztitle, self.color = \
+            only_summary, separate_yaxis, xtitle, ytitle, ztitle, color
+        self.xrange, self.yrange, self.zrange, self.draw_line, self.draw_marker = \
+            xrange, yrange, zrange, draw_line, draw_marker
+
+        # histogram
+        self.bins, self.normed, self.histtype, self.edge_color, self.linewidth, self.bar_width = \
+            bins, normed, histtype, edge_color, linewidth, bar_width
+
+        self.vis_args, self.stream_vis_args = vis_args, stream_vis_args
 
 
 class StreamCreateRequest:
     def __init__(self, stream_name:str, devices:Sequence[str]=None, event_name:str='',
-                 expr:str=None, throttle:float=None, vis_params:VisParams=None):
+                 expr:str=None, throttle:float=None, vis_args:VisArgs=None):
         self.event_name = event_name
         self.expr = expr
         self.stream_name = stream_name or str(uuid.uuid4())
         self.devices = devices
-        self.vis_params = vis_params
+        self.vis_args = vis_args
 
         # max throughput n Lenovo P50 laptop for MNIST
         # text console -> 0.1s

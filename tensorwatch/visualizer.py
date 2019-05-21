@@ -6,6 +6,10 @@ from .vis_base import VisBase
 import ipywidgets as widgets
 
 class Visualizer:
+    """Constructs visualizer for specified vis_type.
+
+       NOTE: If you modify arguments here then also sync VisArgs contructor.
+    """
     def __init__(self, stream:Stream, vis_type:str=None, host:'Visualizer'=None, 
             cell:'Visualizer'=None, title:str=None, 
             clear_after_end=False, clear_after_each=False, history_len=1, dim_history=True, opacity=None,
