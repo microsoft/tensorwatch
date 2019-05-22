@@ -84,7 +84,7 @@ We have a goal to provide various tools for explaining predictions over time to 
 
 ## Tutorials
 
-- [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/lazy_logging.md)
+- [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/simple_logging.md)
 
 - [Lazy Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/lazy_logging.md)
 
