@@ -64,7 +64,7 @@ class NotebookMaker:
         lines = []
 
         stream_identifier = 's'+str(stream_index)
-        lines.append("{} = client.open_stream(stream_name='{}')".format(stream_identifier, stream_name))
+        lines.append("{} = client.open_stream(name='{}')".format(stream_identifier, stream_name))
 
         vis_identifier = 'v'+str(stream_index)
         vis_args_strs = ['stream={}'.format(stream_identifier)]

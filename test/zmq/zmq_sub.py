@@ -3,11 +3,15 @@ import time
 from tensorwatch.zmq_wrapper import ZmqWrapper
 from tensorwatch import utils
 
-def on_event(obj):
-    print(obj)
+class A:
+    def on_event(self, obj):
+        print(obj)
+
+a = A()
+
 
 utils.set_debug_verbosity(10)
-sub = ZmqWrapper.Subscription(40859, "Topic1", on_event)
+sub = ZmqWrapper.Subscription(40859, "Topic1", a.on_event)
 print("subscriber is waiting")
 
 clisrv = ZmqWrapper.ClientServer(40860, False)

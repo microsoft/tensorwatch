@@ -52,4 +52,4 @@ def logits2probabilities(logits):
     return F.softmax(logits, dim=1)
 
 def tensor2numpy(t):
-    return t.data().cpu().numpy()
+    return t.data.cpu().numpy()

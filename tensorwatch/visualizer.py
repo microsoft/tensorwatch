@@ -43,7 +43,7 @@ class Visualizer:
 
         self._host_base.subscribe(stream, show=False, clear_after_end=clear_after_end, clear_after_each=clear_after_each,
             history_len=history_len, dim_history=dim_history, opacity=opacity, 
-            only_summary=only_summary if 'summary' != vis_type else True,
+            only_summary=only_summary if vis_type is None or 'summary' != vis_type else True,
             separate_yaxis=separate_yaxis, xtitle=xtitle, ytitle=ytitle, ztitle=ztitle, color=color,
             xrange=xrange, yrange=yrange, zrange=zrange, 
             draw_line=draw_line if vis_type is not None and 'scatter' in vis_type else True, 
@@ -63,7 +63,7 @@ class Visualizer:
         if vis_type is None or vis_type in ['line', 
                         'mpl-line', 'mpl-line3d', 'mpl-scatter3d', 'mpl-scatter']:
             return mpl.line_plot.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
-                                is_3d=vis_type.endswith('3d'), **vis_args)
+                                is_3d=vis_type is not None and vis_type.endswith('3d'), **vis_args)
         if vis_type in ['image', 'mpl-image']:
             return mpl.image_plot.ImagePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['bar', 'bar3d']:

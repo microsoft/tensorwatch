@@ -87,7 +87,7 @@ class Watcher(WatcherBase):
         # request = create stream
         if clisrv_req.req_type == CliSrvReqTypes.create_stream:
             stream_req = clisrv_req.req_data
-            self.create_stream(stream_name=stream_req.stream_name, devices=stream_req.devices, 
+            self.create_stream(name=stream_req.stream_name, devices=stream_req.devices, 
                 event_name=stream_req.event_name, expr=stream_req.expr, throttle=stream_req.throttle, 
                 vis_args=stream_req.vis_args)
             return None # ignore return as we can't send back stream obj

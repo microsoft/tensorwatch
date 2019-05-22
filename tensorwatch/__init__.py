@@ -13,6 +13,7 @@ from .mpl.line_plot import LinePlot
 from .mpl.image_plot import ImagePlot
 from .mpl.histogram import Histogram
 from .mpl.bar_plot import BarPlot
+from .mpl.pie_chart import PieChart
 from .visualizer import Visualizer
 
 from .stream import Stream

@@ -42,7 +42,7 @@ def probabilities2classes(probs, topk=5):
         for p, c in zip(top_probs[0][0].detach().numpy(), top_probs[1][0].detach().numpy()))
 
 class ImagenetLabels:
-    def __init__(self, json_path='../../data/imagenet_class_index.json'):
+    def __init__(self, json_path='imagenet_class_index.json'):
         self._idx2label = []
         self._idx2cls = []
         self._cls2label = {}

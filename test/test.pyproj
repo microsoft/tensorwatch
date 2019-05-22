@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>files\file_stream.py</StartupFile>
+    <StartupFile>mnist\cli_mnist.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,6 +24,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="deps\live_graph.py" />
     <Compile Include="visualizations\arr_img_plot.py">
       <SubType>Code</SubType>
     </Compile>
@@ -70,7 +71,7 @@
     <Compile Include="visualizations\histogram.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="visualizations\line_plot.py">
+    <Compile Include="visualizations\line3d_plot.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="components\notebook_maker.py">
@@ -98,7 +99,7 @@
     <Compile Include="components\stream.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="zmq\zmq_stream_pub.py">
+    <Compile Include="zmq\zmq_stream.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="zmq\zmq_watcher_client.py">
@@ -107,11 +108,11 @@
     <Compile Include="zmq\zmq_watcher_server.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="zmq\zmq_stream_sub.py">
+    <Compile Include="zmq\zmq_sub.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="simple_log\srv_ij.py" />
-    <Compile Include="zmq\zmq_srv.py">
+    <Compile Include="zmq\zmq_pub.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="deps\thread.py">

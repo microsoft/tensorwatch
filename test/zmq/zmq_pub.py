@@ -6,7 +6,7 @@ from tensorwatch import utils
 utils.set_debug_verbosity(10)
 
 def clisrv_callback(clisrv, msg):
-    print(msg)
+    print('from clisrv', msg)
 
 stream = ZmqWrapper.Publication(port = 40859)
 clisrv = ZmqWrapper.ClientServer(40860, True, clisrv_callback)

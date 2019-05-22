@@ -1,6 +1,8 @@
 import tensorwatch as tw
 import random, time
 
+# TODO: resolve problem with Axis3D?
+
 def static_line3d():
     w = tw.Watcher()
     s = w.create_stream()

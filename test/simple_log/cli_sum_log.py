@@ -20,7 +20,7 @@ def show_mpl():
 def show_text():
     cli = tw.WatcherClient()
     s1 = cli.create_stream(expr='lambda v:(v.i, v.sum)')
-    text = tw.Visualizer(s1)
+    text = tw.Visualizer(s1, vis_type='text')
     text.show()
     input('Waiting')
 

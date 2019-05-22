@@ -73,14 +73,14 @@ class WatcherClient(WatcherBase):
         self._zmq_srvmgmt_sub.add_stream_req(stream_req)
 
         if stream_req.devices is not None:
-            stream = self.open_stream(stream_name=stream_req.stream_name, devices=stream_req.devices)
+            stream = self.open_stream(name=stream_req.stream_name, devices=stream_req.devices)
         else: # we cannot return remote streams that are not backed by a device
             stream = None
         return stream
 
     # override to set devices default to tcp
     def open_stream(self, name:str=None, devices:Sequence[str]=None)->Stream: # overriden
-        return super(WatcherClient, self).open_stream(stream_name=name, devices=devices)
+        return super(WatcherClient, self).open_stream(name=name, devices=devices)
 
 
     # override to send request to server
