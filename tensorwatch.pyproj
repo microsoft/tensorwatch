@@ -32,6 +32,7 @@
     <Compile Include="tensorwatch\notebook_maker.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tensorwatch\receptive_field\__init__.py" />
     <Compile Include="tensorwatch\stream_union.py">
       <SubType>Code</SubType>
     </Compile>

@@ -17,7 +17,7 @@ class EmbeddingsPlot(LinePlot):
         import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
         if hover_images is not None:
             plt.ioff()
-            self.image_output = Output()
+            self.image_output = LinePlot.widgets.Output()
             self.image_figure = plt.figure(figsize=(2,2))
             self.image_ax = self.image_figure.add_subplot(111)
             self.cell.children += (self.image_output,)
@@ -54,7 +54,7 @@ class EmbeddingsPlot(LinePlot):
             if img is not None:
                 LinePlot.display.clear_output(wait=True)    
                 self.image_ax.imshow(img)
-            LinePlot.display(self.image_figure)
+            LinePlot.display.display(self.image_figure)
             plt.ion()
 
         return None
