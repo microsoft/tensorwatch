@@ -10,10 +10,12 @@ from .lv_types import StreamVisInfo, StreamItem
 from . import utils
 from .stream import Stream
 
-from IPython import get_ipython, display
-import ipywidgets as widgets
 
 class VisBase(Stream, metaclass=ABCMeta):
+    # these are expensive import so we attach to base class so derived class can use them
+    from IPython import get_ipython, display
+    import ipywidgets as widgets
+
     def __init__(self, widget, cell:widgets.Box, title:str, show_legend:bool, stream_name:str=None, console_debug:bool=False, **vis_args):
         super(VisBase, self).__init__(stream_name=stream_name, console_debug=console_debug)
 
@@ -23,7 +25,7 @@ class VisBase(Stream, metaclass=ABCMeta):
 
         self.widget = widget
 
-        self.cell = cell or widgets.HBox(layout=widgets.Layout(\
+        self.cell = cell or VisBase.widgets.HBox(layout=VisBase.widgets.Layout(\
             width=vis_args['cell_width'])) if self._use_hbox else None
         if self._use_hbox:
             self.cell.children += (self.widget,)
@@ -56,9 +58,9 @@ class VisBase(Stream, metaclass=ABCMeta):
 
     def show(self, blocking:bool=False):
         self.is_shown = True
-        if get_ipython():
+        if VisBase.get_ipython():
             if self._use_hbox:
-                display.display(self.cell) # this method doesn't need returns
+                VisBase.display.display(self.cell) # this method doesn't need returns
                 #return self.cell
             else:
                 return self._show_widget_notebook()

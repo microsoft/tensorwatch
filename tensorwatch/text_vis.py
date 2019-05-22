@@ -3,15 +3,12 @@
 
 from . import utils
 import pandas as pd
-import ipywidgets as widgets
-from IPython import get_ipython #, display
-
 from .vis_base import VisBase
 
 class TextVis(VisBase):
-    def __init__(self, cell:widgets.Box=None, title:str=None, show_legend:bool=None, 
+    def __init__(self, cell:VisBase.widgets.Box=None, title:str=None, show_legend:bool=None, 
                  stream_name:str=None, console_debug:bool=False, **vis_args):
-        super(TextVis, self).__init__(widgets.HTML(), cell, title, show_legend, 
+        super(TextVis, self).__init__(VisBase.widgets.HTML(), cell, title, show_legend, 
             stream_name=stream_name, console_debug=console_debug, **vis_args)
         self.df = pd.DataFrame([])
 
@@ -62,7 +59,7 @@ class TextVis(VisBase):
         return False # dirty
 
     def _post_update_stream_plot(self, stream_vis):
-        if get_ipython():
+        if VisBase.get_ipython():
             if not stream_vis.only_summary:
                 self.widget.value = self.df.to_html(classes=['output_html', 'rendered_html'])
             else:

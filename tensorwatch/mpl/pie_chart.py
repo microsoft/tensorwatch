@@ -5,7 +5,6 @@ from .base_mpl_plot import BaseMplPlot
 from .. import image_utils
 from .. import utils
 import numpy as np
-import ipywidgets as widgets
 
 class PieChart(BaseMplPlot):
     def init_stream_plot(self, stream_vis, autopct=None, colormap=None, color=None, 

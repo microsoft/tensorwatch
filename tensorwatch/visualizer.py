@@ -3,7 +3,6 @@
 
 from .stream import Stream
 from .vis_base import VisBase
-import ipywidgets as widgets
 
 class Visualizer:
     """Constructs visualizer for specified vis_type.
@@ -58,7 +57,7 @@ class Visualizer:
     def show(self):
         return self._host_base.show()
 
-    def _get_vis_base(self, vis_type, cell:widgets.Box, title, hover_images=None, hover_image_reshape=None, cell_width=None, cell_height=None, **vis_args)->VisBase:
+    def _get_vis_base(self, vis_type, cell:VisBase.widgets.Box, title, hover_images=None, hover_image_reshape=None, cell_width=None, cell_height=None, **vis_args)->VisBase:
         if vis_type is None or vis_type in ['line', 
                         'mpl-line', 'mpl-line3d', 'mpl-scatter3d', 'mpl-scatter']:
             from . import mpl

@@ -1,10 +1,6 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-import plotly 
-import plotly.graph_objs as go
-import ipywidgets as widgets
-
 from ..vis_base import VisBase
 
 import time
@@ -13,8 +9,9 @@ from .. import utils
 
 
 class BasePlotlyPlot(VisBase):
-    def __init__(self, cell:widgets.Box=None, title=None, show_legend:bool=None, is_3d:bool=False, 
+    def __init__(self, cell:VisBase.widgets.Box=None, title=None, show_legend:bool=None, is_3d:bool=False, 
                  stream_name:str=None, console_debug:bool=False, **vis_args):
+        import plotly.graph_objs as go # private import as this takes long time
         super(BasePlotlyPlot, self).__init__(go.FigureWidget(), cell, title, show_legend, 
                                              stream_name=stream_name, console_debug=console_debug, **vis_args)
 
@@ -56,6 +53,7 @@ class BasePlotlyPlot(VisBase):
 
     @staticmethod
     def get_pallet_color(i:int):
+        import plotly # private import as this takes long time
         return plotly.colors.DEFAULT_PLOTLY_COLORS[i % len(plotly.colors.DEFAULT_PLOTLY_COLORS)]
 
     @staticmethod

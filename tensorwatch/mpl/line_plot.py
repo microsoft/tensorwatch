@@ -6,7 +6,6 @@ from .. import image_utils
 from .. import utils
 import numpy as np
 from ..lv_types import PointData
-import ipywidgets as widgets
 import mpl_toolkits.mplot3d as plt3d
 
 class LinePlot(BaseMplPlot):

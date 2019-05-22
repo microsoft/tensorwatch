@@ -18,13 +18,12 @@ from ..vis_base import VisBase
 import sys, logging
 from abc import abstractmethod
 from .. import utils
-from IPython import get_ipython #, display
-import ipywidgets as widgets
+
 
 class BaseMplPlot(VisBase):
-    def __init__(self, cell:widgets.Box=None, title:str=None, show_legend:bool=None, is_3d:bool=False,
+    def __init__(self, cell:VisBase.widgets.Box=None, title:str=None, show_legend:bool=None, is_3d:bool=False,
                  stream_name:str=None, console_debug:bool=False, **vis_args):
-        super(BaseMplPlot, self).__init__(widgets.Output(), cell, title, show_legend, 
+        super(BaseMplPlot, self).__init__(VisBase.widgets.Output(), cell, title, show_legend, 
                 stream_name=stream_name, console_debug=console_debug, **vis_args)
 
         self._fig_init_done = False
@@ -115,7 +114,7 @@ class BaseMplPlot(VisBase):
         #self.figure.canvas.draw()
         #self.figure.canvas.flush_events()
 
-        if self._use_hbox and get_ipython():
+        if self._use_hbox and VisBase.get_ipython():
             self.widget.clear_output(wait=True)
             with self.widget:
                 plt.show(self.figure)

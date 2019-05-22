@@ -2,16 +2,13 @@
 # Licensed under the MIT license.
 
 from .. import image_utils
-from ipywidgets import Output #, Layout
-from IPython.display import display, clear_output
 import numpy as np
 from .line_plot import LinePlot
 import time
 from .. import utils
-import ipywidgets as widgets
 
 class EmbeddingsPlot(LinePlot):
-    def __init__(self, cell:widgets.Box=None, title=None, show_legend:bool=False, stream_name:str=None, console_debug:bool=False,
+    def __init__(self, cell:LinePlot.widgets.Box=None, title=None, show_legend:bool=False, stream_name:str=None, console_debug:bool=False,
                   is_3d:bool=True, hover_images=None, hover_image_reshape=None, **vis_args):
         utils.set_default(vis_args, 'height', '8in')
         super(EmbeddingsPlot, self).__init__(cell, title, show_legend, 
@@ -55,9 +52,9 @@ class EmbeddingsPlot(LinePlot):
             else:
                 img = self.hover_images[ind]
             if img is not None:
-                clear_output(wait=True)    
+                LinePlot.display.clear_output(wait=True)    
                 self.image_ax.imshow(img)
-            display(self.image_figure)
+            LinePlot.display(self.image_figure)
             plt.ion()
 
         return None

@@ -5,7 +5,6 @@ import plotly.graph_objs as go
 from .base_plotly_plot import BasePlotlyPlot
 from ..lv_types import EventData
 from .. import utils
-import ipywidgets as widgets
 
 class LinePlot(BasePlotlyPlot):
     def _setup_layout(self, stream_vis):

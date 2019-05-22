@@ -5,7 +5,6 @@ from .base_mpl_plot import BaseMplPlot
 from .. import utils
 from .. import image_utils
 import numpy as np
-import ipywidgets as widgets
 from itertools import groupby
 import operator
 
