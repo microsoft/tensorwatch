@@ -11,6 +11,7 @@ for i in range(10000):
 
     # we are just observing variables
     # observation has no cost, nothing gets logged anywhere
+    # parameter name is your choice
     w.observe(weights=weights)
 
     time.sleep(1)
