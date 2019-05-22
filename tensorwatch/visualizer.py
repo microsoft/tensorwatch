@@ -3,6 +3,8 @@
 
 from .stream import Stream
 from .vis_base import VisBase
+from . import mpl
+from . import plotly
 
 class Visualizer:
     """Constructs visualizer for specified vis_type.
@@ -60,33 +62,26 @@ class Visualizer:
     def _get_vis_base(self, vis_type, cell:VisBase.widgets.Box, title, hover_images=None, hover_image_reshape=None, cell_width=None, cell_height=None, **vis_args)->VisBase:
         if vis_type is None or vis_type in ['line', 
                         'mpl-line', 'mpl-line3d', 'mpl-scatter3d', 'mpl-scatter']:
-            from . import mpl
-            return mpl.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+            return mpl.line_plot.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
                                 is_3d=vis_type.endswith('3d'), **vis_args)
         if vis_type in ['image', 'mpl-image']:
-            from . import mpl
-            return mpl.ImagePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
+            return mpl.image_plot.ImagePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['bar', 'bar3d']:
-            from . import mpl
-            return mpl.BarPlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+            return mpl.bar_plot.BarPlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
                                is_3d=vis_type.endswith('3d'), **vis_args)
         if vis_type in ['histogram']:
-            from . import mpl
-            return mpl.Histogram(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
+            return mpl.histogram.Histogram(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['pie']:
-            from . import mpl
-            return mpl.PieChart(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
+            return mpl.pie_chart.PieChart(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['text', 'summary']:
             from .text_vis import TextVis
             return TextVis(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, **vis_args)
         if vis_type in ['line3d', 'scatter', 'scatter3d',
                         'plotly-line', 'plotly-line3d', 'plotly-scatter', 'plotly-scatter3d', 'mesh3d']:
-            from . import plotly
-            return plotly.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+            return plotly.line_plot.LinePlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
                                    is_3d=vis_type.endswith('3d'), **vis_args)
         if vis_type in ['tsne', 'embeddings', 'tsne2d', 'embeddings2d']:
-            from . import plotly
-            return plotly.EmbeddingsPlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
+            return plotly.embeddings_plot.EmbeddingsPlot(cell=cell, title=title, cell_width=cell_width, cell_height=cell_height, 
                                          is_3d='2d' not in vis_type, 
                                          hover_images=hover_images, hover_image_reshape=hover_image_reshape, **vis_args)
         else:

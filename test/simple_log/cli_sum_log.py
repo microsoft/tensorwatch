@@ -10,7 +10,7 @@ utils.set_debug_verbosity(4)
 
 def show_mpl():
     cli = tw.WatcherClient()
-    p = tw.mpl.LinePlot(title='Demo')
+    p = tw.LinePlot(title='Demo')
     s1 = cli.create_stream(expr='lambda v:(v.i, v.sum)')
     p.subscribe(s1, xtitle='Index', ytitle='sqrt(ev_i)')
     p.show()

@@ -1,8 +1,6 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-from PIL import Image
-from torchvision import transforms
 import numpy as np
 import math
 import time
@@ -23,6 +21,7 @@ def guess_image_dims(img):
 def to_imshow_array(img, width=None, height=None):
     # array from Pytorch has shape: [[channels,] height, width]
     # image needed for imshow needs: [height, width, channels]
+    from PIL import Image
 
     if img is not None:
         if isinstance(img, Image.Image):
@@ -85,7 +84,9 @@ def show_image(img, size=None, alpha=None, cmap=None,
 
 # convert_mode param is mode: https://pillow.readthedocs.io/en/5.1.x/handbook/concepts.html#modes
 # use convert_mode='RGB' to force 3 channels
-def open_image(path, resize=None, resample=Image.ANTIALIAS, convert_mode=None):
+def open_image(path, resize=None, resample=1, convert_mode=None): # Image.ANTIALIAS==1
+    from PIL import Image
+
     img = Image.open(path)
     if resize is not None:
         img = img.resize(resize, resample)
@@ -94,6 +95,8 @@ def open_image(path, resize=None, resample=Image.ANTIALIAS, convert_mode=None):
     return img
 
 def img2pyt(img, add_batch_dim=True, resize=None):
+    from torchvision import transforms # expensive function-level import
+
     ts = []
     if resize is not None:
         ts.append(transforms.RandomResizedCrop(resize))

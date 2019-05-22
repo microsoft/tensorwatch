@@ -11,7 +11,7 @@ utils.set_debug_verbosity(4)
 def show_mpl():
     cli = tw.WatcherClient(r'c:\temp\sum.log')
     s1 = cli.open_stream('sum')
-    p = tw.mpl.LinePlot(title='Demo')
+    p = tw.LinePlot(title='Demo')
     p.subscribe(s1, xtitle='Index', ytitle='sqrt(ev_i)')
     s1.load()
     p.show()

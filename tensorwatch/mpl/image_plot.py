@@ -4,7 +4,7 @@
 from .base_mpl_plot import BaseMplPlot
 from .. import utils, image_utils
 import numpy as np
-import skimage.transform
+
 #from IPython import get_ipython
 
 class ImagePlot(BaseMplPlot):
@@ -52,6 +52,8 @@ class ImagePlot(BaseMplPlot):
 
             # resize if requested
             if stream_vis.viz_img_scale is not None:
+                import skimage.transform # expensive import done on demand
+
                 if isinstance(img_viz, np.ndarray) and np.issubdtype(img_viz.dtype, np.floating):
                     img_viz = img_viz.clip(-1, 1) # some MNIST images have out of range values causing exception in sklearn
                 img_viz = skimage.transform.rescale(img_viz, 

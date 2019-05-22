@@ -1,7 +1,6 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-import plotly.graph_objs as go
 from .base_plotly_plot import BasePlotlyPlot
 from ..lv_types import EventData
 from .. import utils
@@ -39,6 +38,8 @@ class LinePlot(BasePlotlyPlot):
             self.widget.layout.hoverdistance = 1
 
     def _create_2d_trace(self, stream_vis, mode, hoverinfo, marker, line):
+        import plotly.graph_objs as go # function-level import as this takes long time
+
         yaxis = 'y' + (str(stream_vis.index + 1) if stream_vis.separate_yaxis else '')
 
         trace = go.Scatter(x=[], y=[], mode=mode, name=stream_vis.title or stream_vis.ytitle, yaxis=yaxis, hoverinfo=hoverinfo,
@@ -46,6 +47,8 @@ class LinePlot(BasePlotlyPlot):
         return trace
 
     def _create_3d_trace(self, stream_vis, mode, hoverinfo, marker, line):
+        import plotly.graph_objs as go # function-level import as this takes long time
+
         trace = go.Scatter3d(x=[], y=[], z=[], mode=mode, name=stream_vis.title or stream_vis.ytitle, hoverinfo=hoverinfo,
                            line=line, marker=marker)
         return trace

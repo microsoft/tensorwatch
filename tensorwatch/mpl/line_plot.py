@@ -6,7 +6,6 @@ from .. import image_utils
 from .. import utils
 import numpy as np
 from ..lv_types import PointData
-import mpl_toolkits.mplot3d as plt3d
 
 class LinePlot(BaseMplPlot):
     def init_stream_plot(self, stream_vis, 
@@ -14,6 +13,7 @@ class LinePlot(BaseMplPlot):
         stream_vis.xylabel_refs = [] # annotation references
 
         import matplotlib
+        import mpl_toolkits.mplot3d as plt3d
 
 
         # add main subplot

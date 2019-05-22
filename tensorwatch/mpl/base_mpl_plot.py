@@ -8,8 +8,7 @@
 #import matplotlib
 #if os.name == 'posix' and "DISPLAY" not in os.environ:
 #    matplotlib.use('Agg') # Must be before importing matplotlib.pyplot or pylab!
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib.animation import FuncAnimation
+
 #from ipywidgets.widgets.interaction import show_inline_matplotlib_plots
 #from ipykernel.pylab.backend_inline import flush_figures
 
@@ -29,6 +28,9 @@ class BaseMplPlot(VisBase):
         self._fig_init_done = False
         self.show_legend = show_legend
         self.is_3d = is_3d
+        if is_3d:
+            # this is needed for some reason
+            from mpl_toolkits.mplot3d import Axes3D
         # graph objects
         self.figure = None
         self._ax_main = None
@@ -93,6 +95,7 @@ class BaseMplPlot(VisBase):
 
     def show(self, blocking=False):
         if not self.is_shown and self.anim_interval:
+            from matplotlib.animation import FuncAnimation # function-level import as this one is expensive
             self.animation = FuncAnimation(self.figure, self._on_update, interval=self.anim_interval*1000.0)
         super(BaseMplPlot, self).show(blocking)
 

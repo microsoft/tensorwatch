@@ -1,7 +1,7 @@
 from tensorwatch.watcher_base import WatcherBase
 from tensorwatch.stream import Stream
 from tensorwatch.file_stream import FileStream
-from tensorwatch.mpl.line_plot import LinePlot
+from tensorwatch import LinePlot
 from tensorwatch.image_utils import plt_loop
 import tensorwatch as tw
 
