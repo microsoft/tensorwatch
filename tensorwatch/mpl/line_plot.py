@@ -43,8 +43,11 @@ class LinePlot(BaseMplPlot):
         stream_vis.fill_between_col = None
         # if more than 2 y-axis then place additional outside
         if len(self._stream_vises) > 1:
-            pos = (len(self._stream_vises)) * 30
-            stream_vis.ax.spines['right'].set_position(('outward', pos))
+            pos = 1 + (len(self._stream_vises)-2) * 0.1
+            stream_vis.ax.spines['right'].set_position(('axes', pos))
+            self.make_patch_spines_invisible(stream_vis.ax)
+            stream_vis.ax.spines["right"].set_visible(True)
+
 
         stream_vis.ax.set_xlabel(xtitle)
         stream_vis.ax.xaxis.label.set_style('italic')
@@ -59,6 +62,12 @@ class LinePlot(BaseMplPlot):
             stream_vis.ax.set_xlim(*xrange)
         if yrange is not None:
             stream_vis.ax.set_ylim(*yrange)
+
+    def make_patch_spines_invisible(self, ax):
+        ax.set_frame_on(True)
+        ax.patch.set_visible(False)
+        for sp in ax.spines.values():
+            sp.set_visible(False)
 
     def clear_plot(self, stream_vis, clear_history):
         import matplotlib
