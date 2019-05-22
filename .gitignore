@@ -1,5 +1,7 @@
-data/
-!data/log-20180928-175828.dlclog
+data/*
+!data/test_images/
+!data/imagenet_meta/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

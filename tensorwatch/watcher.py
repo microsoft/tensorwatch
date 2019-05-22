@@ -48,9 +48,12 @@ class Watcher(WatcherBase):
 
     def devices_or_default(self, devices:Sequence[str])->Sequence[str]: # overriden
         # TODO: this method is duplicated in Watcher and WatcherClient
+
+        # make sure TCP port is attached to tcp device
         if devices is not None:
             return ['tcp:' + str(self.port) if device=='tcp' else device for device in devices]
 
+        # if no devices specified then use our filename and tcp:port as default devices
         devices = []
         # first open file device because it may have older data 
         if self.filename is not None:

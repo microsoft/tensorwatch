@@ -57,7 +57,7 @@ class WatcherBase:
         self.close()
 
     def devices_or_default(self, devices:Sequence[str])->Sequence[str]:
-        return None
+        return devices # no default devices, derived classes should override this
 
     def open_stream(self, name:str=None, devices:Sequence[str]=None)->Stream:
         r"""Opens stream from specified devices or returns one by name if

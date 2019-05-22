@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>components\evaler.py</StartupFile>
+    <StartupFile>files\file_stream.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -28,9 +28,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="components\circ_ref.py" />
-    <Compile Include="dlc\dlc.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="files\file_stream.py">
       <SubType>Code</SubType>
     </Compile>
@@ -132,7 +129,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="dlc\" />
     <Folder Include="components\" />
     <Folder Include="mnist\" />
     <Folder Include="files\" />
