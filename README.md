@@ -52,7 +52,9 @@ For example, below we show input and output image pairs randomly sampled during 
 
 <img src="docs/images/fruits.gif" alt="TensorWatch in Jupyter Notebook" width="200"/>
 
-### One Stop Shop for Debugging and Visualization
+See [Lazy Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/lazy_logging.md)
+
+### Pre-Training and Post-Training
 
 TensorWatch builds on several excellent libraries including [hiddenlayer](https://github.com/waleedka/hiddenlayer), [torchstat](https://github.com/Swall0w/torchstat), [Visual Attribution](https://github.com/yulongwang12/visual-attribution) to allow performing debugging and analysis activities in one consistent package and interface.
 
@@ -64,19 +66,27 @@ You can view statistics for different layers such as flops, number of parameters
 
 <img src="docs/images/model_stats.png" alt="Model statistics for Alexnet" width="600"/>
 
+[See notebook](https://github.com/microsoft/tensorwatch/blob/master/notebooks/network_arch.ipynb)
+
 You can view dataset in lower dimensional space using techniques such as t-sne:
 
 <img src="docs/images/tsne.gif" alt="t-sne visualization for MNIST" width="400"/>
 
+[See notebook](https://github.com/microsoft/tensorwatch/blob/master/notebooks/data_exploration.ipynb)
+
 ### Prediction Explanations
 We have a goal to provide various tools for explaining predictions over time to help debugging models. Currently we offer several explainers for convolutional networks including [Lime](https://github.com/marcotcr/lime). For example, below highlights the areas that causes Resnet50 model to make prediction for class 240:
 
-<img src="docs/images/saliency.png" alt="t-sne visualization for MNIST" width="300"/>
+<img src="docs/images/saliency.png" alt="CNN prediction explanation" width="300"/>
+
+[See notebook](https://github.com/microsoft/tensorwatch/blob/master/notebooks/cnn_pred_explain.ipynb)
 
 
 ## Tutorials
 
-- [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/simple_logging.md)
+- [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/lazy_logging.md)
+
+- [Lazy Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/lazy_logging.md)
 
 ## Contribute
 
