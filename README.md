@@ -42,6 +42,9 @@ Please [Tutorials](#tutorials) and [notebooks](https://github.com/microsoft/tens
 ## Visualizations
 In above example, the line graph is used as default visualization. However TensorWatch supports many other visualizations including histogram, pie charts, scatter charts, bar charts and 3D versions of many of these plots. You can simply log your data, specify the chart type you had like to visualize and let TensorWatch take care of the rest. You can also easily create custom visualizations specific to your data.
 
+## Comparing Results of Different Runs
+TensorWatch architecture is based on streams. By default it saves all streams in a single file representing data from your experiment however you can create individual file for each stream if you prefer. This design allows you to easily compare results of multiple runs in different visualizations with essentially one liners in Jupyter Notebook.
+
 ## Training within Jupyter Notebook
 Many times you might prefer to do data analysis, ML training and testing from within Jupyter Notebook instead of from a separate script. TensorWatch can help you do sophisticated visualizations effortlessly for your code running within Jupyter Notebook.
 
