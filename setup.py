@@ -8,13 +8,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tensorwatch",
-    version="0.6.0",
+    version="0.8.0",
     author="Shital Shah",
     author_email="shitals@microsoft.com",
     description="Interactive Realtime Debugging and Visualization for AI",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/sytelus/tensorwatch",
+    url="https://github.com/microsoft/tensorwatch",
     packages=setuptools.find_packages(),
 	license='MIT',
     classifiers=(
@@ -23,6 +23,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ),
     install_requires=[
-          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'torchstat' # , 'receptivefield'
+          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'torchstat', 'receptivefield'
     ]
 )

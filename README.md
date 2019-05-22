@@ -37,24 +37,20 @@ Here's the output in Jupyter Notebook:
 
 <img src="docs/images/quick_start.gif" alt="TensorWatch in Jupyter Notebook" width="250"/>
 
-### Visualizations
+Please [Tutorials](#tutorials) and [notebooks](https://github.com/microsoft/tensorwatch/tree/master/notebooks) for more information.
+
+## Visualizations
 In above example, the line graph is used as default visualization. However TensorWatch supports many other visualizations including histogram, pie charts, scatter charts, bar charts and 3D versions of many of these plots. You can simply log your data, specify the chart type you had like to visualize and let TensorWatch take care of the rest. You can also easily create custom visualizations specific to your data.
 
-[Learn more](docs/visualizations.md)
-
-### Training within Jupyter Notebook
+## Training within Jupyter Notebook
 Many times you might prefer to do data analysis, ML training and testing from within Jupyter Notebook instead of from a separate script. TensorWatch can help you do sophisticated visualizations effortlessly for your code running within Jupyter Notebook.
 
-[Learn more](docs/nb_train.md)
-
-### Querying the Process (Lazy Log Mode)
+## Querying the Process (Lazy Log Mode)
 One of the unique capability TensorWatch offers is to be able to query the live running training process, retrieve the result of this query as stream and direct this stream to your preferred visualization - all of these without explicitly logging any data before hand! We call this new way of debugging *lazy logging mode*.
 
 For example, below we show input and output image pairs randomly sampled during the training of an autoencoder on fruits dataset. These images were not logged, instead stream of these sampled images were returned on the fly as a response to the user query:
 
 <img src="docs/images/fruits.gif" alt="TensorWatch in Jupyter Notebook" width="200"/>
-
-[Learn more](docs/lazzy_logging.md)
 
 ### One Stop Shop for Debugging and Visualization
 
@@ -80,22 +76,15 @@ We have a goal to provide various tools for explaining predictions over time to 
 
 ## Tutorials
 
-- [Debugging with TensorWatch: A 15 Minutes Blitz](docs/tutorial.md)
+- [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/notebooks/simple_logging.ipynb)
 
 ## Contribute
 
-Please take a look at [open issues](https://github.com/microsoft/TensorWatch/issues) if you are looking for areas to contribute to.
-
-* [More on TensorWatch design](docs/design)
-* [Contribution Guidelines](CONTRIBUTING.md)
+We would love your contributions, feedback and feature requests! Please [file a Github issue](https://github.com/microsoft/tensorwatch/issues/new) or send us a pull request. Review the [Microsoft Code of Conduct](https://opensource.microsoft.com/codeofconduct/) and [learn more](https://github.com/microsoft/tensorwatch/blob/master/CONTRIBUTING.md).
 
 ## Contact
 
 Join the TensorWatch group on [Facebook](https://www.facebook.com/groups/378075159472803/) to stay up to date or ask any questions.
-
-## FAQ
-
-If you run into problems, check the [FAQ](docs/faq) and feel free to [post issues](https://github.com/Microsoft/TensorWatch/issues) in the  TensorWatch repository.
 
 ## License
 
