@@ -2,7 +2,6 @@ import tensorwatch as tw
 import time
 import math
 from tensorwatch import utils
-import matplotlib.pyplot as plt
 
 utils.set_debug_verbosity(4)
 

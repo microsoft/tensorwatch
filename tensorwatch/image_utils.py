@@ -1,7 +1,6 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-import matplotlib.pyplot as plt
 from PIL import Image
 from torchvision import transforms
 import numpy as np
@@ -72,6 +71,8 @@ def _resize_image(img, size=None):
 
 def show_image(img, size=None, alpha=None, cmap=None, 
                img2=None, size2=None, alpha2=None, cmap2=None, ax=None):
+    import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
     img =_resize_image(img, size)
     img2 =_resize_image(img2, size2)
 
@@ -116,6 +117,8 @@ def stack_images(imgs):
     return np.hstack(imgs)
 
 def plt_loop(count=None, sleep_time=1, plt_pause=0.01):
+    import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
     #plt.ion()
     #plt.show(block=False)
     while((count is None or count > 0) and not plt.waitforbuttonpress(plt_pause)):
@@ -124,3 +127,8 @@ def plt_loop(count=None, sleep_time=1, plt_pause=0.01):
         time.sleep(sleep_time)
         if count is not None:
             count = count - 1
+
+def get_cmap(name:str):
+    import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+    return plt.cm.get_cmap(name=name)
+

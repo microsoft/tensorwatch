@@ -26,7 +26,7 @@ def to_tuples(l:Iterable[Any], key_f=lambda x:x, val_f=lambda x:x)->Iterable[tup
     """
     return ((key_f(i), val_f(i)) for i in l)
 
-def reduce(l:Iterable[Any], key_f=lambda x:x, val_f=lambda x:x, 
+def group_reduce(l:Iterable[Any], key_f=lambda x:x, val_f=lambda x:x, 
            reducer:Callable[[List[Any]],Any]=None)->Iterable[tuple]:
     """Group values by key and then apply reducer on each group
     """
@@ -101,7 +101,7 @@ def topk(labels:Sized, metric:Sized=None, items:Sized=None, k:int=1,
     # group by label, sort item in each group by metric, take k items in each group
     reverse = True if order=='dsc' else False
     key_f = (lambda i: (i[1])) if order != 'rnd' else lambda i: random.random()
-    groups = reduce(batch, key_f=lambda b: b[0], # key is label
+    groups = group_reduce(batch, key_f=lambda b: b[0], # key is label
         # sort by metric and take k items
         reducer=lambda bi: islice(sorted(bi, key=key_f, reverse=reverse), k))
     

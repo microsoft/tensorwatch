@@ -1,6 +1,5 @@
 import tensorwatch as tw
 import numpy as np
-import matplotlib.pyplot as plt
 import time
 import torchvision.datasets as datasets
 

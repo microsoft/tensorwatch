@@ -2,8 +2,7 @@
 # Licensed under the MIT license.
 
 from .base_mpl_plot import BaseMplPlot
-import matplotlib
-import matplotlib.pyplot as plt
+from .. import image_utils
 from .. import utils
 import numpy as np
 import ipywidgets as widgets
@@ -18,7 +17,7 @@ class PieChart(BaseMplPlot):
         stream_vis.series = []
         stream_vis.wedge_artists = [] # stores previously drawn bars
 
-        stream_vis.cmap = plt.cm.get_cmap(name=colormap or 'Dark2')
+        stream_vis.cmap = image_utils.get_cmap(name=colormap or 'Dark2')
         if color is None:
             if not self.is_3d:
                 color = stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member

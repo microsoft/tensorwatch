@@ -9,7 +9,6 @@
 #if os.name == 'posix' and "DISPLAY" not in os.environ:
 #    matplotlib.use('Agg') # Must be before importing matplotlib.pyplot or pylab!
 from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 #from ipywidgets.widgets.interaction import show_inline_matplotlib_plots
 #from ipykernel.pylab.backend_inline import flush_figures
@@ -42,6 +41,8 @@ class BaseMplPlot(VisBase):
 
     # anim_interval in seconds
     def init_fig(self, anim_interval:float=1.0):
+        import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
         """(for derived class) Initializes matplotlib figure"""
         if self._fig_init_done:
             return False
@@ -51,6 +52,8 @@ class BaseMplPlot(VisBase):
         self.anim_interval = anim_interval
 
         # default color pallet
+        import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
         plt.set_cmap('Dark2')
         plt.rcParams['image.cmap']='Dark2'
 
@@ -95,6 +98,8 @@ class BaseMplPlot(VisBase):
         super(BaseMplPlot, self).show(blocking)
 
     def _post_update_stream_plot(self, stream_vis):
+        import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
         utils.debug_log("Plot updated", stream_vis.stream.stream_name, verbosity=5)
 
         if self.layout_dirty:
@@ -126,6 +131,8 @@ class BaseMplPlot(VisBase):
         #    self.figure.canvas.draw()
 
     def _post_add_subscription(self, stream_vis, **stream_vis_args):
+        import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
         # make sure figure is initialized
         self.init_fig()        
         self.init_stream_plot(stream_vis, **stream_vis_args) 
@@ -137,6 +144,8 @@ class BaseMplPlot(VisBase):
         plt.subplots_adjust(hspace=0.6)
 
     def _show_widget_native(self, blocking:bool):
+        import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
         #plt.ion()
         #plt.show()
         return plt.show(block=blocking)

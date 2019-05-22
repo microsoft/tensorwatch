@@ -2,8 +2,7 @@
 # Licensed under the MIT license.
 
 from .base_mpl_plot import BaseMplPlot
-import matplotlib
-import matplotlib.pyplot as plt
+from .. import image_utils
 from .. import utils
 import numpy as np
 from ..lv_types import PointData
@@ -15,13 +14,16 @@ class LinePlot(BaseMplPlot):
             xtitle='', ytitle='', ztitle='', colormap=None, color=None, xrange=None, yrange=None, linewidth=None, **stream_vis_args):
         stream_vis.xylabel_refs = [] # annotation references
 
+        import matplotlib
+
+
         # add main subplot
         if len(self._stream_vises) <= 1:
             stream_vis.ax = self.get_main_axis()
         else:
             stream_vis.ax = self.get_main_axis().twinx()
 
-        stream_vis.cmap = plt.cm.get_cmap(name=colormap or 'Dark2')
+        stream_vis.cmap = image_utils.get_cmap(name=colormap or 'Dark2')
         if color is None:
             if not self.is_3d:
                 color = stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
@@ -60,6 +62,8 @@ class LinePlot(BaseMplPlot):
             stream_vis.ax.set_ylim(*yrange)
 
     def clear_plot(self, stream_vis, clear_history):
+        import matplotlib
+
         lines = stream_vis.ax.get_lines() 
         # if we need to keep history
         if stream_vis.history_len > 1:

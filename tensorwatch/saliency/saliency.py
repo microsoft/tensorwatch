@@ -7,7 +7,6 @@ from .epsilon_lrp import EpsilonLrp
 from .lime_image_explainer import LimeImageExplainer, LimeImagenetExplainer
 import skimage.transform
 import torch
-import matplotlib.pyplot as plt
 import math
 from .. import image_utils
 
@@ -93,6 +92,8 @@ def get_image_saliency_results(model, raw_image, input, label,
     return results
 
 def get_image_saliency_plot(image_saliency_results, cols = 2, figsize = None):
+    import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
+
     rows = math.ceil(len(image_saliency_results) / cols)
     figsize=figsize or (8, 3 * rows)
     figure = plt.figure(figsize=figsize) #figsize=(8, 3)

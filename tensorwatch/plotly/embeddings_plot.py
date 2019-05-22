@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-import matplotlib.pyplot as plt
+from .. import image_utils
 from ipywidgets import Output #, Layout
 from IPython.display import display, clear_output
 import numpy as np
@@ -16,6 +16,8 @@ class EmbeddingsPlot(LinePlot):
         utils.set_default(vis_args, 'height', '8in')
         super(EmbeddingsPlot, self).__init__(cell, title, show_legend, 
                                              stream_name=stream_name, console_debug=console_debug, is_3d=is_3d, **vis_args)
+
+        import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
         if hover_images is not None:
             plt.ioff()
             self.image_output = Output()
@@ -43,7 +45,8 @@ class EmbeddingsPlot(LinePlot):
                     return
                 # else too much time since update
             # else we have stable ind
-
+        
+        import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
         with self.image_output:
             plt.ioff()
 

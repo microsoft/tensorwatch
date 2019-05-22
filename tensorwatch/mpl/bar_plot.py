@@ -2,9 +2,8 @@
 # Licensed under the MIT license.
 
 from .base_mpl_plot import BaseMplPlot
-import matplotlib
-import matplotlib.pyplot as plt
 from .. import utils
+from .. import image_utils
 import numpy as np
 import ipywidgets as widgets
 from itertools import groupby
@@ -23,7 +22,7 @@ class BarPlot(BaseMplPlot):
         stream_vis.series = {}
         stream_vis.bars_artists = [] # stores previously drawn bars
 
-        stream_vis.cmap = plt.cm.get_cmap(name=colormap or 'Set3')
+        stream_vis.cmap =  image_utils.get_cmap(colormap or 'Set3')
         if color is None:
             if not self.is_3d:
                 stream_vis.cmap((len(self._stream_vises)%stream_vis.cmap.N)/stream_vis.cmap.N) # pylint: disable=no-member
