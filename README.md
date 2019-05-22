@@ -76,7 +76,7 @@ We have a goal to provide various tools for explaining predictions over time to 
 
 ## Tutorials
 
-- [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/notebooks/simple_logging.ipynb)
+- [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/simple_logging.md)
 
 ## Contribute
 
