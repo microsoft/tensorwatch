@@ -4,7 +4,7 @@ TensorWatch is a debugging and visualization tool designed for deep learning and
 
 TensorWatch is under heavy active development with a goal of providing a research platform for debugging machine learning in one easy to use, extensible and highly hackable package.
 
-![record screenshot](docs/images/teaser.gif)
+<img src="docs/images/teaser.gif" alt="TensorWatch in Jupyter Notebook" width="400"/>
 
 ## How to Get It
 
