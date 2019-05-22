@@ -8,8 +8,11 @@ from .watcher import Watcher
 from .watcher_base import WatcherBase
 
 from .text_vis import TextVis
-from .plotly import EmbeddingsPlot
-from .mpl import LinePlot, ImagePlot, Histogram, BarPlot
+from .plotly.embeddings_plot import EmbeddingsPlot
+from .mpl.line_plot import LinePlot
+from .mpl.image_plot import ImagePlot
+from .mpl.histogram import Histogram
+from .mpl.bar_plot import BarPlot
 from .visualizer import Visualizer
 
 from .stream import Stream
