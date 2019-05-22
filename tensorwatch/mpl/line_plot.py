@@ -180,7 +180,7 @@ class LinePlot(BaseMplPlot):
                 ann['x'], ann['y'], ann['text']))
 
         stream_vis.ax.relim()
-        stream_vis.ax.autoscale_view()
+        stream_vis.ax.autoscale_view(True,True,True)
 
         return False # dirty
 

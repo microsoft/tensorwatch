@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>mnist\cli_mnist.py</StartupFile>
+    <StartupFile>simple_log\quick_start.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="deps\live_graph.py" />
+    <Compile Include="simple_log\quick_start.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="visualizations\arr_img_plot.py">
       <SubType>Code</SubType>
     </Compile>
