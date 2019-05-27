@@ -1,16 +1,15 @@
-import time
+import time, random
 import tensorwatch as tw
-import random
 
-# create watcher, notice that we are not logging anything
+# create watcher object as usual
 w = tw.Watcher()
 
-weights = [random.random() for _ in range(5)]
+weights = None
 for i in range(10000):
     weights = [random.random() for _ in range(5)]
 
-    # we are just observing variables
-    # observation has no cost, nothing gets logged anywhere
+    # let watcher observe variables we have
+    # this has almost no performance cost
     w.observe(weights=weights)
 
     time.sleep(1)
