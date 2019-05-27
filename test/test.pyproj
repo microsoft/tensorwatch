@@ -5,7 +5,7 @@
     <ProjectGuid>9a7fe67e-93f0-42b5-b58f-77320fc639e4</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>simple_log\sum_lazy.py</StartupFile>
+    <StartupFile>simple_log\sum_log.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,9 +25,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="deps\live_graph.py" />
-    <Compile Include="simple_log\example.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="simple_log\quick_start.py">
       <SubType>Code</SubType>
     </Compile>

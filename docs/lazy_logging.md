@@ -4,7 +4,7 @@
 In this tutorial, we will use a straightforward script that creates an array of random numbers. Our goal is to examine this array from the Jupyter Notebook while below script is running separately in a console.
 
 ```
-# available in test/simple_log/sum_lazzy.py
+# available in test/simple_log/sum_lazy.py
 
 import time, random
 import tensorwatch as tw
@@ -32,7 +32,7 @@ Notice that we give `Watcher` object an opportunity to *observe* variables. Obse
 TensorWatch has two core classes: `Watcher` and `WatcherClient`. The `Watcher` object will open up TCP/IP sockets by default and listens to any incoming requests. The `WatcherClient` allows you to connect to `Watcher` and have it execute any Python [lambda expression](http://book.pythontips.com/en/latest/lambdas.html) you want. The Python lambda expressions consume a stream of values as input and outputs another stream of values. The lambda expressions may typically contain [map, filter, and reduce](http://book.pythontips.com/en/latest/map_filter.html) so you can transform values in the input stream, filter them, or aggregate them. Let's see all these with a simple example.
 
 ## Create the Client
-You can either create a Jupyter Notebook or get the existing one in your repo at `notebooks/lazy_logging.ipynb`. 
+You can either create a Jupyter Notebook or get the existing one in the repo at `notebooks/lazy_logging.ipynb`. 
 
 Let's first do imports:
 
