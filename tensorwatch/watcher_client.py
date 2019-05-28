@@ -47,7 +47,7 @@ class WatcherClient(WatcherBase):
             utils.debug_log("WatcherClient is closed", verbosity=1)
         super(WatcherClient, self).close()
 
-    def devices_or_default(self, devices:Sequence[str])->Sequence[str]: # overriden
+    def devices_or_default(self, devices:Sequence[str])->Sequence[str]: # overridden
         # TODO: this method is duplicated in Watcher and WatcherClient
 
         # make sure TCP port is attached to tcp device

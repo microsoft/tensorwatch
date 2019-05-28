@@ -3,6 +3,9 @@ from .backprop import VanillaGradExplainer
 
 
 def _get_layer(model, key_list):
+    if key_list is None:
+        return None
+
     a = model
     for key in key_list:
         a = a._modules[key]
@@ -27,12 +30,13 @@ class GradCAMExplainer(VanillaGradExplainer):
         def backward_hook(m, grad_i, grad_o):
             self.intermediate_grad.append(grad_o[0].data.clone())
 
-        if self.use_inp:
-            self.target_layer.register_forward_hook(forward_hook_input)
-        else:
-            self.target_layer.register_forward_hook(forward_hook_output)
+        if self.target_layer is not None:
+            if self.use_inp:
+                self.target_layer.register_forward_hook(forward_hook_input)
+            else:
+                self.target_layer.register_forward_hook(forward_hook_output)
 
-        self.target_layer.register_backward_hook(backward_hook)
+            self.target_layer.register_backward_hook(backward_hook)
 
     def _reset_intermediate_lists(self):
         self.intermediate_act = []
@@ -43,14 +47,16 @@ class GradCAMExplainer(VanillaGradExplainer):
 
         _ = super(GradCAMExplainer, self)._backprop(inp, ind)
 
-        grad = self.intermediate_grad[0]
-        act = self.intermediate_act[0]
+        if len(self.intermediate_grad):
+            grad = self.intermediate_grad[0]
+            act = self.intermediate_act[0]
 
-        weights = grad.sum(-1).sum(-1).unsqueeze(-1).unsqueeze(-1)
-        cam = weights * act
-        cam = cam.sum(1).unsqueeze(1)
+            weights = grad.sum(-1).sum(-1).unsqueeze(-1).unsqueeze(-1)
+            cam = weights * act
+            cam = cam.sum(1).unsqueeze(1)
 
-        cam = torch.clamp(cam, min=0)
+            cam = torch.clamp(cam, min=0)
 
-        return cam
-
+            return cam
+        else:
+            return None

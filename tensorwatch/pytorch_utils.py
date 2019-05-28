@@ -21,17 +21,20 @@ def tensors2batch(tensors, preprocess_transform=None):
 def int2tensor(val):
     return torch.LongTensor([val])
 
+def image2batch(image, image_transform=None):
+    if image_transform:
+        input_x = image_transform(image)
+    else: # if no transforms supplied then just convert PIL image to tensor
+        input_x = transforms.ToTensor()(image)
+    input_x = input_x.unsqueeze(0) #convert to batch of 1
+    return input_x
+
 def image_class2tensor(image_path, class_index=None, image_convert_mode=None, 
                        image_transform=None):
-    
-    raw_input = image_utils.open_image(os.path.abspath(image_path), convert_mode=image_convert_mode)
-    if image_transform:
-        input_x = image_transform(raw_input)
-    else:
-        input_x = transforms.ToTensor()(raw_input)
-    input_x = input_x.unsqueeze(0) #convert to batch of 1
+    image_pil = image_utils.open_image(os.path.abspath(image_path), convert_mode=image_convert_mode)
+    input_x = image2batch(image_pil, image_transform)
     target_class = int2tensor(class_index) if class_index is not None else None
-    return raw_input, input_x, target_class
+    return image_pil, input_x, target_class
 
 def batch_predict(model, inputs, input_transform=None, device=None):
     if input_transform:

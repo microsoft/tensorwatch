@@ -167,7 +167,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="install_jupyterlab.bat" />
-    <Content Include="ISSUE_TEMPLATE.md" />
     <Content Include="LICENSE.TXT">
       <SubType>Code</SubType>
     </Content>

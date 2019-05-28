@@ -10,18 +10,20 @@ utils.set_debug_verbosity(4)
 
 def show_mpl():
     cli = tw.WatcherClient()
-    p = tw.LinePlot(title='Demo')
-    s1 = cli.create_stream(expr='lambda v:(v.i, v.sum)')
-    p.subscribe(s1, xtitle='Index', ytitle='sqrt(ev_i)')
-    p.show()
+    st_isum = cli.open_stream('isums')
+    st_rsum = cli.open_stream('rsums')
     
+    line_plot = tw.Visualizer(st_isum, vis_type='line', xtitle='i', ytitle='isum')
+    line_plot.show()
+
+    line_plot2 = tw.Visualizer(st_rsum, vis_type='line', host=line_plot, ytitle='rsum')
+
     tw.plt_loop()
 
 def show_text():
     cli = tw.WatcherClient()
-    s1 = cli.create_stream(expr='lambda v:(v.i, v.sum)')
-    text = tw.Visualizer(s1, vis_type='text')
-    text.show()
+    text_vis = tw.Visualizer(st_isum, vis_type='text')
+    text_vis.show()
     input('Waiting')
 
 #show_text()

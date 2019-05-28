@@ -1,14 +1,19 @@
-import time
+import time, random
 import tensorwatch as tw
 
-# create watcher and stream that we would use
-# for logging
+# we will create two streams, one for 
+# sums of integers, other for random numbers
 w = tw.Watcher()
-s = w.create_stream('my_log')
+st_isum = w.create_stream('isums')
+st_rsum = w.create_stream('rsums')
 
-sum = 0
+isum, rsum = 0, 0
 for i in range(10000):
-    sum += i
-    # write tuple to our log
-    s.write((i, sum))
+    isum += i
+    rsum += random.randint(0,i)
+
+    # write to streams
+    st_isum.write((i, isum))
+    st_rsum.write((i, rsum))
+
     time.sleep(1)
