@@ -3,6 +3,7 @@
 
 from sklearn.manifold import TSNE
 from sklearn.preprocessing import StandardScaler
+import numpy as np
 
 def _standardize_data(data, col, whitten, flatten):
     if col is not None:
@@ -29,7 +30,10 @@ def get_tsne_components(data, features_col=0, labels_col=1, whitten=True, n_comp
         labels = data[labels_col]
         for i, item in enumerate(comps):
             # low, high, annotation, text, color
-            item.extend((None, None, None, str(labels[i]), labels[i]))
+            label = labels[i]
+            if isinstance(labels, np.ndarray):
+                label = label.item()
+            item.extend((None, None, None, str(int(label)), label))
         return comps
     return tsne_results
 
