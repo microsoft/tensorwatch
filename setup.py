@@ -23,6 +23,6 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ),
     install_requires=[
-          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'torchstat', 'receptivefield', 'ipywidgets', 'sklearn'
+          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'torchstat', 'receptivefield', 'ipywidgets', 'sklearn', 'nbformat'
     ]
 )
