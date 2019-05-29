@@ -54,7 +54,6 @@ When you write to TensorWatch stream, the values get serialized and sent to TCP/
 
 Ok, so that's a bit of a very simplified description. TensorWatch architecture is actually much more powerful. Almost everything in TensorWatch is a *stream*. Files, sockets, console and even visualizers themselves are stream. A cool thing about TensorWatch streams is that they can listen to other streams. This allows TensorWatch to create a *data flow graph*. This means a visualizer can listen to many streams simultaneously, each of which could be file, socket or some other stream. You can recursively extend this to build arbitrary data flow graphs. TensorWatch decouples streams from how they get stored and how they get visualized.
 
-
 ## Visualizations
 In the above example, the line graph is used as the default visualization. However, TensorWatch supports many other visualizations including histogram, pie charts, scatter charts, bar charts and 3D versions of many of these plots. You can log your data, specify the chart type you want and let TensorWatch take care of the rest. 
 
@@ -108,6 +107,16 @@ We wish to provide various tools for explaining predictions to help debug models
 - [Simple Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/simple_logging.md)
 
 - [Lazy Logging Tutorial](https://github.com/microsoft/tensorwatch/blob/master/docs/lazy_logging.md)
+
+- [Using TensorWatch for Deep Learning Training (MNIST)](https://github.com/microsoft/tensorwatch/blob/master/notebooks/mnist.ipynb)
+
+- [Using TensorWatch for Deep Learning Training (Food360)](https://github.com/microsoft/tensorwatch/blob/master/notebooks/fruits_analysis.ipynb)
+
+- [Exploring Data Using T-SNE](https://github.com/microsoft/tensorwatch/blob/master/notebooks/data_exploration.ipynb)
+
+- [Predication Explainers for Convolutional Neural Networks](https://github.com/microsoft/tensorwatch/blob/master/notebooks/cnn_pred_explain.ipynb)
+
+- [Viewing Model Graph and Statistics](https://github.com/microsoft/tensorwatch/blob/master/notebooks/network_arch.ipynb)
 
 ## Contribute
 
