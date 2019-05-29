@@ -1,1 +1,2 @@
-include tesnorwatch/*.txt
+include tensorwatch/*.txt
+include tensorwatch/*.json
