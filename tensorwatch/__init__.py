@@ -22,7 +22,7 @@ from .lv_types import PointData, ImageData, VisArgs, StreamItem, PredictionResul
 from . import utils
 
 ###### Import methods for tw namespace #########
-from .receptive_field.rf_utils import plot_receptive_field, plot_grads_at
+#from .receptive_field.rf_utils import plot_receptive_field, plot_grads_at
 from .embeddings.tsne_utils import get_tsne_components
 from .model_graph.torchstat_utils import model_stats
 from .image_utils import show_image, open_image, img2pyt, linear_to_2d, plt_loop
