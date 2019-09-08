@@ -56,7 +56,7 @@ line_plot = tw.Visualizer(stream, vis_type='line')
 line_plot.show()
 ```
 
-Now when you run our script `sum_lazzy.py` in the console and then above Jupyter Notebook, you will see the sum of `weights` array getting plotted in real-time:
+Now when you run our script `sum_lazy.py` in the console and then above Jupyter Notebook, you will see the sum of `weights` array getting plotted in real-time:
 
 <img src="images/lazy_log_array_sum.png" width="400">
 
