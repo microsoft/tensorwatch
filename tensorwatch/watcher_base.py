@@ -170,11 +170,11 @@ class WatcherBase:
                 stream_info.last_sent = time.time()
                 
                 events_vars = EventData(self._global_vars, **obs_vars)
-                self._eval_wrie(stream_info, events_vars)
+                self._eval_write(stream_info, events_vars)
             else:
                 utils.debug_log("Throttled", event_name, verbosity=5)
 
-    def _eval_wrie(self, stream_info:'WatcherBase.StreamInfo', event_data:EventData):
+    def _eval_write(self, stream_info:'WatcherBase.StreamInfo', event_data:EventData):
         eval_return = stream_info.evaler.post(event_data)
         if eval_return.is_valid:
             event_name = stream_info.req.event_name
