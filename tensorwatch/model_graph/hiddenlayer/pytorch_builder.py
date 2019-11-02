@@ -44,7 +44,7 @@ def pytorch_id(node):
     """Returns a unique ID for a node."""
     # After ONNX simplification, the scopeName is not unique anymore
     # so append node outputs to guarantee uniqueness
-    return node.scopeName() + "/outputs/" + "/".join([o.uniqueName() for o in node.outputs()])
+    return node.scopeName() + "/outputs/" + "/".join([str(o.unique()) for o in node.outputs()])
 
 
 def get_shape(torch_node):
