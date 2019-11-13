@@ -44,7 +44,7 @@ def pytorch_id(node):
     """Returns a unique ID for a node."""
     # After ONNX simplification, the scopeName is not unique anymore
     # so append node outputs to guarantee uniqueness
-    return node.scopeName() + "/outputs/" + "/".join([o.uniqueName() for o in node.outputs()])
+    return node.scopeName() + "/outputs/" + "/".join([o.debugName() for o in node.outputs()])
 
 
 def get_shape(torch_node):
@@ -106,16 +106,24 @@ def import_graph(hl_graph, model, args, input_names=None, verbose=False):
         args = torch.ones(args)
 
     # Run the Pytorch graph to get a trace and generate a graph from it
-    trace, out = torch.jit.get_trace_graph(model, args)
-    torch.onnx._optimize_trace(trace, torch.onnx.OperatorExportTypes.ONNX)
-    torch_graph = trace.graph()
+    with torch.onnx.set_training(model, False):
+        try:
+            trace = torch.jit.trace(model, args)
+            torch.onnx._optimize_trace(trace)
+            torch_graph = trace.graph
+        except RuntimeError as e:
+            print(e)
+            print('Error occured when creating jit trace for model.')
+            raise e
 
     # Dump list of nodes (DEBUG only)
     if verbose:
         dump_pytorch_graph(torch_graph)
 
     # Loop through nodes and build HL graph
-    for torch_node in torch_graph.nodes():
+    nodes = list(torch_graph.nodes())
+    inps = [(n, [i.unique() for i in n.inputs()]) for n in nodes]
+    for i, torch_node in enumerate(nodes):
         # Op
         op = torch_node.kind()
         # Parameters
@@ -130,8 +138,7 @@ def import_graph(hl_graph, model, args, input_names=None, verbose=False):
                        output_shape=shape, params=params)
         hl_graph.add_node(hl_node)
         # Add edges
-        for target_torch_node in torch_graph.nodes():
-            target_inputs = [i.unique() for i in target_torch_node.inputs()]
+        for target_torch_node,target_inputs in inps:
             if set(outputs) & set(target_inputs):
                 hl_graph.add_edge_by_id(pytorch_id(torch_node), pytorch_id(target_torch_node), shape)
     return hl_graph

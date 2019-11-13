@@ -392,7 +392,7 @@ class Graph():
         """Allows Jupyter notebook to render the graph automatically."""
         return self.build_dot(self.orientation)._repr_svg_()
     
-    def save(self, path, format="pdf"):
+    def save(self, path, format="png"):
         # TODO: assert on acceptable format values
         dot = self.build_dot(self.orientation)
         dot.format = format

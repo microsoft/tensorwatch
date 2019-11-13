@@ -14,13 +14,13 @@ class FileStream(Stream):
         self._file = open(file_name, 'wb' if for_write else 'rb')
         self.file_name = file_name
         self.for_write = for_write
-        utils.debug_log('FileStream started', self.file_name, verbosity=1)
+        utils.debug_log('FileStream started', os.path.realpath(self._file.name), verbosity=0)
 
     def close(self):
         if not self._file.closed:
             self._file.close()
             self._file = None
-            utils.debug_log('FileStream is closed', self.file_name, verbosity=1)
+            utils.debug_log('FileStream is closed', os.path.realpath(self._file.name), verbosity=0)
         super(FileStream, self).close()
 
     def write(self, val:Any, from_stream:'Stream'=None):

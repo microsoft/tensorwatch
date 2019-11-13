@@ -84,6 +84,7 @@ class NotebookMaker:
     def write(self):
         nb = new_notebook(cells=self.cells, metadata={'language': 'python',})
         with codecs.open(self.filename, encoding='utf-8', mode='w') as f:
+            utils.debug_log('Notebook created', path.realpath(f.name), verbosity=0)
             nbformat.write(nb, f, 4)
 
 
