@@ -25,6 +25,6 @@ setuptools.setup(
     include_package_data=True,
     install_requires=[
           'matplotlib', 'numpy', 'pyzmq', 'plotly', 'torchstat', 'ipywidgets', 
-          'sklearn', 'nbformat', 'scikit-image', 'nbformat', 'yaml' # , 'receptivefield'
+          'nbformat', 'scikit-image', 'nbformat', 'yaml', 'scikit-image', 'graphviz' # , 'receptivefield'
     ]
 )

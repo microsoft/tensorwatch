@@ -28,6 +28,8 @@ class FileStream(Stream):
 
         if self.for_write:
             pickle.dump(stream_item, self._file)
+            self._file.flush()
+            #os.fsync()
         super(FileStream, self).write(stream_item)
 
     def read_all(self, from_stream:'Stream'=None):

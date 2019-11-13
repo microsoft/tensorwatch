@@ -47,6 +47,7 @@ def pytorch_id(node):
     return node.scopeName() + "/outputs/" + "/".join([o.debugName() for o in node.outputs()])
 
 
+
 def get_shape(torch_node):
     """Return the output shape of the given Pytorch node."""
     # Extract node output shape from the node string representation
