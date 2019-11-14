@@ -19,7 +19,7 @@ class DotWrapper:
         # self.dot.render(file_name, directory=directory, cleanup=True) 
         if filename is not None:
             png = self.dot.create_png()
-            with open(filename, 'wb') as fid:
+            with open(os.path.expanduser(filename), 'wb') as fid:
                 fid.write(png)   #  
 
 def draw_graph(model, args):
