@@ -8,7 +8,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tensorwatch",
-    version="0.8.6",
+    version="0.8.7",
     author="Shital Shah",
     author_email="shitals@microsoft.com",
     description="Interactive Realtime Debugging and Visualization for AI",
@@ -25,6 +25,6 @@ setuptools.setup(
     include_package_data=True,
     install_requires=[
           'matplotlib', 'numpy', 'pyzmq', 'plotly', 'torchstat', 'ipywidgets', 
-          'nbformat', 'scikit-image', 'nbformat', 'yaml', 'scikit-image', 'graphviz' # , 'receptivefield'
+          'nbformat', 'scikit-image', 'nbformat', 'pyyaml', 'scikit-image', 'graphviz' # , 'receptivefield'
     ]
 )
