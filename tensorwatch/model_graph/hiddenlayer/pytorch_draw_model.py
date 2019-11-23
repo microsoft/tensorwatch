@@ -10,7 +10,7 @@ class DotWrapper:
         self.dot = dot
     def _repr_svg_(self):
         """Allows Jupyter notebook to render the graph automatically."""
-        return self.dot._repr_svg_()     
+        return self.dot.create_svg().decode()
     def save(self, filename, format="png"):
         # self.dot.format = format
         # directory, file_name = os.path.split(path)
