@@ -118,6 +118,27 @@ We wish to provide various tools for explaining predictions to help debugging mo
 
 - [Viewing Model Graph and Statistics](https://github.com/microsoft/tensorwatch/blob/master/notebooks/network_arch.ipynb)
 
+## Paper
+
+More technical details are available in [TensorWatch paper (EICS 2019 Conference)](https://dl.acm.org/doi/10.1145/3319499.3328231). Please cite this as:
+
+```
+@inproceedings{tensorwatch2019eics,
+  author    = {Shital Shah and Roland Fernandez and Steven M. Drucker},
+  title     = {A system for real-time interactive analysis of deep learning training},
+  booktitle = {Proceedings of the {ACM} {SIGCHI} Symposium on Engineering Interactive
+               Computing Systems, {EICS} 2019, Valencia, Spain, June 18-21, 2019},
+  pages     = {16:1--16:6},
+  year      = {2019},
+  crossref  = {DBLP:conf/eics/2019},
+  url       = {https://doi.org/10.1145/3319499.3328231},
+  doi       = {10.1145/3319499.3328231},
+  timestamp = {Fri, 31 May 2019 08:40:31 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/eics/ShahFD19},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+```
+
 ## Contribute
 
 We would love your contributions, feedback, questions, and feature requests! Please [file a Github issue](https://github.com/microsoft/tensorwatch/issues/new) or send us a pull request. Please review the [Microsoft Code of Conduct](https://opensource.microsoft.com/codeofconduct/) and [learn more](https://github.com/microsoft/tensorwatch/blob/master/CONTRIBUTING.md).
