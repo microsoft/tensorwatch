@@ -1,0 +1,18 @@
+% Teach biblatex about numpages field
+\DeclareDatamodelFields[type=field, datatype=literal]{numpages}
+\DeclareDatamodelEntryfields{numpages}
+
+% Teach biblatex about articleno field
+\DeclareDatamodelFields[type=field, datatype=literal]{articleno}
+\DeclareDatamodelEntryfields{articleno}
+
+% Teach biblatex about urls field
+\DeclareDatamodelFields[type=list, datatype=uri]{urls}
+\DeclareDatamodelEntryfields{urls}
+
+% Teach biblatex about school field
+\DeclareDatamodelFields[type=list, datatype=literal]{school}
+\DeclareDatamodelEntryfields[thesis]{school}
+
+\DeclareDatamodelFields[type=field, datatype=literal]{key}
+\DeclareDatamodelEntryfields{key}

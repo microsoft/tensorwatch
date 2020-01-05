@@ -1,0 +1,387 @@
+%%%% Proceedings format for most of ACM conferences (with the exceptions listed below) and all ICPS volumes.
+% \documentclass[sigconf]{acmart}
+%%%% As of March 2017, [siggraph] is no longer used. Please use sigconf (above) for SIGGRAPH conferences.
+
+%%%% Proceedings format for SIGPLAN conferences 
+% \documentclass[sigplan, anonymous, review]{acmart}
+
+%%%% Proceedings format for SIGCHI conferences
+\documentclass[sigchi]{acmart} %, review, anonymous, acmSubmissionID
+
+%%%% To use the SIGCHI extended abstract template, please visit
+% https://www.overleaf.com/read/zzzfqvkmrfzn
+
+\usepackage[inline]{enumitem}
+
+%
+% defining the \BibTeX command - from Oren Patashnik's original BibTeX documentation.
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08emT\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+    
+% Rights management information. 
+% This information is sent to you when you complete the rights form.
+% These commands have SAMPLE values in them; it is your responsibility as an author to replace
+% the commands and values with those provided to you when you complete the rights form.
+%
+% These commands are for a PROCEEDINGS abstract or paper.
+\setcopyright{rightsretained} 
+\copyrightyear{2019}
+\acmYear{2019}
+\setcopyright{acmlicensed}
+\acmConference[EICS '19]{EICS '19: ACM SIGCHI Symposium on Engineering Interactive Computing Systems}{June 18-21, 2019}{Valencia, Spain}
+\acmBooktitle{Valencia '19: ACM SIGCHI Symposium on Engineering Interactive Computing Systems, June 18-21, 2019, 2018, Valencia, Spain}
+\acmPrice{15.00}
+\acmDOI{10.1145/1122445.1122456}
+\acmISBN{978-1-4503-9999-9/18/06}
+
+%
+% These commands are for a JOURNAL article.
+%\setcopyright{acmcopyright}
+%\acmJournal{TOG}
+%\acmYear{2018}\acmVolume{37}\acmNumber{4}\acmArticle{111}\acmMonth{8}
+%\acmDOI{10.1145/1122445.1122456}
+
+%
+% Submission ID. 
+% Use this when submitting an article to a sponsored event. You'll receive a unique submission ID from the organizers
+% of the event, and this ID should be used as the parameter to this command.
+%\acmSubmissionID{123-A56-BU3}
+
+%
+% The majority of ACM publications use numbered citations and references. If you are preparing content for an event
+% sponsored by ACM SIGGRAPH, you must use the "author year" style of citations and references. Uncommenting
+% the next command will enable that style.
+%\citestyle{acmauthoryear}
+
+%\usepackage{subcaption}
+
+%
+% end of the preamble, start of the body of the document source.
+\begin{document}
+
+%
+% The "title" command has an optional parameter, allowing the author to define a "short title" to be used in page headers.
+\title{A System for Real-Time Interactive Analysis of Deep Learning Training}
+
+%
+% The "author" command and its associated commands are used to define the authors and their affiliations.
+% Of note is the shared affiliation of the first two authors, and the "authornote" and "authornotemark" commands
+% used to denote shared contribution to the research.
+\author{Shital Shah}
+\affiliation{%
+  \institution{Microsoft Research}
+  \streetaddress{1 Microsoft Way}
+  \city{Redmond}
+  \state{Washington}
+  \postcode{98052}
+}
+\email{shitals@microsoft.com}
+
+\author{Roland Fernandez}
+\affiliation{%
+  \institution{Microsoft Research}
+  \streetaddress{1 Microsoft Way}
+  \city{Redmond}
+  \state{Washington}
+  \postcode{98052}
+}
+\email{rfernand@microsoft.com}
+
+\author{Steven Drucker}
+\affiliation{%
+  \institution{Microsoft Research}
+  \streetaddress{1 Microsoft Way}
+  \city{Redmond}
+  \state{Washington}
+  \postcode{98052}
+}
+\email{sdrucker@microsoft.com}
+
+%
+% By default, the full list of authors will be used in the page headers. Often, this list is too long, and will overlap
+% other information printed in the page headers. This command allows the author to define a more concise list
+% of authors' names for this purpose.
+% \renewcommand{\shortauthors}{Shah, et al.}
+
+%
+% The abstract is a short summary of the work to be presented in the article.
+\begin{abstract}
+  Performing diagnosis or exploratory analysis during the training of deep learning models is challenging but often necessary for making a sequence of decisions guided by the incremental observations. Currently available systems for this purpose are limited to monitoring only the logged data that must be specified before the training process starts. Each time a new information is desired, a cycle of stop-change-restart is required in the training process. These limitations make interactive exploration and diagnosis tasks difficult, imposing long tedious iterations during the model development. We present a new system that enables users to perform interactive queries on live processes generating real-time information that can be rendered in multiple formats on multiple surfaces in the form of several desired visualizations simultaneously. To achieve this, we model various exploratory inspection and diagnostic tasks for deep learning training processes as specifications for streams using a map-reduce paradigm with which many data scientists are already familiar. Our design achieves generality and extensibility by defining composable primitives which is a fundamentally different approach than is used by currently available systems.
+\end{abstract}
+
+%
+% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
+% Please copy and paste the code instead of the example below.
+%
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003120.10003121.10003129</concept_id>
+<concept_desc>Human-centered computing~Interactive systems and tools</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003120.10003145.10003151</concept_id>
+<concept_desc>Human-centered computing~Visualization systems and tools</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010520.10010521</concept_id>
+<concept_desc>Computer systems organization~Architectures</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10010520.10010570</concept_id>
+<concept_desc>Computer systems organization~Real-time systems</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Human-centered computing~Interactive systems and tools}
+\ccsdesc[500]{Human-centered computing~Visualization systems and tools}
+\ccsdesc[500]{Computer systems organization~Architectures}
+\ccsdesc[500]{Computer systems organization~Real-time systems}
+
+%
+% Keywords. The author(s) should pick words that accurately describe the work being
+% presented. Separate the keywords with commas.
+\keywords{debugging; diagnostics; exploratory inspection; monitoring; visualization; deep learning; map-reduce; streams}
+
+%
+% A "teaser" image appears between the author and affiliation information and the body 
+% of the document, and typically spans the page. 
+% \begin{teaserfigure}
+%   \includegraphics[width=\textwidth]{sampleteaser}
+%   \caption{Seattle Mariners at Spring Training, 2010.}
+%   \Description{Enjoying the baseball game from the third-base seats. Ichiro Suzuki preparing to bat.}
+%   \label{fig:teaser}
+% \end{teaserfigure}
+
+\copyrightyear{2019} 
+\acmYear{2019} 
+\acmConference[EICS '19]{ACM SIGCHI Symposium on Engineering Interactive Computing Systems}{June 18--21, 2019}{Valencia, Spain}
+\acmBooktitle{ACM SIGCHI Symposium on Engineering Interactive Computing Systems (EICS '19), June 18--21, 2019, Valencia, Spain}\acmDOI{10.1145/3319499.3328231}
+\acmISBN{978-1-4503-6745-5/19/06}
+
+%
+% This command processes the author and affiliation and title information and builds
+% the first part of the formatted document.
+\setlist[itemize]{noitemsep, topsep=0pt}
+\setlist[enumerate]{noitemsep, topsep=0pt}
+
+\maketitle
+
+\section{Introduction}
+The rise of deep learning is complimented by ever increasing model complexity, size of the datasets, and corresponding longer training times to develop the model. For example, finishing 90-epoch ImageNet-1k training with ResNet-50 takes 14 days to complete on an NVIDIA M40 GPU\cite{You:2018:ITM:3225058.3225069}. Researchers and practitioners often find themselves losing productivity due to the inability to quickly obtain desired information dynamically from the training process without having to incur stop-change-restart cycles.  While a few solutions have been developed for real-time monitoring of deep learning training, there has been a distinct lack of systems that offer dynamic expressiveness through conversational style interactivity supporting the exploratory paradigm.
+
+In this paper we offer a new system that enables the dynamic specification of queries and eliminates the requirement to halt the learning process each time a new output is desired. We also enable the displays of multiple, simultaneous visualizations that can be generated on-demand by routing to them the desired information chosen by the user. The pillars of our architecture are general enough to apply our system design to other domains with similar long running processes.
+
+Our main contributions are
+\begin{enumerate*}
+\item system design based on dynamic stream generation using map-reduce as the Domain Specific Language (DSL) to perform interactive analysis of long running processes such as machine learning training
+\item separation of concerns that allows to build dynamic stream processing pipeline with visualizations agnostic of rendering surfaces, and 
+\item abstraction to allow the comparison of previously generated heterogeneous data along with the live data in a desired set of visualizations, all specified at the runtime.
+\end{enumerate*}
+
+\section{Related Work}
+TensorBoard\cite{Wongsuphasawat2018} is currently among the most popular of monitoring tools, offering a variety of capabilities including data exploration using dimensionality reduction, and model data flow graphs. However, its monitoring capabilities are limited to viewing only the data that was explicitly specified to be logged before the training starts. While the tool provides some interactivity in visualization widgets, no  interactivity is provided in terms of dynamic queries. Furthermore, few pre-defined visualizations are offered in the dashboard in a pre-configured tabbed interface and thus somewhat limited in other layout preferences. 
+
+The logging-based model is also used by other frameworks, including Visdom\cite{Choo2018} and VisualDL\cite{VisualDL}. Several authors\cite{Liu2017,DBLP:journals/corr/abs-1712-05902,Choo2018} have identified the research opportunities in diagnostic aspects of deep learning training and interactively analyzing it due to time consuming trial-and-error procedures.
+
+Map-reduce is an extensively studied paradigm originated from the functional programming \cite{Steele1995} and successfully utilized for constructing data flows and performing large scale data processing in the field of distributed computing \cite{Dean2008,Gates:2009:BHD:1687553.1687568,Catanzaro2008AMR}. Many variants of map-reduce has been created\cite{Afrati:2011:MER:1951365.1951367} for a variety of scenarios, and it has also gained wide adoption for the various data analysis tasks\cite{Ekanayake2008,Pavlo:2009:CAL:1559845.1559865}.
+
+Visualizations based on streams have been studied deeply for the real-time data scenarios\cite{(Ed.)98datavisualization,Traub2017} with various systems aiming to enhance interactivity, adaptability, performance and dynamic configurations\cite{Logre:2018:MSV:3233739.3229096,ellis2014real, Roberts2007, Few:2006:IDD:1206491}. Query driven visualizations have been popular for databases utilizing SQL and big data using custom DSLs\cite{Stockinger, Babu:2001:CQO:603867.603884, Plale2003}. This paradigm also becomes a cornerstone in our system design.
+
+% TODO: paper outline
+% TODO: cite Liu2018 and its refrences
+
+\section{Scenarios}
+We describe a few real-world scenarios in this section to develop an intuition of the requirements and understanding of problems often faced by the practitioners.
+
+\subsection{Diagnosing Deep Learning Training}
+John is the deep learning practitioner with the task of developing a model for gender identification from a large labeled dataset of human faces. As each experiment takes several minutes even on a reduced subset of the data, John wishes to view training loss and accuracy trends in real time. In many experiments, training loss does not seem to be reducing and to understand the cause John needs to view the gradient flow chart. However, this requires John to terminate the training process, add additional logging for this information, and then restart the training. As John observes the gradient flow chart, he starts suspecting that his network may be suffering from the vanishing gradient problem. To be sure, John now wishes to view growth of weights and the distribution of initial values. This new information again causes a stop-change-restart cycle adding significant cost to obtain each new piece of information in the diagnostic process that is inherently iterative.
+
+\subsection{Analyzing The Model Interpretation Results}
+Susan is using a GAMs framework\cite{Hastie1986} to analyze the impact of each feature in her model. As a data scientist, she depends on Jupyter Notebook to perform her analysis. As the computation takes several minutes before generating the desired charts, Susan wants to display progressive visualizations displaying partial results as they evolve. Instead of designing and implementing a custom system for her one-off experiment, it would be ideal if she could  simply generate a stream of data using map-reduce paradigm that she is already familiar with. This stream can then be easily painted to the desired rendering surface such as Jupyter Notebook to display progressive real-time visualization as her models evolve in time. 
+
+\subsection{Diagnosing and Managing Deep Learning Jobs}
+Rachel spins up several dozens of deep learning jobs as part of her experiments in GPU cloud infrastructure. These long running jobs may take many days to complete and therefore are expensive to run in cloud. However, it turns out that many of the poorer performing jobs could be identified much earlier and be terminated, thus freeing up the expensive resources. However, designing and building such infrastructure is time consuming and requires additional engineering skills. It would be ideal for Rachel if she could simply output streams of performance data from her jobs and then create a small monitoring application that consumes these streams.
+
+\section{System Design}
+
+\begin{figure*}[h]
+  \centering
+  \includegraphics[height=3.5in]{TensorWatch_Collaboration}
+  \caption{Collaboration diagram for our system depicting interactions between various actors. Standard notations are used with numbered interactions indicating their sequence with alphabet suffix denoting the potential concurrency. Our system includes the long running process generating various events, clients making requests for stream using map-reduce queries (denoted by MRx) for the desired events and the agent responding back with resultant streams that can be directed to desired visualizations or other processes.}
+  \label{fig:TensorWatch_Collaboration}
+\end{figure*}
+
+\subsection{Key Actors}
+Our system design contains the following key actors as shown in Figure \ref{fig:TensorWatch_Collaboration}:
+\begin{enumerate}
+  \item A long running process $P$ such as a deep learning training process.
+  \item Zero or more clients that may be located on the  same or different machines as $P$.
+  \item An agent $A$ that is embedded in $P$ listening to requests from the clients
+\end{enumerate}
+\subsection{The Long Running Process}
+We abstract three specific characteristics of a long running process $P$:
+\begin{enumerate}
+  \item $P$ may generate many types of events during its lifetime. Each type of event may occur multiple times, but the sequence of events is always serialized, i.e., there is never more than one event of the same type occurring at the same time in the same process.
+  \item As events of each type are strictly ordered so that we can optionally assign a group to any arbitrary contiguous set of events. This ability will enable windowing for the reduce operator discussed later.
+  \item For each event, optionally a set of values may be available for the observation. For example, on a batch completion event the metrics for that batch may be available for the observation. The process informs the agent when an event occurs and provides access to these observables.
+\end{enumerate}
+\subsection{The Client}
+At any point in time multiple clients may exist simultaneously issuing the queries and consuming corresponding resultant streams. Each query can be viewed as a stream specification with the following attributes:
+\begin{enumerate}
+  \item The event type for which a stream should be generated. An event type may have multiple associated streams but each stream has only one associated event type.
+  \item An expression in the form of map-reduce operations. This expression is applied to the observables at the time of event and the output becomes the value in the resultant stream.
+\end{enumerate}
+
+The client may utilize the resultant stream by directing it to multiple processes such as visualizations chosen at the runtime. Thus the same stream may generate a visualization as well as become input to another process in the data flow pipeline.
+
+\subsection{The Agent}
+The agent runs in-process in the host long running process $P$ and characterized by the following responsibilities:
+
+\begin{enumerate}
+  \item Listening to incoming requests for the creation of a stream. This is done asynchronously without blocking the host process $P$.
+  \item When $P$ informs the agent that an event has occurred, the agent determines if any active streams exist for that event. If so, the agent executes the map-reduce computation attached to each stream for that event and sends the result of this computation back to the client.
+\end{enumerate}
+
+An important aspect of the agent design is that if there are no streams requested for an event then there is almost no performance penalty. Also, there is no performance penalty for having access to the large numbers of observables. This means that user may specify all of the variables of interest as observables beforehand and later use queries to use subset of them depending on the task.
+
+\subsection{Example: Implementation for Deep Learning Training}
+
+As an example of how above actors and abstractions may be utilized, consider the deep learning training scenario. This process performs computation in series of epochs, completion of each is an \emph{epoch event}. During each epoch, we execute several batches of data, completion of each becoming a \emph{batch event}. At each batch event we may observe the metric object that contains several statistics for the batch. Contiguous set of batch events within each epoch can be treated as one group. At the end of an epoch, we may want to compute some aggregated statistics which can easily be done by specifying the map-reduce expression that extracts the desired value from the metric object and performing the aggregation operation on it.
+
+\subsection{Multiple Processes and Streams}
+The above abstractions can easily be utilized to efficiently inspect many simultaneously running processes and make decisions such as early termination or modify desired parameters at the runtime. A user can also compare and visualize arbitrarily chosen subsets of jobs. 
+
+\subsection{Modifying the State of a Long Running Process}
+Our design trivially enables a useful capability of changing the observables of the long running process. In the context of deep learning training, this can be used for interactive hyper parameter tuning guided by observations \cite{NIPS2011_4443}. We simply allow users to send commands from interfaces such as Jupyter Notebook to the agent running in the host process. The agent then executes these commands on observables presented to it by the host process at the specified events.
+
+\subsection{Stream Persistence}
+One of the significant disadvantages of many current systems is the requirement that data of interest must be logged to the disk storage, which can become an expensive bottleneck. Our design with stream abstraction trivially enables pay-what-you-use model so that users can selectively specify at runtime to persist only those streams that they may be interested in viewing or comparison in the future.
+
+\section{Stream Visualization}
+Once a stream is produced, it can be visualized, stored or processed further in users data flow graph. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\linewidth]{tensorwatch-screenshot}
+  \includegraphics[width=\linewidth]{tensorwatch-screenshot2}  
+  \caption{Screenshot of three simultaneous real-time visualizations on two different surfaces generated dynamically by an user for the MNIST training process. On the top is an interactive session in Jupyter Notebook where the user specifies map-reduce queries in a cell for each desired visualization. The first output cell at the top shows evolution of average absolute gradients for each layer with lighter lines indicating the older plots. The second output cell shows random sample of predictions so far. At the bottom is the plot of two batch statistics rendered in a separate native application.}  
+\end{figure}
+
+\subsection{Adaptive Visualizers}
+As we allow users to generate arbitrary streams dynamically, it becomes important that visualization widgets are specifically designed for automatic configuration by reflecting on data available in the stream. We adopt the adaptive visualization paradigm\cite{Nazemi2016, mourlas2009intelligent} for this purpose. For example, a visualizer may decide to paint a stream that has a tuple of two numeric values as a 2D line chart, tuple of 3 numeric values as a 3D line chart and tuple of 2 numeric and 1 string value as annotated 2D line chart. The user may override to select a precise rendering for a given stream.
+
+A visualizer may allow adding or removing streams dynamically. The streams may not have the same data type allowing for the heterogeneous visualizations such as display of a histogram and a line chart overlays. If a visualizer receives incompatible streams than it may display an error. In the context of deep learning, this enables capabilities such as viewing multiple related metrics in the same visualization or comparing data generated by multiple experiments in the same visualization.
+
+% A visualizer may be notified of the restart event for a stream due to reasons such as the restart of the generating process. A visualizer must handle such notification appropriately. 
+
+% A visualizer does not have knowledge about the source of the stream. Depending on the source some streams may generate data at high throughput while others may not. As this is not predictable, automatic buffering is provided by the system so visualizer may continue to stay agnostic of data source.
+
+\subsection{Frame Based Animated Visualizations}
+Many useful visualizations may consume values in a stream one after another as they arrive, e.g.\ , line charts. Another interesting scenario is to consider each value in the stream providing the complete data for each \emph{frame} in the visualization. This enables users to create dynamic specification for the animated visualizations using familiar map-reduce paradigm. In the context of deep learning training, this allows users to create on-demand custom visualizations such as per-layer gradient statistics change over time, display of sample predictions sorted by loss value and so on.
+
+% \begin{enumerate}
+%   \item When each value in the stream is a 3D tensor, we can display an animated 3D mesh in the visualizer. This allows for the live evolution of 3D structures such as sampling the training loss surfaces.
+%   \item When each value in the stream is the key-value pair describing performance data such as GPU/CPU utilization, memory pressure, disk I/O etc, we can trivially display live performance data in text form or plot them as series of live charts.
+%   \item When each value in the stream is the aggregated summary of weight or gradients grouped by layer, it effortlessly allows the user to view the evolution of diagrams such as the gradient flow over time.
+%   \item When each value in the stream is a tuple of input image, label, and output image, they may be displayed as live predictions as the training progresses. Furthermore, the user can make dynamic decisions such as sorting these tuples by loss to display best or worst predictions or just show randomly sampled predictions on-demand.
+% \end{enumerate}
+
+\section{Stream Generation Using Map-Reduce}
+\subsection{Background}
+There are many variants of the map-reduce model\cite{Afrati:2011:MER:1951365.1951367} and differences in various implementations. We will focus on the variant that is popular among data scientists and readily available in widely used programming languages such as Python.
+
+The map-reduce paradigm consists of two higher order operators: \emph{map} and \emph{reduce}. The map operator accepts a function $M$ and a list of values $V$. The $M$ is applied to each value in $V$ to transform it to some other value or choose not to output any value, i.e.\ , the filter operation.
+
+The reduce operator accepts a function $R$ and a list of values $V$. The $R$ processes each value in $V$ to produce an aggregated output value. For instance the operation of sum over a sequence can be done as reduce operation with $R$ that initializes aggregated value to $0$ and then consumes each value in the sequence to produce new aggregated value.
+
+% \subsection{Example}
+% Assume that the user wishes to display the average of the absolute value of gradients in the first layer during the training of a convolutional network. In our system, this can be done by composing map and reduce operators as follows:
+
+% \begin{verbatim}
+% Map F: 
+%   If weight value does not belong to first layer:
+%     do not output (filter)
+% Map A: 
+%   For gradient value of each weight:
+%     take absolute value
+% Reduce R: 
+%   Average all gradient values.
+% \end{verbatim}
+
+\subsection{Extending Map-Reduce}\label{map-reduce-ext}
+While the map operator consumes a stream and outputs a stream, the reduce operator consumes stream and outputs an aggregated value instead of a stream. The reduce operator's output is not generated until the entire stream ends. In several of our scenarios, we rather desire that the reduce operator works on a group of contiguous values in the stream, aggregating values in that group and outputting a stream. For instance, we may want to compute the average duration for batches within each epoch and generate a stream with these averages as epochs progresses.
+
+To achieve this, we introduce an extension to allow us leveraging the existing infrastructure and avoid need for entirely new domain specific language. In our extension, we simply require that each value in the stream is accompanied by an \emph{optional} binary value $B$ which when $true$ triggers the output from the reduce operator.
+
+There are two advantages offered by this design:
+
+\begin{enumerate}
+  \item $B$ can be set at any time by the host process $P$ enabling many of our core scenarios trivially.
+%   We also point out that map-reduce operations must be performed on the server-side because transferring millions of parameters from the model to the client over the network would be highly inefficient. 
+  \item $B$ can also be set by a client at any time. This enables the scenarios where the user dynamically defines the aggregation window. For example, the user may wish to view a metric averaged over every 5 minutes.
+\end{enumerate}
+
+\section{Implementation}
+We implement our design using Python and other frameworks described in this section. We will be releasing our implementation as an open source cross-platform offering.
+
+For networking stack we utilize the ZeroMQ library to implement publisher-subscriber model between the agent and the client. Out of the box, we offer implementations for MatplotLib as well as Plotly frameworks for various visualizations including line charts, histograms and image matrix. MatplotLib allows a variety of UX backends, many of which can run as native application or in Notebook interface for exploratory tasks. The Jupyter Lab allows transforming Notebook in to the user defined dashboards.
+
+One of the key requirements in our system model is the implementation of the map-reduce extension described in Section \ref{map-reduce-ext}. We achieve this by implementing a component we call \emph{postable iterator}. The postable iterator allows to post input sequence of tuple $\{value, B\}$, where $B$ is group completion flag described in the Section \ref{map-reduce-ext}. The postable iterator then evaluates the map-reduce expression and returns the output value of map or reduce operator or signals the caller that no output was produced for the posted value.
+
+One of the key difficulties in implementation using languages such as Python and frameworks such as ZeroMQ, MatplotLib, and Jupyter Notebook is managing the limitations imposed for multi-threading. 
+% For instance, ZeroMQ sockets are not thread safe and requires that many operations be performed as callbacks in the eventloop. Similarly Jupyter Notebook allows executing one cell at a time, making it difficult to have multiple real-time visualizations. 
+We adopt the cooperative concurrency model with callbacks combining with the producer-consumer pattern to work around many of these limitations. 
+
+% The client creates a request for the stream using Client-Server sockets and the agent responds by publishing those streams on PUB-SUB sockets. The ZeroMQ offers options for several different transports including TCP and In-Process.
+
+% \subsection{Operation Modes}
+% Our system may be used in two modes: 
+
+% \begin{enumerate}
+%   \item Client-server mode: In this mode the agent runs as a server in-process with the host process $P$ while the client runs in a separate process on the same or different machine.
+%   \item In-process, same-thread mode: In this mode the agent as well as client interact on the same thread in the same process. As the interaction between client and server is synchronous, the implementation considers potentially blocking scenarios using worker thread pattern.
+% \end{enumerate}
+
+% For instance, MatplotLib provides animation timers such that callbacks can be run on the rendering thread. It thus becomes possible to have several simultaneous plots each making callbacks in which we consume the values from the stream.
+
+% \section{Comparison Study [TODO]}
+% In this section we compare the capabilities of two frameworks in wide use, TensorBoard and Visdom, with our system.
+
+% 1. Stream persistence: TensorBoard primarily allows file based logging of specified values and hence all streams are persistent.
+% 2. In-process, Out-of-Process:
+% 3. Interactive analysis
+% 4. Dynamic expressions
+% 5. Custom rendering components
+% 6. Comparing arbitrary streams
+% 7. Stream processing and operations
+% 8. Simultaneous multiple views
+% 9. Multiple rendering surfaces
+% 10. Programmatic access
+% 11. Centralized logging
+% 12. Customizing dashboard
+
+\section{Conclusion}
+We described the design of a system that brings data streaming and map-reduce style queries to the domain of machine learning training for enabling the new scenarios of diagnosis and exploratory inspection. We identified several advantages of our system over currently popular systems, including the ability to perform interactive queries, dynamic construction of data flow pipelines, and decoupled adaptive visualizations as nodes in such pipelines. We plan to release our system as an open source cross-platform offering to help researchers and engineers perform diagnosis and exploratory tasks more efficiently for the deep learning training processes.
+
+%
+% The acknowledgments section is defined using the "acks" environment (and NOT an unnumbered section). This ensures
+% the proper identification of the section in the article metadata, and the consistent spelling of the heading.
+\begin{acks}
+We would like to thank Susan Dumais for her guidance and advice on this project.
+\end{acks}
+
+%
+% The next two lines define the bibliography style to be used, and the bibliography file.
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{sample-base}
+
+% 
+% If your work has an appendix, this is the place to put it.
+% \appendix
+
+\end{document}

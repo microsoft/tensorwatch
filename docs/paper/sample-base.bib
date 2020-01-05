@@ -1,0 +1,584 @@
+%%% ====================================================================
+%%%  BibTeX-file{
+%%%     author          = "Gerry Murray",
+%%%     version         = "1.2",
+%%%     date            = "2 April 2012",
+%%%     filename        = "acmsmall-sample-bibfile.bib",
+%%%     address         = "ACM, NY",
+%%%     email           = "murray at hq.acm.org",
+%%%     codetable       = "ISO/ASCII",
+%%%     keywords        = "ACM Reference Format, bibliography, citation, references",
+%%%     supported       = "yes",
+%%%     docstring       = "This BibTeX database file contains 'bibdata' entries
+%%%                        that 'match' the examples provided in the Specifications Document
+%%%                        AND, also, 'legacy'-type bibs. It should assist authors in
+%%%                        choosing the 'correct' at-bibtype and necessary bib-fields
+%%%                        so as to obtain the appropriate ACM Reference Format output.
+%%%                        It also contains many 'Standard Abbreviations'. "
+%%%  }
+%%% ====================================================================
+
+% Journals
+
+% First the Full Name is given, then the abbreviation used in the AMS Math
+% Reviews, with an indication if it could not be found there.
+% Note the 2nd overwrites the 1st, so swap them if you want the full name.
+
+ %{AMS}
+ @String{AMSTrans = "American Mathematical Society Translations" }
+ @String{AMSTrans = "Amer. Math. Soc. Transl." }
+ @String{BullAMS = "Bulletin of the American Mathematical Society" }
+ @String{BullAMS = "Bull. Amer. Math. Soc." }
+ @String{ProcAMS = "Proceedings of the American Mathematical Society" }
+ @String{ProcAMS = "Proc. Amer. Math. Soc." }
+ @String{TransAMS = "Transactions of the American Mathematical Society" }
+ @String{TransAMS = "Trans. Amer. Math. Soc." }
+
+ %ACM
+ @String{CACM = "Communications of the {ACM}" }
+ @String{CACM = "Commun. {ACM}" }
+ @String{CompServ = "Comput. Surveys" }
+ @String{JACM = "J. ACM" }
+ @String{ACMMathSoft = "{ACM} Transactions on Mathematical Software" }
+ @String{ACMMathSoft = "{ACM} Trans. Math. Software" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newsletter" }
+ @String{SIGNUM = "{ACM} {SIGNUM} Newslett." }
+
+ @String{AmerSocio = "American Journal of Sociology" }
+ @String{AmerStatAssoc = "Journal of the American Statistical Association" }
+ @String{AmerStatAssoc = "J. Amer. Statist. Assoc." }
+ @String{ApplMathComp = "Applied Mathematics and Computation" }
+ @String{ApplMathComp = "Appl. Math. Comput." }
+ @String{AmerMathMonthly = "American Mathematical Monthly" }
+ @String{AmerMathMonthly = "Amer. Math. Monthly" }
+ @String{BIT = "{BIT}" }
+ @String{BritStatPsych = "British Journal of Mathematical and Statistical
+          Psychology" }
+ @String{BritStatPsych = "Brit. J. Math. Statist. Psych." }
+ @String{CanMathBull = "Canadian Mathematical Bulletin" }
+ @String{CanMathBull = "Canad. Math. Bull." }
+ @String{CompApplMath = "Journal of Computational and Applied Mathematics" }
+ @String{CompApplMath = "J. Comput. Appl. Math." }
+ @String{CompPhys = "Journal of Computational Physics" }
+ @String{CompPhys = "J. Comput. Phys." }
+ @String{CompStruct = "Computers and Structures" }
+ @String{CompStruct = "Comput. \& Structures" }
+ @String{CompJour = "The Computer Journal" }
+ @String{CompJour = "Comput. J." }
+ @String{CompSysSci = "Journal of Computer and System Sciences" }
+ @String{CompSysSci = "J. Comput. System Sci." }
+ @String{Computing = "Computing" }
+ @String{ContempMath = "Contemporary Mathematics" }
+ @String{ContempMath = "Contemp. Math." }
+ @String{Crelle = "Crelle's Journal" }
+ @String{GiornaleMath = "Giornale di Mathematiche" }
+ @String{GiornaleMath = "Giorn. Mat." } % didn't find in AMS MR., ibid.
+
+ %IEEE
+ @String{Computer = "{IEEE} Computer" }
+ @String{IEEETransComp = "{IEEE} Transactions on Computers" }
+ @String{IEEETransComp = "{IEEE} Trans. Comput." }
+ @String{IEEETransAC = "{IEEE} Transactions on Automatic Control" }
+ @String{IEEETransAC = "{IEEE} Trans. Automat. Control" }
+ @String{IEEESpec = "{IEEE} Spectrum" } % didn't find in AMS MR
+ @String{ProcIEEE = "Proceedings of the {IEEE}" }
+ @String{ProcIEEE = "Proc. {IEEE}" } % didn't find in AMS MR
+ @String{IEEETransAeroElec = "{IEEE} Transactions on Aerospace and Electronic
+     Systems" }
+ @String{IEEETransAeroElec = "{IEEE} Trans. Aerospace Electron. Systems" }
+
+ @String{IMANumerAna = "{IMA} Journal of Numerical Analysis" }
+ @String{IMANumerAna = "{IMA} J. Numer. Anal." }
+ @String{InfProcLet = "Information Processing Letters" }
+ @String{InfProcLet = "Inform. Process. Lett." }
+ @String{InstMathApp = "Journal of the Institute of Mathematics and
+     its Applications" }
+ @String{InstMathApp = "J. Inst. Math. Appl." }
+ @String{IntControl = "International Journal of Control" }
+ @String{IntControl = "Internat. J. Control" }
+ @String{IntNumerEng = "International Journal for Numerical Methods in
+     Engineering" }
+ @String{IntNumerEng = "Internat. J. Numer. Methods Engrg." }
+ @String{IntSuper = "International Journal of Supercomputing Applications" }
+ @String{IntSuper = "Internat. J. Supercomputing Applic." } % didn't find
+%% in AMS MR
+ @String{Kibernetika = "Kibernetika" }
+ @String{JResNatBurStand = "Journal of Research of the National Bureau
+     of Standards" }
+ @String{JResNatBurStand = "J. Res. Nat. Bur. Standards" }
+ @String{LinAlgApp = "Linear Algebra and its Applications" }
+ @String{LinAlgApp = "Linear Algebra Appl." }
+ @String{MathAnaAppl = "Journal of Mathematical Analysis and Applications" }
+ @String{MathAnaAppl = "J. Math. Anal. Appl." }
+ @String{MathAnnalen = "Mathematische Annalen" }
+ @String{MathAnnalen = "Math. Ann." }
+ @String{MathPhys = "Journal of Mathematical Physics" }
+ @String{MathPhys = "J. Math. Phys." }
+ @String{MathComp = "Mathematics of Computation" }
+ @String{MathComp = "Math. Comp." }
+ @String{MathScand = "Mathematica Scandinavica" }
+ @String{MathScand = "Math. Scand." }
+ @String{TablesAidsComp = "Mathematical Tables and Other Aids to Computation" }
+ @String{TablesAidsComp = "Math. Tables Aids Comput." }
+ @String{NumerMath = "Numerische Mathematik" }
+ @String{NumerMath = "Numer. Math." }
+ @String{PacificMath = "Pacific Journal of Mathematics" }
+ @String{PacificMath = "Pacific J. Math." }
+ @String{ParDistComp = "Journal of Parallel and Distributed Computing" }
+ @String{ParDistComp = "J. Parallel and Distrib. Comput." } % didn't find
+%% in AMS MR
+ @String{ParComputing = "Parallel Computing" }
+ @String{ParComputing = "Parallel Comput." }
+ @String{PhilMag = "Philosophical Magazine" }
+ @String{PhilMag = "Philos. Mag." }
+ @String{ProcNAS = "Proceedings of the National Academy of Sciences
+                    of the USA" }
+ @String{ProcNAS = "Proc. Nat. Acad. Sci. U. S. A." }
+ @String{Psychometrika = "Psychometrika" }
+ @String{QuartMath = "Quarterly Journal of Mathematics, Oxford, Series (2)" }
+ @String{QuartMath = "Quart. J. Math. Oxford Ser. (2)" }
+ @String{QuartApplMath = "Quarterly of Applied Mathematics" }
+ @String{QuartApplMath = "Quart. Appl. Math." }
+ @String{RevueInstStat = "Review of the International Statisical Institute" }
+ @String{RevueInstStat = "Rev. Inst. Internat. Statist." }
+
+ %SIAM
+ @String{JSIAM = "Journal of the Society for Industrial and Applied
+     Mathematics" }
+ @String{JSIAM = "J. Soc. Indust. Appl. Math." }
+ @String{JSIAMB = "Journal of the Society for Industrial and Applied
+     Mathematics, Series B, Numerical Analysis" }
+ @String{JSIAMB = "J. Soc. Indust. Appl. Math. Ser. B Numer. Anal." }
+ @String{SIAMAlgMeth = "{SIAM} Journal on Algebraic and Discrete Methods" }
+ @String{SIAMAlgMeth = "{SIAM} J. Algebraic Discrete Methods" }
+ @String{SIAMAppMath = "{SIAM} Journal on Applied Mathematics" }
+ @String{SIAMAppMath = "{SIAM} J. Appl. Math." }
+ @String{SIAMComp = "{SIAM} Journal on Computing" }
+ @String{SIAMComp = "{SIAM} J. Comput." }
+ @String{SIAMMatrix = "{SIAM} Journal on Matrix Analysis and Applications" }
+ @String{SIAMMatrix = "{SIAM} J. Matrix Anal. Appl." }
+ @String{SIAMNumAnal = "{SIAM} Journal on Numerical Analysis" }
+ @String{SIAMNumAnal = "{SIAM} J. Numer. Anal." }
+ @String{SIAMReview = "{SIAM} Review" }
+ @String{SIAMReview = "{SIAM} Rev." }
+ @String{SIAMSciStat = "{SIAM} Journal on Scientific and Statistical
+     Computing" }
+ @String{SIAMSciStat = "{SIAM} J. Sci. Statist. Comput." }
+
+ @String{SoftPracExp = "Software Practice and Experience" }
+ @String{SoftPracExp = "Software Prac. Experience" } % didn't find in AMS MR
+ @String{StatScience = "Statistical Science" }
+ @String{StatScience = "Statist. Sci." }
+ @String{Techno = "Technometrics" }
+ @String{USSRCompMathPhys = "{USSR} Computational Mathematics and Mathematical
+     Physics" }
+ @String{USSRCompMathPhys = "{U. S. S. R.} Comput. Math. and Math. Phys." }
+ @String{VLSICompSys = "Journal of {VLSI} and Computer Systems" }
+ @String{VLSICompSys = "J. {VLSI} Comput. Syst." }
+ @String{ZAngewMathMech = "Zeitschrift fur Angewandte Mathematik und
+     Mechanik" }
+ @String{ZAngewMathMech = "Z. Angew. Math. Mech." }
+ @String{ZAngewMathPhys = "Zeitschrift fur Angewandte Mathematik und Physik" }
+ @String{ZAngewMathPhys = "Z. Angew. Math. Phys." }
+
+% Publishers % ================================================= |
+
+ @String{Academic = "Academic Press" }
+ @String{ACMPress = "{ACM} Press" }
+ @String{AdamHilger = "Adam Hilger" }
+ @String{AddisonWesley = "Addison-Wesley" }
+ @String{AllynBacon = "Allyn and Bacon" }
+ @String{AMS = "American Mathematical Society" }
+ @String{Birkhauser = "Birkha{\"u}ser" }
+ @String{CambridgePress = "Cambridge University Press" }
+ @String{Chelsea = "Chelsea" }
+ @String{ClaredonPress = "Claredon Press" }
+ @String{DoverPub = "Dover Publications" }
+ @String{Eyolles = "Eyolles" }
+ @String{HoltRinehartWinston = "Holt, Rinehart and Winston" }
+ @String{Interscience = "Interscience" }
+ @String{JohnsHopkinsPress = "The Johns Hopkins University Press" }
+ @String{JohnWileySons = "John Wiley and Sons" }
+ @String{Macmillan = "Macmillan" }
+ @String{MathWorks = "The Math Works Inc." }
+ @String{McGrawHill = "McGraw-Hill" }
+ @String{NatBurStd = "National Bureau of Standards" }
+ @String{NorthHolland = "North-Holland" }
+ @String{OxfordPress = "Oxford University Press" }  %address Oxford or London?
+ @String{PergamonPress = "Pergamon Press" }
+ @String{PlenumPress = "Plenum Press" }
+ @String{PrenticeHall = "Prentice-Hall" }
+ @String{SIAMPub = "{SIAM} Publications" }
+ @String{Springer = "Springer-Verlag" }
+ @String{TexasPress = "University of Texas Press" }
+ @String{VanNostrand = "Van Nostrand" }
+ @String{WHFreeman = "W. H. Freeman and Co." }
+
+%Entries
+@article{Wongsuphasawat2018,
+  doi = {10.1109/tvcg.2017.2744878},
+  url = {https://doi.org/10.1109/tvcg.2017.2744878},
+  year  = {2018},
+  month = {jan},
+  publisher = {Institute of Electrical and Electronics Engineers ({IEEE})},
+  volume = {24},
+  number = {1},
+  pages = {1--12},
+  author = {Kanit Wongsuphasawat and Daniel Smilkov and James Wexler and Jimbo Wilson and Dandelion Mane and Doug Fritz and Dilip Krishnan and Fernanda B. Viegas and Martin Wattenberg},
+  title = {Visualizing Dataflow Graphs of Deep Learning Models in {TensorFlow}},
+  journal = {{IEEE} Transactions on Visualization and Computer Graphics}
+}
+
+@misc{VisualDL, 
+  title = {Visualize your deep learning training and data flawlessly}, url={https://github.com/PaddlePaddle/VisualDL}
+ }
+ 
+ @article{Choo2018,
+  doi = {10.1109/mcg.2018.042731661},
+  url = {https://doi.org/10.1109/mcg.2018.042731661},
+  year  = {2018},
+  month = {jul},
+  publisher = {Institute of Electrical and Electronics Engineers ({IEEE})},
+  volume = {38},
+  number = {4},
+  pages = {84--92},
+  author = {Jaegul Choo and Shixia Liu},
+  title = {Visual Analytics for Explainable Deep Learning},
+  journal = {{IEEE} Computer Graphics and Applications}
+}
+
+@article{Liu2017,
+  doi = {10.1016/j.visinf.2017.01.006},
+  url = {https://doi.org/10.1016/j.visinf.2017.01.006},
+  year  = {2017},
+  month = {mar},
+  publisher = {Elsevier {BV}},
+  volume = {1},
+  number = {1},
+  pages = {48--56},
+  author = {Shixia Liu and Xiting Wang and Mengchen Liu and Jun Zhu},
+  title = {Towards better analysis of machine learning models: A visual analytics perspective},
+  journal = {Visual Informatics}
+}
+
+@article{Choo2018,
+  doi = {10.1109/mcg.2018.042731661},
+  url = {https://doi.org/10.1109/mcg.2018.042731661},
+  year  = {2018},
+  month = {jul},
+  publisher = {Institute of Electrical and Electronics Engineers ({IEEE})},
+  volume = {38},
+  number = {4},
+  pages = {84--92},
+  author = {Jaegul Choo and Shixia Liu},
+  title = {Visual Analytics for Explainable Deep Learning},
+  journal = {{IEEE} Computer Graphics and Applications}
+}
+
+@article{Steele1995,
+  doi = {10.1145/224133.224134},
+  url = {https://doi.org/10.1145/224133.224134},
+  year  = {1995},
+  month = {may},
+  publisher = {Association for Computing Machinery ({ACM})},
+  volume = {{VIII}},
+  number = {2},
+  pages = {1--14},
+  author = {Guy L. Steele},
+  title = {Parallelism in Lisp},
+  journal = {{ACM} {SIGPLAN} Lisp Pointers}
+}
+
+@article{Dean2008,
+  doi = {10.1145/1327452.1327492},
+  url = {https://doi.org/10.1145/1327452.1327492},
+  year  = {2008},
+  month = {jan},
+  publisher = {Association for Computing Machinery ({ACM})},
+  volume = {51},
+  number = {1},
+  pages = {107},
+  author = {Jeffrey Dean and Sanjay Ghemawat},
+  title = {{MapReduce}},
+  journal = {Communications of the {ACM}}
+}
+
+@inproceedings{Catanzaro2008AMR,
+  title={A map reduce framework for programming graphics processors},
+  author={Bryan Catanzaro and Narayanan Sundaram and Kurt Keutzer},
+  year={2008}
+}
+
+@article{Gates:2009:BHD:1687553.1687568,
+ author = {Gates, Alan F. and Natkovich, Olga and Chopra, Shubham and Kamath, Pradeep and Narayanamurthy, Shravan M. and Olston, Christopher and Reed, Benjamin and Srinivasan, Santhosh and Srivastava, Utkarsh},
+ title = {Building a High-level Dataflow System on Top of Map-Reduce: The Pig Experience},
+ journal = {Proc. VLDB Endow.},
+ issue_date = {August 2009},
+ volume = {2},
+ number = {2},
+ month = aug,
+ year = {2009},
+ issn = {2150-8097},
+ pages = {1414--1425},
+ numpages = {12},
+ url = {https://doi.org/10.14778/1687553.1687568},
+ doi = {10.14778/1687553.1687568},
+ acmid = {1687568},
+ publisher = {VLDB Endowment},
+} 
+
+@inproceedings{Afrati:2011:MER:1951365.1951367,
+ author = {Afrati, Foto N. and Borkar, Vinayak and Carey, Michael and Polyzotis, Neoklis and Ullman, Jeffrey D.},
+ title = {Map-reduce Extensions and Recursive Queries},
+ booktitle = {Proceedings of the 14th International Conference on Extending Database Technology},
+ series = {EDBT/ICDT '11},
+ year = {2011},
+ isbn = {978-1-4503-0528-0},
+ location = {Uppsala, Sweden},
+ pages = {1--8},
+ numpages = {8},
+ url = {http://doi.acm.org/10.1145/1951365.1951367},
+ doi = {10.1145/1951365.1951367},
+ acmid = {1951367},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {datalog, map-reduce, polynomial fringe, recursion, task migration, transitive closure},
+} 
+
+@inproceedings{Ekanayake2008,
+  doi = {10.1109/escience.2008.59},
+  url = {https://doi.org/10.1109/escience.2008.59},
+  year  = {2008},
+  month = {dec},
+  publisher = {{IEEE}},
+  author = {Jaliya Ekanayake and Shrideep Pallickara and Geoffrey Fox},
+  title = {{MapReduce} for Data Intensive Scientific Analyses},
+  booktitle = {2008 {IEEE} Fourth International Conference on {eScience}}
+}
+
+@inproceedings{Pavlo:2009:CAL:1559845.1559865,
+ author = {Pavlo, Andrew and Paulson, Erik and Rasin, Alexander and Abadi, Daniel J. and DeWitt, David J. and Madden, Samuel and Stonebraker, Michael},
+ title = {A Comparison of Approaches to Large-scale Data Analysis},
+ booktitle = {Proceedings of the 2009 ACM SIGMOD International Conference on Management of Data},
+ series = {SIGMOD '09},
+ year = {2009},
+ isbn = {978-1-60558-551-2},
+ location = {Providence, Rhode Island, USA},
+ pages = {165--178},
+ numpages = {14},
+ url = {http://doi.acm.org/10.1145/1559845.1559865},
+ doi = {10.1145/1559845.1559865},
+ acmid = {1559865},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {benchmarks, mapreduce, parallel database},
+} 
+
+@article{DBLP:journals/corr/abs-1712-05902,
+  author    = {Nako Sung and
+               Minkyu Kim and
+               Hyunwoo Jo and
+               Youngil Yang and
+               Jingwoong Kim and
+               Leonard Lausen and
+               Youngkwan Kim and
+               Gayoung Lee and
+               Dong{-}Hyun Kwak and
+               Jung{-}Woo Ha and
+               Sunghun Kim},
+  title     = {{NSML:} {A} Machine Learning Platform That Enables You to Focus on
+               Your Models},
+  journal   = {CoRR},
+  volume    = {abs/1712.05902},
+  year      = {2017},
+  url       = {http://arxiv.org/abs/1712.05902},
+  archivePrefix = {arXiv},
+  eprint    = {1712.05902},
+  timestamp = {Mon, 13 Aug 2018 16:46:11 +0200},
+  biburl    = {https://dblp.org/rec/bib/journals/corr/abs-1712-05902},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+
+@MISC{(Ed.)98datavisualization,
+    author = {Chandrajit Bajaj (Ed.) and Chandrajit Bajaj and C Fl John Wiley},
+    title = {Data Visualization Techniques},
+    year = {1998}
+}
+
+@article{Logre:2018:MSV:3233739.3229096,
+ author = {Logre, Ivan and D{\'e}ry-Pinna, Anne-Marie},
+ title = {MDE in Support of Visualization Systems Design: A Multi-Staged Approach Tailored for Multiple Roles},
+ journal = {Proc. ACM Hum.-Comput. Interact.},
+ issue_date = {June 2018},
+ volume = {2},
+ number = {EICS},
+ month = jun,
+ year = {2018},
+ issn = {2573-0142},
+ pages = {14:1--14:17},
+ articleno = {14},
+ numpages = {17},
+ url = {http://doi.acm.org/10.1145/3229096},
+ doi = {10.1145/3229096},
+ acmid = {3229096},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {domain specific language, meta-model, visualization},
+} 
+
+@misc{Traub2017,
+  doi = {10.5441/002/edbt.2017.61},
+  url = {http://openproceedings.org/2017/conf/edbt/paper-276.pdf},
+  author = {Traub,  Jonas and Steenbergen,  Nikolaas and Grulich,  Philipp and Rabl,  Tilmann and Markl,  Volker},
+  keywords = {Database Technology},
+  language = {eng},
+  title = {I²: Interactive Real-Time Visualization for Streaming Data},
+  publisher = {OpenProceedings.org},
+  year = {2017}
+}
+
+@book{ellis2014real,
+  title={Real-Time Analytics: Techniques to Analyze and Visualize Streaming Data},
+  author={Ellis, B.},
+  isbn={9781118838020},
+  url={https://books.google.com/books?id=DFnOAwAAQBAJ},
+  year={2014},
+  publisher={Wiley}
+}
+
+@inproceedings{You:2018:ITM:3225058.3225069,
+ author = {You, Yang and Zhang, Zhao and Hsieh, Cho-Jui and Demmel, James and Keutzer, Kurt},
+ title = {ImageNet Training in Minutes},
+ booktitle = {Proceedings of the 47th International Conference on Parallel Processing},
+ series = {ICPP 2018},
+ year = {2018},
+ isbn = {978-1-4503-6510-9},
+ location = {Eugene, OR, USA},
+ pages = {1:1--1:10},
+ articleno = {1},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/3225058.3225069},
+ doi = {10.1145/3225058.3225069},
+ acmid = {3225069},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {Distributed Machine Learning, Fast Deep Neural Networks Training},
+} 
+
+@incollection{NIPS2011_4443,
+title = {Algorithms for Hyper-Parameter Optimization},
+author = {James S. Bergstra and Bardenet, R\'{e}mi and Bengio, Yoshua and Bal\'{a}zs K\'{e}gl},
+booktitle = {Advances in Neural Information Processing Systems 24},
+editor = {J. Shawe-Taylor and R. S. Zemel and P. L. Bartlett and F. Pereira and K. Q. Weinberger},
+pages = {2546--2554},
+year = {2011},
+publisher = {Curran Associates, Inc.},
+url = {http://papers.nips.cc/paper/4443-algorithms-for-hyper-parameter-optimization.pdf}
+}
+
+@article{Hastie1986,
+  doi = {10.1214/ss/1177013604},
+  url = {https://doi.org/10.1214/ss/1177013604},
+  year  = {1986},
+  month = {aug},
+  publisher = {Institute of Mathematical Statistics},
+  volume = {1},
+  number = {3},
+  pages = {297--310},
+  author = {Trevor Hastie and Robert Tibshirani},
+  title = {Generalized Additive Models},
+  journal = {Statistical Science}
+}
+
+@inproceedings{Roberts2007,
+  doi = {10.1109/cmv.2007.20},
+  url = {https://doi.org/10.1109/cmv.2007.20},
+  year  = {2007},
+  month = {jul},
+  publisher = {{IEEE}},
+  author = {Jonathan C. Roberts},
+  title = {State of the Art: Coordinated \& Multiple Views in Exploratory Visualization},
+  booktitle = {Fifth International Conference on Coordinated and Multiple Views in Exploratory Visualization ({CMV} 2007)}
+}
+
+@book{Few:2006:IDD:1206491,
+ author = {Few, Stephen},
+ title = {Information Dashboard Design: The Effective Visual Communication of Data},
+ year = {2006},
+ isbn = {0596100167},
+ publisher = {O'Reilly Media, Inc.},
+} 
+
+@book{Nazemi2016,
+  doi = {10.1007/978-3-319-30816-6},
+  url = {https://doi.org/10.1007/978-3-319-30816-6},
+  year  = {2016},
+  publisher = {Springer International Publishing},
+  author = {Kawa Nazemi},
+  title = {Adaptive Semantics Visualization}
+}
+
+@Book{mourlas2009intelligent,
+ author = {Mourlas, Constantinos},
+ title = {Intelligent user interfaces : adaptation and personalization systems and technologies},
+ publisher = {Information Science Reference},
+ year = {2009},
+ address = {Hershey, PA},
+ isbn = {9781605660325}
+ }
+ 
+ @article{Babu:2001:CQO:603867.603884,
+ author = {Babu, Shivnath and Widom, Jennifer},
+ title = {Continuous Queries over Data Streams},
+ journal = {SIGMOD Rec.},
+ issue_date = {September 2001},
+ volume = {30},
+ number = {3},
+ month = sep,
+ year = {2001},
+ issn = {0163-5808},
+ pages = {109--120},
+ numpages = {12},
+ url = {http://doi.acm.org/10.1145/603867.603884},
+ doi = {10.1145/603867.603884},
+ acmid = {603884},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+} 
+
+@inproceedings{Stockinger,
+  doi = {10.1109/visual.2005.1532792},
+  url = {https://doi.org/10.1109/visual.2005.1532792},
+  publisher = {{IEEE}},
+  author = {K. Stockinger and J. Shalf and  Kesheng Wu and E.W. Bethel},
+  title = {Query-Driven Visualization of Large Data Sets},
+  booktitle = {{VIS} 05. {IEEE} Visualization,  2005.}
+}
+
+@article{Plale2003,
+  doi = {10.1109/tpds.2003.1195413},
+  url = {https://doi.org/10.1109/tpds.2003.1195413},
+  year  = {2003},
+  month = {apr},
+  publisher = {Institute of Electrical and Electronics Engineers ({IEEE})},
+  volume = {14},
+  number = {4},
+  pages = {422--432},
+  author = {B. Plale and K. Schwan},
+  title = {Dynamic querying of streaming data with the {dQUOB} system},
+  journal = {{IEEE} Transactions on Parallel and Distributed Systems}
+}
+
+@article{Liu2018,
+  doi = {10.1145/3200489},
+  url = {https://doi.org/10.1145/3200489},
+  year  = {2018},
+  month = {nov},
+  publisher = {Association for Computing Machinery ({ACM})},
+  volume = {10},
+  number = {1},
+  pages = {1--25},
+  author = {Dongyu Liu and Weiwei Cui and Kai Jin and Yuxiao Guo and Huamin Qu},
+  title = {{DeepTracker}},
+  journal = {{ACM} Transactions on Intelligent Systems and Technology}
+}
