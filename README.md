@@ -120,7 +120,7 @@ We wish to provide various tools for explaining predictions to help debugging mo
 
 ## Paper
 
-More technical details are available in [TensorWatch paper (EICS 2019 Conference)](https://dl.acm.org/doi/10.1145/3319499.3328231). Please cite this as:
+More technical details are available in [TensorWatch paper (EICS 2019 Conference)](https://arxiv.org/abs/2001.01215). Please cite this as:
 
 ```
 @inproceedings{tensorwatch2019eics,
@@ -131,7 +131,7 @@ More technical details are available in [TensorWatch paper (EICS 2019 Conference
   pages     = {16:1--16:6},
   year      = {2019},
   crossref  = {DBLP:conf/eics/2019},
-  url       = {https://doi.org/10.1145/3319499.3328231},
+  url       = {https://arxiv.org/abs/2001.01215},
   doi       = {10.1145/3319499.3328231},
   timestamp = {Fri, 31 May 2019 08:40:31 +0200},
   biburl    = {https://dblp.org/rec/bib/conf/eics/ShahFD19},

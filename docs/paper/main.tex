@@ -12,7 +12,7 @@
 % https://www.overleaf.com/read/zzzfqvkmrfzn
 
 \usepackage[inline]{enumitem}
-
+\usepackage{hyperref}
 %
 % defining the \BibTeX command - from Oren Patashnik's original BibTeX documentation.
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08emT\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
@@ -105,7 +105,7 @@
 %
 % The abstract is a short summary of the work to be presented in the article.
 \begin{abstract}
-  Performing diagnosis or exploratory analysis during the training of deep learning models is challenging but often necessary for making a sequence of decisions guided by the incremental observations. Currently available systems for this purpose are limited to monitoring only the logged data that must be specified before the training process starts. Each time a new information is desired, a cycle of stop-change-restart is required in the training process. These limitations make interactive exploration and diagnosis tasks difficult, imposing long tedious iterations during the model development. We present a new system that enables users to perform interactive queries on live processes generating real-time information that can be rendered in multiple formats on multiple surfaces in the form of several desired visualizations simultaneously. To achieve this, we model various exploratory inspection and diagnostic tasks for deep learning training processes as specifications for streams using a map-reduce paradigm with which many data scientists are already familiar. Our design achieves generality and extensibility by defining composable primitives which is a fundamentally different approach than is used by currently available systems.
+  Performing diagnosis or exploratory analysis during the training of deep learning models is challenging but often necessary for making a sequence of decisions guided by the incremental observations. Currently available systems for this purpose are limited to monitoring only the logged data that must be specified before the training process starts. Each time a new information is desired, a cycle of stop-change-restart is required in the training process. These limitations make interactive exploration and diagnosis tasks difficult, imposing long tedious iterations during the model development. We present a new system that enables users to perform interactive queries on live processes generating real-time information that can be rendered in multiple formats on multiple surfaces in the form of several desired visualizations simultaneously. To achieve this, we model various exploratory inspection and diagnostic tasks for deep learning training processes as specifications for streams using a map-reduce paradigm with which many data scientists are already familiar. Our design achieves generality and extensibility by defining composable primitives which is a fundamentally different approach than is used by currently available systems. The open source implementation of our system is available as TensorWatch project at https://github.com/microsoft/tensorwatch.
 \end{abstract}
 
 %
@@ -209,7 +209,7 @@ Rachel spins up several dozens of deep learning jobs as part of her experiments 
 
 \section{System Design}
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
   \centering
   \includegraphics[height=3.5in]{TensorWatch_Collaboration}
   \caption{Collaboration diagram for our system depicting interactions between various actors. Standard notations are used with numbered interactions indicating their sequence with alphabet suffix denoting the potential concurrency. Our system includes the long running process generating various events, clients making requests for stream using map-reduce queries (denoted by MRx) for the desired events and the agent responding back with resultant streams that can be directed to desired visualizations or other processes.}
