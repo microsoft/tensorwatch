@@ -1,15 +1,46 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-import torchstat
+from .torchstat import statistics
 import pandas as pd
 
+
+class LayerStats:
+    def __init__(self, node) -> None:
+        self.name = node.name
+        self.input_shape = node.input_shape
+        self.output_shape = node.output_shape
+        self.parameters = node.parameter_quantity
+        self.inference_memory = node.inference_memory
+        self.MAdd = node.MAdd
+        self.Flops = node.Flops
+        self.mread, self.mwrite = node.Memory[0], node.Memory[1]
+        self.duration = node.duration
+
+class ModelStats(LayerStats):
+    def __init__(self, model, input_shape) -> None:
+        if len(input_shape) > 3:
+            input_shape = input_shape[1:4]
+        ms = statistics.ModelStat(model, input_shape, 1)
+        collected_nodes = ms._analyze_model()
+        self.layer_stats = []
+        for node in collected_nodes:
+            self.layer_stats.append(LayerStats(node))
+
+        self.name = 'Model'
+        self.input_shape = input_shape
+        self.output_shape = self.layer_stats[-1].output_shape
+        self.parameters = sum((l.parameters for l in self.layer_stats))
+        self.inference_memory = sum((l.inference_memory for l in self.layer_stats))
+        self.MAdd = sum((l.MAdd for l in self.layer_stats))
+        self.Flops = sum((l.Flops for l in self.layer_stats))
+        self.mread = sum((l.mread for l in self.layer_stats))
+        self.mwrite = sum((l.mwrite for l in self.layer_stats))
+        self.duration = sum((l.duration for l in self.layer_stats))
+
 def model_stats(model, input_shape):
-    if len(input_shape) > 3:
-        input_shape = input_shape[1:4]
-    ms = torchstat.statistics.ModelStat(model, input_shape, 1)
-    collected_nodes = ms._analyze_model()
-    return _report_format(collected_nodes)
+    ms = ModelStats(model, input_shape)
+    return model_stats2df(ms)
 
 def _round_value(value, binary=False):
     divisor = 1024. if binary else 1000.
@@ -25,58 +56,29 @@ def _round_value(value, binary=False):
     return str(value)
 
 
-def _report_format(collected_nodes):
+def model_stats2df(model_stats:ModelStats):
     pd.set_option('display.width', 1000)
     pd.set_option('display.max_rows', 10000)
     pd.set_option('display.max_columns', 10000)
 
-    data = list()
-    for node in collected_nodes:
-        name = node.name
-        input_shape = ' '.join(['{:>3d}'] * len(node.input_shape)).format(
-            *[e for e in node.input_shape])
-        output_shape = ' '.join(['{:>3d}'] * len(node.output_shape)).format(
-            *[e for e in node.output_shape])
-        parameter_quantity = node.parameter_quantity
-        inference_memory = node.inference_memory
-        MAdd = node.MAdd
-        Flops = node.Flops
-        mread, mwrite = [i for i in node.Memory]
-        duration = node.duration
-        data.append([name, input_shape, output_shape, parameter_quantity,
-                     inference_memory, MAdd, duration, Flops, mread,
-                     mwrite])
-    df = pd.DataFrame(data)
-    df.columns = ['module name', 'input shape', 'output shape',
-                  'params', 'memory(MB)',
-                  'MAdd', 'duration', 'Flops', 'MemRead(B)', 'MemWrite(B)']
-    df['duration[%]'] = df['duration'] / (df['duration'].sum() + 1e-7)
-    df['MemR+W(B)'] = df['MemRead(B)'] + df['MemWrite(B)']
-    total_parameters_quantity = df['params'].sum()
-    total_memory = df['memory(MB)'].sum()
-    total_operation_quantity = df['MAdd'].sum()
-    total_flops = df['Flops'].sum()
-    total_duration = df['duration[%]'].sum()
-    total_mread = df['MemRead(B)'].sum()
-    total_mwrite = df['MemWrite(B)'].sum()
-    total_memrw = df['MemR+W(B)'].sum()
-    del df['duration']
-
-    # Add Total row
-    total_df = pd.Series([total_parameters_quantity, total_memory,
-                          total_operation_quantity, total_flops,
-                          total_duration, mread, mwrite, total_memrw],
-                         index=['params', 'memory(MB)', 'MAdd', 'Flops', 'duration[%]',
-                                'MemRead(B)', 'MemWrite(B)', 'MemR+W(B)'],
-                         name='total')
-    df = df.append(total_df)
+    df = pd.DataFrame([l.__dict__ for l in model_stats.layer_stats])
+    total_df = pd.Series(model_stats.__dict__, name='Total')
+    df = df.append(total_df[df.columns], ignore_index=True)
 
     df = df.fillna(' ')
-    df['memory(MB)'] = df['memory(MB)'].apply(
-        lambda x: '{:.2f}'.format(x))
-    df['duration[%]'] = df['duration[%]'].apply(lambda x: '{:.2%}'.format(x))
-    df['MAdd'] = df['MAdd'].apply(lambda x: '{:,}'.format(x))
-    df['Flops'] = df['Flops'].apply(lambda x: '{:,}'.format(x))
+    # df['memory(MB)'] = df['memory(MB)'].apply(
+    #     lambda x: '{:.2f}'.format(x))
+    # df['duration[%]'] = df['duration[%]'].apply(lambda x: '{:.2%}'.format(x))
+    for c in ['MAdd', 'Flops', 'parameters', 'inference_memory', 'mread', 'mwrite']:
+        df[c] = df[c].apply(lambda x: '{:,}'.format(x))
+
+    df.rename(columns={'name': 'module name',
+                       'input_shape': 'input shape',
+                       'input_shape': 'input shape',
+                       'inference_memory': 'infer memory(MB)',
+                       'mread': 'MemRead(B)',
+                       'mwrite': 'MemWrite(B)'
+                       }, inplace=True)
 
     #summary = "Total params: {:,}\n".format(total_parameters_quantity)
 

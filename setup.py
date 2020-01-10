@@ -24,7 +24,7 @@ setuptools.setup(
     ),
     include_package_data=True,
     install_requires=[
-          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'torchstat', 'ipywidgets', 'pydot',
+          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'ipywidgets', 'pydot',
           'nbformat', 'scikit-image', 'nbformat', 'pyyaml', 'scikit-image', 'graphviz' # , 'receptivefield'
     ]
 )
