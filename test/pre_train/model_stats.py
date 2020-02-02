@@ -1,7 +1,9 @@
 import tensorwatch as tw
 import torchvision.models
 
-alexnet_model = torchvision.models.alexnet()
+model_names = ['alexnet', 'resnet18', 'resnet34','densenet121']
 
-df = tw.model_stats(alexnet_model, [1, 3, 224, 224])
-print(df)
+for model_name in model_names:
+    model = getattr(torchvision.models, model_name)()
+    df = tw.model_stats(model, [1, 3, 224, 224])
+    print(df)
