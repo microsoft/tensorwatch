@@ -49,7 +49,7 @@ def convert_leaf_modules_to_stat_tree(leaf_modules):
 class ModelStat(object):
     def __init__(self, model, input_size, query_granularity=1):
         assert isinstance(model, nn.Module)
-        assert isinstance(input_size, (tuple, list)) and len(input_size) == 3
+        assert isinstance(input_size, (tuple, list))
         self._model = model
         self._input_size = input_size
         self._query_granularity = query_granularity

@@ -5,19 +5,19 @@ import numpy as np
 
 def compute_memory(module, inp, out):
     if isinstance(module, (nn.ReLU, nn.ReLU6, nn.ELU, nn.LeakyReLU)):
-        return compute_ReLU_memory(module, inp, out)
+        return compute_ReLU_memory(module, inp[0], out[0])
     elif isinstance(module, nn.PReLU):
-        return compute_PReLU_memory(module, inp, out)
+        return compute_PReLU_memory(module, inp[0], out[0])
     elif isinstance(module, nn.Conv2d):
-        return compute_Conv2d_memory(module, inp, out)
+        return compute_Conv2d_memory(module, inp[0], out[0])
     elif isinstance(module, nn.BatchNorm2d):
-        return compute_BatchNorm2d_memory(module, inp, out)
+        return compute_BatchNorm2d_memory(module, inp[0], out[0])
     elif isinstance(module, nn.Linear):
-        return compute_Linear_memory(module, inp, out)
+        return compute_Linear_memory(module, inp[0], out[0])
     elif isinstance(module, (nn.AvgPool2d, nn.MaxPool2d)):
-        return compute_Pool2d_memory(module, inp, out)
+        return compute_Pool2d_memory(module, inp[0], out[0])
     else:
-        print(f"[Memory]: {type(module).__name__} is not supported!")
+        #print(f"[Memory]: {type(module).__name__} is not supported!")
         return 0, 0
     pass
 

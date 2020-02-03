@@ -3,7 +3,7 @@
 
 from .torchstat import statistics
 import pandas as pd
-
+import copy
 
 class LayerStats:
     def __init__(self, node) -> None:
@@ -18,9 +18,9 @@ class LayerStats:
         self.duration = node.duration
 
 class ModelStats(LayerStats):
-    def __init__(self, model, input_shape) -> None:
-        if len(input_shape) > 3:
-            input_shape = input_shape[1:4]
+    def __init__(self, model, input_shape, clone_model=True) -> None:
+        if clone_model:
+            model = copy.deepcopy(model)
         ms = statistics.ModelStat(model, input_shape, 1)
         collected_nodes = ms._analyze_model()
         self.layer_stats = []

@@ -1,5 +1,6 @@
 import time
 from collections import OrderedDict
+from typing import Sequence
 import numpy as np
 import torch
 import torch.nn as nn
@@ -19,7 +20,7 @@ class ModelHook(object):
         self._origin_call = dict()  # sub module call hook
 
         self._hook_model()
-        x = torch.rand(1, *self._input_size)  # add module duration time
+        x = torch.rand(*self._input_size)  # add module duration time
         self._model.eval()
         self._model(x)
 
@@ -30,6 +31,7 @@ class ModelHook(object):
         if len(list(module.children())) > 0:
             return
 
+        # register variables for each module to hold values we will compute
         module.register_buffer('input_shape', torch.zeros(3).int())
         module.register_buffer('output_shape', torch.zeros(3).int())
         module.register_buffer('parameter_quantity', torch.zeros(1).int())
@@ -39,12 +41,19 @@ class ModelHook(object):
         module.register_buffer('Flops', torch.zeros(1).long())
         module.register_buffer('Memory', torch.zeros(2).long())
 
+    def _to_seq(self, x):
+        if isinstance(x, torch.Tensor):
+            return [x]
+        if isinstance(x, Sequence):
+            res = []
+            for xi in x:
+                res += self._to_seq(xi)
+            return res
+        return []
+
     def _sub_module_call_hook(self):
         def wrap_call(module, *input, **kwargs):
             assert module.__class__ in self._origin_call
-
-            # Itemsize for memory
-            itemsize = input[0].detach().numpy().itemsize
 
             start = time.time()
             output = self._origin_call[module.__class__](module, *input, **kwargs)
@@ -52,10 +61,11 @@ class ModelHook(object):
             module.duration = torch.from_numpy(
                 np.array([end - start], dtype=np.float32))
 
+            inputs, outputs = self._to_seq(input), self._to_seq(output)
             module.input_shape = torch.from_numpy(
-                np.array(input[0].size()[1:], dtype=np.int32))
+                np.array(inputs[0].size(), dtype=np.int32))
             module.output_shape = torch.from_numpy(
-                np.array(output.size()[1:], dtype=np.int32))
+                np.array(outputs[0].size(), dtype=np.int32))
 
             parameter_quantity = 0
             # iterate through parameters and count num params
@@ -65,30 +75,24 @@ class ModelHook(object):
                 np.array([parameter_quantity], dtype=np.long))
 
             inference_memory = 1
-            for s in output.size()[1:]:
-                inference_memory *= s
+            for oi in outputs:
+                for s in oi.size():
+                    inference_memory *= s
             # memory += parameters_number  # exclude parameter memory
             inference_memory = inference_memory * 4 / (1024 ** 2)  # shown as MB unit
             module.inference_memory = torch.from_numpy(
                 np.array([inference_memory], dtype=np.float32))
 
-            if len(input) == 1:
-                madd = compute_madd(module, input[0], output)
-                flops = compute_flops(module, input[0], output)
-                Memory = compute_memory(module, input[0], output)
-            elif len(input) > 1:
-                madd = compute_madd(module, input, output)
-                flops = compute_flops(module, input, output)
-                Memory = compute_memory(module, input, output)
-            else:  # error
-                madd = 0
-                flops = 0
-                Memory = (0, 0)
+            madd = compute_madd(module, inputs, outputs)
+            flops = compute_flops(module, inputs, outputs)
+            Memory = compute_memory(module, inputs, outputs)
+
             module.MAdd = torch.from_numpy(
                 np.array([madd], dtype=np.int64))
             module.Flops = torch.from_numpy(
                 np.array([flops], dtype=np.int64))
-            Memory = np.array(Memory, dtype=np.int32) * itemsize
+            Memory = np.array(Memory, dtype=np.int32) * \
+                     sum(oi.detach().numpy().itemsize for oi in outputs)
             module.Memory = torch.from_numpy(Memory)
 
             return output

@@ -139,23 +139,23 @@ def compute_Bilinear_madd(module, inp1, inp2, out):
 
 def compute_madd(module, inp, out):
     if isinstance(module, nn.Conv2d):
-        return compute_Conv2d_madd(module, inp, out)
+        return compute_Conv2d_madd(module, inp[0], out[0])
     elif isinstance(module, nn.ConvTranspose2d):
-        return compute_ConvTranspose2d_madd(module, inp, out)
+        return compute_ConvTranspose2d_madd(module, inp[0], out[0])
     elif isinstance(module, nn.BatchNorm2d):
-        return compute_BatchNorm2d_madd(module, inp, out)
+        return compute_BatchNorm2d_madd(module, inp[0], out[0])
     elif isinstance(module, nn.MaxPool2d):
-        return compute_MaxPool2d_madd(module, inp, out)
+        return compute_MaxPool2d_madd(module, inp[0], out[0])
     elif isinstance(module, nn.AvgPool2d):
-        return compute_AvgPool2d_madd(module, inp, out)
+        return compute_AvgPool2d_madd(module, inp[0], out[0])
     elif isinstance(module, (nn.ReLU, nn.ReLU6)):
-        return compute_ReLU_madd(module, inp, out)
+        return compute_ReLU_madd(module, inp[0], out[0])
     elif isinstance(module, nn.Softmax):
-        return compute_Softmax_madd(module, inp, out)
+        return compute_Softmax_madd(module, inp[0], out[0])
     elif isinstance(module, nn.Linear):
-        return compute_Linear_madd(module, inp, out)
+        return compute_Linear_madd(module, inp[0], out[0])
     elif isinstance(module, nn.Bilinear):
         return compute_Bilinear_madd(module, inp[0], inp[1], out)
     else:
-        print(f"[MAdd]: {type(module).__name__} is not supported!")
+        #print(f"[MAdd]: {type(module).__name__} is not supported!")
         return 0

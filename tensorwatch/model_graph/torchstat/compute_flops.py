@@ -5,21 +5,21 @@ import math
 
 def compute_flops(module, inp, out):
     if isinstance(module, nn.Conv2d):
-        return compute_Conv2d_flops(module, inp, out)
+        return compute_Conv2d_flops(module, inp[0], out[0])
     elif isinstance(module, nn.BatchNorm2d):
-        return compute_BatchNorm2d_flops(module, inp, out)
+        return compute_BatchNorm2d_flops(module, inp[0], out[0])
     elif isinstance(module, (nn.AvgPool2d, nn.MaxPool2d)):
-        return compute_Pool2d_flops(module, inp, out)
+        return compute_Pool2d_flops(module, inp[0], out[0])
     elif isinstance(module, (nn.AdaptiveAvgPool2d, nn.AdaptiveMaxPool2d)):
-        return compute_adaptivepool_flops(module, inp, out)
+        return compute_adaptivepool_flops(module, inp[0], out[0])
     elif isinstance(module, (nn.ReLU, nn.ReLU6, nn.PReLU, nn.ELU, nn.LeakyReLU)):
-        return compute_ReLU_flops(module, inp, out)
+        return compute_ReLU_flops(module, inp[0], out[0])
     elif isinstance(module, nn.Upsample):
-        return compute_Upsample_flops(module, inp, out)
+        return compute_Upsample_flops(module, inp[0], out[0])
     elif isinstance(module, nn.Linear):
-        return compute_Linear_flops(module, inp, out)
+        return compute_Linear_flops(module, inp[0], out[0])
     else:
-        print(f"[Flops]: {type(module).__name__} is not supported!")
+        #print(f"[Flops]: {type(module).__name__} is not supported!")
         return 0
     pass
 
