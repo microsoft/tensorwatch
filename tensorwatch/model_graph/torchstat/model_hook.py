@@ -31,11 +31,14 @@ class ModelHook(object):
         if len(list(module.children())) > 0:
             return
 
+        if hasattr(module, 'parameter_quantity'):
+            return
+
         # register variables for each module to hold values we will compute
-        module.register_buffer('input_shape', torch.zeros(3).int())
-        module.register_buffer('output_shape', torch.zeros(3).int())
         module.register_buffer('parameter_quantity', torch.zeros(1).int())
         module.register_buffer('inference_memory', torch.zeros(1).long())
+        module.register_buffer('input_shape', torch.zeros(3).int())
+        module.register_buffer('output_shape', torch.zeros(3).int())
         module.register_buffer('MAdd', torch.zeros(1).long())
         module.register_buffer('duration', torch.zeros(1).float())
         module.register_buffer('Flops', torch.zeros(1).long())
@@ -92,7 +95,7 @@ class ModelHook(object):
             module.Flops = torch.from_numpy(
                 np.array([flops], dtype=np.int64))
             Memory = np.array(Memory, dtype=np.int32) * \
-                     sum(oi.detach().numpy().itemsize for oi in outputs)
+                     sum(oi.cpu().detach().numpy().itemsize for oi in outputs)
             module.Memory = torch.from_numpy(Memory)
 
             return output
