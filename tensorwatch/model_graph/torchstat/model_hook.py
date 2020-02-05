@@ -21,6 +21,7 @@ class ModelHook(object):
 
         self._hook_model()
         x = torch.rand(*self._input_size)  # add module duration time
+        x = x.to(next(model.parameters()).device)
         self._model.eval()
         self._model(x)
 
