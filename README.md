@@ -1,6 +1,6 @@
 # Welcome to TensorWatch
 
-TensorWatch is a debugging and visualization tool designed for data science, deep learning and reinforcement learning from Microsoft Research. It works in Jupyter Notebook to show real-time visualizations of your machine learning training and perform several other key analysis tasks for your models and data. 
+TensorWatch is a debugging and visualization tool designed for data science, deep learning and reinforcement learning from Microsoft Research. It works in Jupyter Notebook to show real-time visualizations of your machine learning training and perform several other key analysis tasks for your models and data.
 
 TensorWatch is designed to be flexible and extensible so you can also build your own custom visualizations, UIs, and dashboards. Besides traditional "what-you-see-is-what-you-log" approach, it also has a unique capability to execute arbitrary queries against your live ML training process, return a stream as a result of the query and view this stream using your choice of a visualizer (we call this [Lazy Logging Mode](#lazy-logging-mode])).
 
@@ -14,7 +14,7 @@ TensorWatch is under heavy development with a goal of providing a platform for d
 pip install tensorwatch
 ```
 
-TensorWatch supports Python 3.x and is tested with PyTorch 0.4-1.x. Most features should also work with TensorFlow eager tensors.
+TensorWatch supports Python 3.x and is tested with PyTorch 0.4-1.x. Most features should also work with TensorFlow eager tensors. TensorWatch uses graphviz to create network diagrams and depending on your platform sometime you might need to manually [install](https://graphviz.gitlab.io/download/) it.
 
 ## How to Use It
 
@@ -36,7 +36,7 @@ w.make_notebook()
 
 for i in range(1000):
     # write x,y pair we want to log
-    s.write((i, i*i)) 
+    s.write((i, i*i))
 
     time.sleep(1)
 ```
@@ -55,12 +55,12 @@ When you write to a TensorWatch stream, the values get serialized and sent to a 
 Ok, so that's a very simplified description. The TensorWatch architecture is actually much more powerful. Almost everything in TensorWatch is a *stream*. Files, sockets, consoles and even visualizers are streams themselves. A cool thing about TensorWatch streams is that they can listen to any other streams. This allows TensorWatch to create a *data flow graph*. This means that a visualizer can listen to many streams simultaneously, each of which could be a file, a socket or some other stream. You can recursively extend this to build arbitrary data flow graphs. TensorWatch decouples streams from how they get stored and how they get visualized.
 
 ## Visualizations
-In the above example, the line graph is used as the default visualization. However, TensorWatch supports many other diagram types including histograms, pie charts, scatter charts, bar charts and 3D versions of many of these plots. You can log your data, specify the chart type you want and let TensorWatch take care of the rest. 
+In the above example, the line graph is used as the default visualization. However, TensorWatch supports many other diagram types including histograms, pie charts, scatter charts, bar charts and 3D versions of many of these plots. You can log your data, specify the chart type you want and let TensorWatch take care of the rest.
 
 One of the significant strengths of TensorWatch is the ability to combine, compose, and create custom visualizations effortlessly. For example, you can choose to visualize an arbitrary number of streams in the same plot. Or you can visualize the same stream in many different plots *simultaneously*. Or you can place an arbitrary set of visualizations side-by-side. You can even create your own custom visualization widget simply by creating a new Python class, implementing a few methods.
 
 ## Comparing Results of Multiple Runs
-Each TensorWatch stream may contain a metric of your choice. By default, TensorWatch saves all streams in a single file, but you could also choose to save each stream in separate files or not to save them at all (for example, sending streams over sockets or into the console directly, zero hit to disk!). Later you can open these streams and direct them to one or more visualizations. This design allows you to quickly compare the results from your different experiments in your choice of visualizations easily. 
+Each TensorWatch stream may contain a metric of your choice. By default, TensorWatch saves all streams in a single file, but you could also choose to save each stream in separate files or not to save them at all (for example, sending streams over sockets or into the console directly, zero hit to disk!). Later you can open these streams and direct them to one or more visualizations. This design allows you to quickly compare the results from your different experiments in your choice of visualizations easily.
 
 ## Training within Jupyter Notebook
 Often you might prefer to do data analysis, ML training, and testing - all from within Jupyter Notebook instead of from a separate script. TensorWatch can help you do sophisticated, real-time visualizations effortlessly from code that is run within a Jupyter Notebook end-to-end.
