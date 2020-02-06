@@ -24,7 +24,8 @@ setuptools.setup(
     ),
     include_package_data=True,
     install_requires=[
-          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'ipywidgets', 'pydot',
+          'matplotlib', 'numpy', 'pyzmq', 'plotly', 'ipywidgets', 
+          'pydot @ git+https://github.com/sytelus/pydot@v1.5.0#egg=pydot',
           'nbformat', 'scikit-image', 'nbformat', 'pyyaml', 'scikit-image', 'graphviz' # , 'receptivefield'
     ]
 )
