@@ -1,0 +1,1 @@
+dot -Tpng -O test\pre_train\sample.dot
