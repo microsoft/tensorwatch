@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-from .torchstat import statistics
+from .torchstat import analyzer
 import pandas as pd
 import copy
 
@@ -18,11 +18,10 @@ class LayerStats:
         self.duration = node.duration
 
 class ModelStats(LayerStats):
-    def __init__(self, model, input_shape, clone_model=True) -> None:
+    def __init__(self, model, input_shape, clone_model=False) -> None:
         if clone_model:
             model = copy.deepcopy(model)
-        ms = statistics.ModelStat(model, input_shape, 1)
-        collected_nodes = ms._analyze_model()
+        collected_nodes = analyzer.analyze(model, input_shape, 1)
         self.layer_stats = []
         for node in collected_nodes:
             self.layer_stats.append(LayerStats(node))

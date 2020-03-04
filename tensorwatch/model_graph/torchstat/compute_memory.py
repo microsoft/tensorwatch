@@ -32,7 +32,7 @@ def compute_ReLU_memory(module, inp, out):
     mread = inp.numel()
     mwrite = out.numel()
 
-    return mread, mwrite
+    return mread*inp.element_size(), mwrite*out.element_size()
 
 
 def compute_PReLU_memory(module, inp, out):
@@ -42,7 +42,7 @@ def compute_PReLU_memory(module, inp, out):
     mread = batch_size * (inp[0].numel() + num_params(module))
     mwrite = out.numel()
 
-    return mread, mwrite
+    return mread*inp.element_size(), mwrite*out.element_size()
 
 
 def compute_Conv2d_memory(module, inp, out):
@@ -55,7 +55,8 @@ def compute_Conv2d_memory(module, inp, out):
     # This includes weights with bias if the module contains it.
     mread = batch_size * (inp[0].numel() + num_params(module))
     mwrite = out.numel()
-    return mread, mwrite
+
+    return mread*inp.element_size(), mwrite*out.element_size()
 
 
 def compute_BatchNorm2d_memory(module, inp, out):
@@ -66,7 +67,7 @@ def compute_BatchNorm2d_memory(module, inp, out):
     mread = batch_size * (inp[0].numel() + 2 * in_c)
     mwrite = out.numel()
 
-    return mread, mwrite
+    return mread*inp.element_size(), mwrite*out.element_size()
 
 
 def compute_Linear_memory(module, inp, out):
@@ -79,8 +80,7 @@ def compute_Linear_memory(module, inp, out):
     mread = batch_size * (inp[0].numel() + num_params(module))
     mwrite = out.numel()
 
-    return mread, mwrite
-
+    return mread*inp.element_size(), mwrite*out.element_size()
 
 def compute_Pool2d_memory(module, inp, out):
     assert isinstance(module, (nn.MaxPool2d, nn.AvgPool2d))
@@ -89,4 +89,4 @@ def compute_Pool2d_memory(module, inp, out):
     mread = inp.numel()
     mwrite = out.numel()
 
-    return mread, mwrite
+    return mread*inp.element_size(), mwrite*out.element_size()
