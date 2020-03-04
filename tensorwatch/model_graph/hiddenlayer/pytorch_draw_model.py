@@ -16,11 +16,11 @@ class DotWrapper:
         # directory, file_name = os.path.split(path)
         # # Remove extension from file name. dot.render() adds it.
         # file_name = file_name.replace("." + format, "")
-        # self.dot.render(file_name, directory=directory, cleanup=True) 
+        # self.dot.render(file_name, directory=directory, cleanup=True)
         if filename is not None:
             png = self.dot.create_png()
             with open(os.path.expanduser(filename), 'wb') as fid:
-                fid.write(png)   #  
+                fid.write(png)   #
 
 def draw_graph(model, args):
     if args is None:
@@ -33,7 +33,7 @@ def draw_graph(model, args):
         args = torch.ones(args)
 
     dot = draw_img_classifier(model, args)
-    return DotWrapper(dot)   
+    return DotWrapper(dot)
 
 def draw_img_classifier(model, dataset=None, display_param_nodes=False,
                                 rankdir='TB', styles=None, input_shape=None):
@@ -110,7 +110,7 @@ def sgraph2dot(sgraph, display_param_nodes=False, rankdir='TB', styles=None):
         if op['type'] == 'Conv':
             return ["sh={}".format(distiller.size2str(op['attrs']['kernel_shape'])),
                     "g={}".format(str(op['attrs']['group']))]
-        return ''   
+        return ''
 
     op_nodes = [op['name'] for op in sgraph.ops.values()]
     data_nodes = []
