@@ -25,7 +25,7 @@ class ModuleStats:
         self.MAdd = 0
         self.duration = 0.0
         self.Flops = 0
-        self.Memory = 0
+        self.Memory = 0,0
         self.parameter_quantity = 0
         self.done=False
 
