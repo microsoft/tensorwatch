@@ -36,13 +36,13 @@ class VisBase(Stream, metaclass=ABCMeta):
         self.layout_dirty = False
         self.q_last_processed = 0
 
-    def subscribe(self, stream:Stream, title=None, clear_after_end=False, clear_after_each=False, 
+    def subscribe(self, stream:Stream, title=None, clear_after_end=False, clear_after_each=False,
             show:bool=False, history_len=1, dim_history=True, opacity=None, **stream_vis_args):
         # in this ovedrride we don't call base class method
         with self.lock:
             self.layout_dirty = True
-        
-            stream_vis = StreamVisInfo(stream, title, clear_after_end, 
+
+            stream_vis = StreamVisInfo(stream, title, clear_after_end,
                 clear_after_each, history_len, dim_history, opacity,
                 len(self._stream_vises), stream_vis_args, 0)
             stream_vis._clear_pending = False
@@ -66,6 +66,9 @@ class VisBase(Stream, metaclass=ABCMeta):
                 return self._show_widget_notebook()
         else:
             return self._show_widget_native(blocking)
+
+    def save(self, filepath:str)->None:
+        self._save_widget(filepath)
 
     def write(self, val:Any, from_stream:'Stream'=None):
         stream_item = self.to_stream_item(val)
@@ -118,7 +121,7 @@ class VisBase(Stream, metaclass=ABCMeta):
                     stream_vis._clear_pending = False
                 if stream_vis.clear_after_each or (stream_item.ended and stream_vis.clear_after_end):
                     stream_vis._clear_pending = True
-                        
+
                 stream_items.append(stream_item)
 
         return stream_items, clear_current, clear_history
@@ -178,3 +181,5 @@ class VisBase(Stream, metaclass=ABCMeta):
     @abstractmethod
     def _show_widget_notebook(self):
         pass
+    def _save_widget(self, filepath:str)->None:
+        raise NotImplementedError('Save functionality is not implemented')

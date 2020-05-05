@@ -22,7 +22,7 @@ from .. import utils
 class BaseMplPlot(VisBase):
     def __init__(self, cell:VisBase.widgets.Box=None, title:str=None, show_legend:bool=None, is_3d:bool=False,
                  stream_name:str=None, console_debug:bool=False, **vis_args):
-        super(BaseMplPlot, self).__init__(VisBase.widgets.Output(), cell, title, show_legend, 
+        super(BaseMplPlot, self).__init__(VisBase.widgets.Output(), cell, title, show_legend,
                 stream_name=stream_name, console_debug=console_debug, **vis_args)
 
         self._fig_init_done = False
@@ -105,7 +105,7 @@ class BaseMplPlot(VisBase):
         utils.debug_log("Plot updated", stream_vis.stream.stream_name, verbosity=5)
 
         if self.layout_dirty:
-            # do not do tight_layout() call on every update 
+            # do not do tight_layout() call on every update
             # that would jumble up the graphs! it should only called
             # once each time there is change in layout
             self.figure.tight_layout()
@@ -136,8 +136,8 @@ class BaseMplPlot(VisBase):
         import matplotlib.pyplot as plt # delayed import due to matplotlib threading issue
 
         # make sure figure is initialized
-        self.init_fig()        
-        self.init_stream_plot(stream_vis, **stream_vis_args) 
+        self.init_fig()
+        self.init_stream_plot(stream_vis, **stream_vis_args)
 
         # redo the legend
         #self.figure.legend(loc='center right', bbox_to_anchor=(1.5, 0.5))
@@ -153,7 +153,7 @@ class BaseMplPlot(VisBase):
         return plt.show(block=blocking)
 
     def _show_widget_notebook(self):
-        # no need to return anything because %matplotlib notebook will 
+        # no need to return anything because %matplotlib notebook will
         # detect spawning of figure and paint it
         # if self.figure is returned then you will see two of them
         return None
@@ -167,3 +167,7 @@ class BaseMplPlot(VisBase):
     def init_stream_plot(self, stream_vis, **stream_vis_args):
         """(for derived class) Create new plot info for this stream"""
         pass
+
+    def _save_widget(self, filepath:str)->None:
+        self._update_stream_plots()
+        self.figure.savefig(filepath)
