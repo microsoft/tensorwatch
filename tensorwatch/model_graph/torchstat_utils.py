@@ -73,7 +73,7 @@ def model_stats2df(model_stats:ModelStats):
 
     df.rename(columns={'name': 'module name',
                        'input_shape': 'input shape',
-                       'input_shape': 'input shape',
+                       'output_shape': 'output shape',
                        'inference_memory': 'infer memory(MB)',
                        'mread': 'MemRead(B)',
                        'mwrite': 'MemWrite(B)'
