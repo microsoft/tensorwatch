@@ -122,7 +122,7 @@ We wish to provide various tools for explaining predictions to help debugging mo
 
 More technical details are available in [TensorWatch paper (EICS 2019 Conference)](https://arxiv.org/abs/2001.01215). Please cite this as:
 
-```
+```bib
 @inproceedings{tensorwatch2019eics,
   author    = {Shital Shah and Roland Fernandez and Steven M. Drucker},
   title     = {A system for real-time interactive analysis of deep learning training},
