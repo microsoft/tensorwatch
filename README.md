@@ -21,7 +21,7 @@ TensorWatch supports Python 3.x and is tested with PyTorch 0.4-1.x. Most feature
 ### Quick Start
 
 Here's simple code that logs an integer and its square as a tuple every second to TensorWatch:
-```
+```python
 import tensorwatch as tw
 import time
 
