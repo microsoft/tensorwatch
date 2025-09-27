@@ -16,6 +16,10 @@ pip install tensorwatch
 
 TensorWatch supports Python 3.x and is tested with PyTorch 0.4-1.x. Most features should also work with TensorFlow eager tensors. TensorWatch uses graphviz to create network diagrams and depending on your platform sometime you might need to manually [install](https://graphviz.gitlab.io/download/) it.
 
+### Security Notice
+
+> **Caution:** TensorWatch persists stream data with Python's `pickle` serialization. Unpickling content from untrusted sources can execute arbitrary code. Only open TensorWatch pickle files (for example `.log` or `.pkl`) that you created yourself or that come from a source you fully trust.
+
 ## How to Use It
 
 ### Quick Start
