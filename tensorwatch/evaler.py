@@ -85,7 +85,7 @@ class Evaler:
                 else:
                     self.eval_return = Evaler.EvalReturn(result, True)
             except Exception as ex: # pylint: disable=broad-except
-                logging.exception('Exception occured while evaluating expression: ' + self.expr)
+                logging.exception('Exception occurred while evaluating expression: ' + self.expr)
                 self.eval_return = Evaler.EvalReturn(None, True, ex)
             self.eval_wait.set()
             self.reset_wait.wait()
