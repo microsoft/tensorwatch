@@ -114,7 +114,7 @@ def import_graph(hl_graph, model, args, input_names=None, verbose=False):
             torch_graph = trace.graph
         except RuntimeError as e:
             print(e)
-            print('Error occured when creating jit trace for model.')
+            print('Error occurred when creating jit trace for model.')
             raise e
 
     # Dump list of nodes (DEBUG only)
